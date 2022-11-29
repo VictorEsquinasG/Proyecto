@@ -1,0 +1,37 @@
+/* Definimos variables globales */
+$ml-s:16px;
+$mt-s:14px;
+$bg-color-alt1:linear-gradient(80deg,#FDB750,orangered);
+$bg-color-alt2: #974D17;//rgba(36, 86, 35);
+$bg-color__footer:black;
+$txt-color__footer:white;
+/* GENÉRICOS */
+$colorError: rgb(93, 34, 21);
+/* COLORES PRINCIPALES */
+$bg-color--principal: white;
+$bg-color--principal-2:rgba(223, 223, 223, 0.703);
+$color--principal: #974D17;
+/* PARA EL LOGIN */
+$color-shadow--principal: rgba(86, 62, 35, 0.7);
+/* COLORES SECUNDARIOS */
+$bg-color--secundario: #a56334;
+$color--secundario: aliceblue;
+/* NAV */
+$bg-nav: #D9D9D9;
+$color-nav: #000000;
+$padding-vert: 1.5px;
+$padding-vert--2: 1.5%;
+$padding-hor: 10px;
+$font-family__nav: Cambria;
+$font-family__p: Inter;
+/* TAMAÑOS */
+$txt-tamanio--xl: 18.25px;
+$txt-tamanio--m: 14px;
+$txt-tamanio--s: 11px;
+/* BOTONES */
+$bg-color-btn: purple;
+$padding-x-base: 12px; 
+$padding-y-base: 6px;
+$padding-y-lg: 10px;
+$padding-x-lg: 20px;
+$font-size: 16px;

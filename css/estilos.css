@@ -1,0 +1,649 @@
+@charset "UTF-8";
+/* RESET */
+html, body, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  font-size: 100%;
+  font: inherit;
+  box-sizing: border-box;
+  vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: "";
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* FUENTES */
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/Inter.zip") format("zip");
+}
+/* Función que calcula el tamaño de la font-size */
+/* Tamaños de las fuentes */
+.g--font-size {
+  font-size: 16px;
+}
+
+.g--font-size-1s {
+  font-size: 13.3333333333px;
+}
+.g--font-size-1l {
+  font-size: 19.2px;
+}
+
+.g--font-size-2s {
+  font-size: 11.1111111111px;
+}
+.g--font-size-2l {
+  font-size: 23.04px;
+}
+
+.g--font-size-3s {
+  font-size: 9.2592592593px;
+}
+.g--font-size-3l {
+  font-size: 27.648px;
+}
+
+.g--font-size-4s {
+  font-size: 7.7160493827px;
+}
+.g--font-size-4l {
+  font-size: 33.1776px;
+}
+
+.g--font-size-5s {
+  font-size: 6.4300411523px;
+}
+.g--font-size-5l {
+  font-size: 39.81312px;
+}
+
+.g--font-size-6s {
+  font-size: 5.3583676269px;
+}
+.g--font-size-6l {
+  font-size: 47.775744px;
+}
+
+/* VARIABLES */
+/* Definimos variables globales */
+/* GENÉRICOS */
+/* COLORES PRINCIPALES */
+/* PARA EL LOGIN */
+/* COLORES SECUNDARIOS */
+/* NAV */
+/* TAMAÑOS */
+/* BOTONES */
+/* PROCESOS */
+/* MENU DE NAVEGACION */
+header {
+  width: 100vw;
+  height: fit-content;
+  background-color: rgb(255, 255, 255);
+  position: sticky;
+  overflow-x: hidden;
+  z-index: 3;
+  /* Nos aseguramos que queda por encima */
+}
+
+nav {
+  text-align: center;
+  margin-bottom: 3em;
+  display: block;
+  width: 100vw;
+  height: inherit;
+  background-color: #D9D9D9;
+  overflow-x: hidden;
+}
+nav > .c-nav__contenedor {
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: 100%;
+  height: inherit;
+  text-align: center;
+  margin: auto;
+  height: inherit;
+  margin-left: 1.5%;
+  padding: 1.5% 10px;
+}
+nav > .c-nav__contenedor .c-nav__menu > * {
+  display: inline-block;
+}
+nav > .c-nav__contenedor a {
+  color: #000000;
+  font-size: 18.25px;
+  text-decoration: none;
+  font-weight: bold;
+  font-family: Cambria;
+}
+nav > .c-nav__contenedor > #c-btn-home {
+  margin-left: 0;
+}
+nav > .c-nav__contenedor > div {
+  margin: auto;
+  font-size: 18.25px;
+  padding-top: 4px;
+  padding-right: 10px;
+  /*border-top: 3px solid rgb(2, 6, 34);  */
+  padding: 1.5px 10px;
+}
+nav > .c-nav__contenedor > div:not(#c-btn-home, .c-nav__login):hover {
+  height: inherit;
+  cursor: pointer;
+  opacity: 89%;
+  border-color: #974D17;
+  border-bottom: 2px solid #a56334;
+}
+nav > .c-nav__contenedor > div:not(#c-btn-home, .c-nav__login):hover > * {
+  color: #974D17;
+  text-decoration: none;
+}
+nav > .c-nav__contenedor > form {
+  margin-right: 35px;
+  margin-top: 3em;
+}
+nav > .c-nav__login {
+  overflow: hidden;
+}
+nav > .c-nav__login > a {
+  vertical-align: middle;
+}
+nav > .c-nav .c-btn-home {
+  width: 5vw;
+  height: inherit;
+  vertical-align: auto;
+  margin-left: -25px;
+  border-left: 0ch;
+  border-right: 0ch;
+}
+nav > .c-nav > form {
+  float: right;
+  vertical-align: middle;
+  margin-right: 3.25%;
+}
+
+input--error {
+  border-color: rgb(93, 34, 21);
+}
+
+.c-btn {
+  padding: 6px 12px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  text-align: center;
+  display: inline-block;
+  cursor: pointer;
+  /* Para que parezca un botón */
+  border: 1px solid transparent;
+  border-radius: 5px;
+  background-color: transparent;
+}
+.c-btn--primary {
+  color: white;
+  background: linear-gradient(80deg, #FDB750, orangered);
+  border-color: white;
+}
+.c-btn--primary__form {
+  float: right;
+}
+.c-btn--secundary {
+  color: white;
+  background: #a56334;
+  border-color: white;
+}
+.c-btn--secundary__form {
+  float: left;
+}
+.c-btn--contacto {
+  color: white;
+  position: relative;
+  vertical-align: middle;
+  top: -2.5rem;
+  left: -1.2rem;
+}
+.c-btn--size-lg {
+  padding: 10px 20px;
+  font-size: 20px;
+}
+.c-btn:hover {
+  font-weight: bold;
+  color: purple;
+  background: white;
+  border-color: purple;
+  border-width: 2px;
+}
+
+/* BODY */
+#cuerpo {
+  width: 100vw;
+  height: fit-content;
+  margin-top: 2.5vh;
+}
+#cuerpo > h1 {
+  text-align: center;
+  margin: auto;
+  font-weight: bold;
+  color: #974D17;
+  font-family: Cambria;
+}
+
+#footer {
+  width: 100vw;
+  height: fit-content;
+  overflow: hidden;
+  position: absolute;
+  bottom: 0%;
+}
+#footer * {
+  justify-content: center;
+}
+
+/* TABLAS */
+table {
+  border-collapse: collapse;
+}
+
+table, th, tr, td {
+  width: 60vw;
+  height: 4.5vh;
+  border: 1.5px solid white;
+  margin: auto;
+  border-collapse: collapse;
+  text-align: center;
+  vertical-align: middle;
+  font-family: Inter;
+}
+
+th {
+  background-color: rgba(109, 72, 8, 0.5);
+  color: white;
+  font-weight: bold;
+}
+
+tr:nth-child(even) {
+  color: white;
+  background-color: rgba(132, 74, 4, 0.85);
+}
+
+.editar {
+  width: 20px;
+  height: 20px;
+  background: url("https://www.flaticon.es/icono-gratis/lapiz_872350?term=edit&page=1&position=7&page=1&position=7&related_id=872350&origin=search");
+  image-orientation: 50% 50%;
+}
+
+/* LOGIN (SIGN UP) */
+.c-login {
+  /*
+          input[type="checkbox"] {
+              display: none;
+
+              &+label {
+                  display: block;
+                  position: relative;
+                  padding-left: 35px;
+                  margin-bottom: 20px;
+                  font: 14px 'Open Sans', Arial, sans-serif;
+                  cursor: pointer;
+                  user-select: none;
+
+                  &:last-child {
+                      margin-bottom: 0;
+                  }
+
+                  &:before {
+                      content: '';
+                      display: block;
+                      width: 20px;
+                      height: 20px;
+                      border: 1px solid #b85c15;
+                      position: absolute;
+                      left: 0;
+                      top: 0;
+                      opacity: 0.6;
+                      transition: all .12s, border-color .08s;
+                  }
+              }
+
+              &:checked+label::before {
+                  width: 10px;
+                  top: -5px;
+                  left: 5px;
+                  border-radius: 0;
+                  opacity: 1;
+                  border-top-color: transparent;
+                  border-left-color: transparent;
+                  -webkit-transform: rotate(45deg);
+                  transform: rotate(45deg);
+              }
+          }*/
+}
+.c-login__cajaLogin {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  padding: 40px;
+  transform: translate(-50%, -50%);
+  background: rgba(223, 223, 223, 0.703);
+  box-shadow: 0 15px 25px rgba(86, 62, 35, 0.7);
+  border-radius: 10px;
+}
+.c-login__cajaLogin > h2 {
+  margin: 0 0 30px;
+  padding: 0;
+  font-family: monospace;
+  font-weight: bold;
+  font-size: 22px;
+  color: #a56334;
+  text-align: center;
+}
+.c-login__user input {
+  position: relative;
+  width: 100%;
+  padding: 10px 0;
+  font-size: 10px;
+  margin-bottom: 30px;
+  border: none;
+  border-bottom: 1px solid #a56334;
+  outline: none;
+  background: transparent;
+}
+.c-login__user input:focus ~ label {
+  top: -85px;
+  left: 0;
+  color: rgba(86, 62, 35, 0.7);
+  font: 12px;
+}
+.c-login__user input:focus ~ valid {
+  top: -85px;
+  left: 0;
+  color: rgba(86, 62, 35, 0.7);
+  font: 12px;
+}
+.c-login__user label {
+  position: relative;
+  left: 0;
+  top: -60px;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #974D17;
+  pointer-events: none;
+  transition: 0.5s;
+}
+.c-login__recuerdame {
+  padding: 2px;
+  height: 100%;
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+.c-login__recuerdame label {
+  color: #FDB750;
+  font-weight: bold;
+  font-family: Inter;
+}
+.c-login__Registrarse {
+  font-size: 14px;
+  text-decoration: none;
+  color: #974D17;
+  margin: auto;
+  width: 60%;
+  text-align: center;
+}
+.c-login__Registrarse a {
+  margin: auto;
+  color: #a56334;
+  text-decoration: none;
+}
+.c-login__Registrarse a:hover {
+  text-decoration: underline;
+  font-weight: bold;
+}
+.c-login__btn {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  margin-top: 20px;
+}
+.c-login__btn--submit {
+  padding: 5px 1px;
+  color: #974D17;
+  font-size: 16px;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  overflow: hidden;
+  transition: 0.5s;
+  letter-spacing: 4px;
+  border: 1px solid #974D17;
+}
+.c-login__btn--submit:hover {
+  background: #a56334;
+  color: white;
+  border-radius: 5px;
+  box-shadow: 0 0 5px #a56334, 0 0 25px #a56334, 0 0 50px #a56334, 0 0 100px #a56334;
+}
+
+/* LOGIN */
+#registro {
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+#registro .c-registro {
+  width: 400px;
+  height: fit-content;
+  margin-top: 10vh;
+  padding: 3%;
+  background: rgba(223, 223, 223, 0.703);
+  box-shadow: 0 15px 25px rgba(86, 62, 35, 0.7);
+  border-radius: 10px;
+}
+#registro .c-registro > h2 {
+  margin: 0 0 30px;
+  padding: 0;
+  font-family: monospace;
+  font-weight: bold;
+  font-size: 22px;
+  color: #a56334;
+  text-align: center;
+}
+#registro .c-registro form {
+  height: fit-content;
+  width: auto;
+}
+#registro .c-registro__user {
+  width: 100%;
+  height: fit-content;
+  display: grid;
+  grid-template-columns: [a1] 40% [a2] 60%;
+  grid-template-rows: auto;
+}
+#registro .c-registro__user label {
+  grid-column: a1;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #974D17;
+  pointer-events: none;
+  transition: 0.5s;
+}
+#registro .c-registro__user input {
+  width: 100%;
+  padding: 10px 0;
+  font-size: 10px;
+  margin-bottom: 30px;
+  border: none;
+  outline: none;
+  background: transparent;
+  grid-column: a2;
+}
+#registro .c-registro__user input:not([type=file]) {
+  border-bottom: 1px solid #a56334;
+}
+#registro .c-registro__img input[type=file] {
+  display: none;
+}
+#registro .c-registro__img .img {
+  grid-column-start: a1;
+  grid-column-end: a2;
+  border-radius: 5px;
+  text-align: center;
+  color: #974D17;
+  border: 0.5px dotted rgb(159, 96, 18);
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+#registro .c-registro__ubi {
+  display: grid;
+  grid-template-columns: [lab] 50% [inp] 50%;
+  grid-template-rows: auto;
+  padding-bottom: 0.5rem;
+}
+#registro .c-registro__ubi label {
+  grid-column: lab;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #974D17;
+  pointer-events: none;
+  transition: 0.5s;
+}
+#registro .c-registro__ubi input {
+  width: 100%;
+  padding: 10px 0;
+  font-size: 10px;
+  margin-bottom: 30px;
+  border: none;
+  border-bottom: 1px solid #a56334;
+  outline: none;
+  background: transparent;
+  grid-column: inp;
+}
+#registro .c-registro__Contbtn {
+  display: flex;
+  justify-content: center;
+}
+#registro .c-registro__Contbtn__btn {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+#registro .c-registro__Contbtn__btn--submit {
+  margin-bottom: 2rem;
+  padding: 5px;
+  color: #974D17;
+  font-size: Inter;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  overflow: hidden;
+  transition: 0.5s;
+  letter-spacing: 0.2px;
+  border: 0.5px solid #974D17;
+  cursor: pointer;
+}
+#registro .c-registro__Contbtn__btn--submit:hover {
+  background: linear-gradient(80deg, #FDB750, orangered);
+  color: white;
+  border-radius: 5px;
+  box-shadow: 0 0 5px #a56334, 0 0 25px #a56334, 0 0 50px #a56334, 0 0 100px #a56334;
+}
+#registro .c-registro__contenedor {
+  width: 60%;
+  height: fit-content;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+#registro .c-registro__contenedor input {
+  background: transparent;
+}
+#registro .c-registro__user {
+  flex: 1 1 100%;
+}
+#registro .c-registro__btn {
+  margin-top: 5rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+#registro .c-registro__btn--submit {
+  padding: 5px 10px;
+  color: #974D17;
+  font-size: 16px;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  overflow: hidden;
+  transition: 0.5s;
+  letter-spacing: 4px;
+  border: 1px solid #974D17;
+}
+#registro .c-registro__btn--submit:hover {
+  background: linear-gradient(80deg, #FDB750, orangered);
+  color: white;
+  border-radius: 5px;
+  box-shadow: 0 0 5px #a56334, 0 0 25px #a56334, 0 0 50px #a56334, 0 0 100px #a56334;
+}
+
+/* SERVIDOR  DE CORREO */
+#mail {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  margin: auto;
+  border: 2px dotted darkcyan;
+}
+#mail > h1 {
+  font-weight: bold;
+}/*# sourceMappingURL=estilos.css.map */

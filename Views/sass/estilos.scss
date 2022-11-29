@@ -1,0 +1,23 @@
+/* RESET */
+@import "./base/reset";
+/* FUENTES */
+@import "./utils/fuentes";
+@import "./utils/functions/tamanio-fuentes";
+/* VARIABLES */
+@import "./utils/variables";
+/* PROCESOS */
+@import "./utils/functions/mixin";
+/* MENU DE NAVEGACION */
+@import "./components/navmenu";
+@import "./components/input";
+@import "./components/botones";
+/* BODY */
+@import "./components/body";
+/* TABLAS */
+@import "./components/tabla";
+/* LOGIN (SIGN UP) */
+@import "./components/login";
+/* LOGIN */
+@import "./components/registro";
+/* SERVIDOR  DE CORREO */
+@import "./components/mail";

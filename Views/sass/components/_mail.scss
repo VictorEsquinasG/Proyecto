@@ -1,0 +1,12 @@
+#mail {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    margin: auto;
+    border: 2px dotted darkcyan;
+    &>h1{
+        font-weight: bold;
+    }
+
+}

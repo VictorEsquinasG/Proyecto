@@ -1,0 +1,20 @@
+/* Función que calcula el tamaño de la font-size */
+@use "sass:math";
+@function getFontSize ($index) {
+    @return ( math.pow(1.2,$index) * 16);
+}
+/* Tamaños de las fuentes */
+.g--font-size{
+    font-size: unquote(getFontSize(0)+"px");
+}
+@for $i from 1 to 7 {
+    .g--font-size-#{$i}
+    {
+        &s{
+            font-size: unquote(getFontSize(-$i)+"px");
+        }
+        &l{
+            font-size: unquote(getFontSize($i)+"px");
+        }
+    }
+}

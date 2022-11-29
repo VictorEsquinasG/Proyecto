@@ -1,0 +1,30 @@
+table {
+    border-collapse: collapse;
+}
+table,th,tr,td {
+    width: 60vw;
+    height: 4.5vh;
+    border: 1.5px solid $bg-color--principal;
+    margin: auto;
+    border-collapse: collapse;
+    text-align: center;
+    vertical-align: middle;
+    font-family: $font-family__p;
+}
+th {
+    background-color: rgba(109, 72, 8, 0.5);
+    color: white;
+    font-weight: bold;
+}
+
+tr:nth-child(even) {
+    color: white;
+    background-color: rgba(132, 74, 4, 0.85);
+}
+
+.editar {
+    width: 20px;
+    height: 20px;
+    background: url("https://www.flaticon.es/icono-gratis/lapiz_872350?term=edit&page=1&position=7&page=1&position=7&related_id=872350&origin=search");
+    image-orientation: 50% 50%;
+}

@@ -1,0 +1,53 @@
+.c-btn {
+    padding: $padding-y-base $padding-x-base;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: $font-size;
+    text-align: center;
+    display: inline-block;
+    cursor: pointer;
+    /* Para que parezca un botón */
+    border: 1px solid transparent;
+    border-radius: 5px;
+    background-color: transparent;
+
+    &--primary {
+        color: $bg-color--principal;
+        background: $bg-color-alt1;
+        border-color: $bg-color--principal;
+
+        &__form {
+            float: right;
+        }
+    }
+
+    &--secundary {
+        color: $bg-color--principal;
+        background: $bg-color--secundario;
+        border-color: $bg-color--principal;
+
+        &__form {
+            float: left;
+        }
+    }
+    &--contacto{
+        color: $bg-color--principal;
+        position: relative;
+        vertical-align:middle;
+        top: -2.5rem;
+        left: -1.2rem;
+    }
+
+    &--size-lg {
+        padding: $padding-y-lg $padding-x-lg;
+        font-size: 20px;
+    }
+    
+    &:hover {
+        font-weight: bold;  
+        color: $bg-color-btn;
+        background: $bg-color--principal;  
+        border-color: $bg-color-btn;
+        border-width: 2px;
+        
+    }
+}

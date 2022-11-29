@@ -1,0 +1,107 @@
+header {
+    width: 100vw;
+    height: fit-content;
+    background-color: rgb(255, 255, 255);
+    position: sticky;
+    overflow-x: hidden;
+    z-index: 3;
+    /* Nos aseguramos que queda por encima */
+}
+
+nav {
+    text-align: center;
+    margin-bottom: 3em;
+    display: block;
+    width: 100vw;
+    height: inherit;
+    // position: fixed;
+    background-color: $bg-nav;
+    overflow-x: hidden;
+
+    &>.c-nav {
+        &__contenedor {
+            overflow: hidden;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            width: 100%;
+            height: inherit;
+            text-align: center;
+            margin: auto;
+            height: inherit;
+            margin-left: 1.5%;
+            padding: $padding-vert--2 $padding-hor;
+
+            & .c-nav__menu {
+
+                &>* {
+                    display: inline-block;
+                }
+            }
+
+            & a {
+                color: $color-nav;
+                font-size: $txt-tamanio--xl;
+                text-decoration: none;
+                font-weight: bold;
+                font-family: $font-family__nav;
+            }
+
+            &>#c-btn-home {
+                margin-left: 0;
+            }
+
+            &>div {
+                margin: auto;
+                font-size: $txt-tamanio--xl;
+                padding-top: 4px;
+                padding-right: 10px;
+
+                /*border-top: 3px solid rgb(2, 6, 34);  */
+                &:not(#c-btn-home, .c-nav__login):hover {
+                    height: inherit;
+
+                    &>* {
+                        color: $color--principal;
+                        text-decoration: none;
+                    }
+
+                    cursor: pointer;
+                    opacity: 89%;
+                    border-color: $color--principal;
+                    border-bottom: 2px solid $bg-color--secundario;
+                }
+
+                padding: $padding-vert $padding-hor;
+            }
+
+            &>form {
+                margin-right: 35px;
+                margin-top: 3em;
+            }
+        }
+
+        &__login {
+            overflow: hidden;
+
+            &>a {
+                vertical-align: middle;
+            }
+        }
+
+        & .c-btn-home {
+            width: 5vw;
+            height: inherit;
+            vertical-align: auto;
+            margin-left: -25px;
+            border-left: 0ch;
+            border-right: 0ch;
+        }
+
+        &>form {
+            float: right;
+            vertical-align: middle;
+            margin-right: 3.25%;
+        }
+    }
+}

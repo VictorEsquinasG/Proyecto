@@ -1,0 +1,202 @@
+#registro {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    & .c-registro {
+        width: 400px;
+        height: fit-content;
+        margin-top: 10vh;
+        padding: 3%;
+        background: $bg-color--principal-2;
+        box-shadow: 0 15px 25px $color-shadow--principal;
+        border-radius: 10px;
+
+        &>h2 {
+            margin: 0 0 30px;
+            padding: 0;
+            font-family: monospace;
+            font-weight: bold;
+            font-size: 22px;
+            color: $bg-color--secundario;
+            text-align: center;
+        }
+
+        & form {
+            height: fit-content;
+            width: auto;
+        }
+
+        &__user {
+            width: 100%;
+            height: fit-content;
+            display: grid;
+            grid-template-columns: [a1] 40% [a2] 60%;
+            grid-template-rows: auto;
+
+            & label {
+                grid-column: a1;
+                padding: 10px 0;
+                font-size: 16px;
+                color: #974D17;
+                // Al hacer click no nos mandará al input como hace normalmente
+                pointer-events: none;
+                transition: .5s;
+            }
+
+            & input {
+                width: 100%;
+                padding: 10px 0;
+                font-size: 10px;
+                margin-bottom: 30px;
+                border: none;
+                // La línea que muestra el input como seleccionado
+                outline: none;
+                background: transparent;
+                grid-column: a2;
+
+                // Si es de tipo File (la imagen) no le pondremos el "subrayado"
+                &:not([type="file"]) {
+                    border-bottom: 1px solid $bg-color--secundario;
+                }
+
+            }
+
+        }
+
+        &__img {
+
+            & input[type="file"] {
+                display: none;
+            }
+
+            & .img {
+                // display: grid;
+                grid-column-start: a1;
+                grid-column-end: a2;
+                border-radius: 5px;
+                text-align: center;
+                color: #974D17;
+                border: 0.5px dotted rgb(159, 96, 18);
+                display: inline-block;
+                padding: 6px 12px;
+                cursor: pointer;
+            }
+        }
+
+        &__ubi {
+            display: grid;
+            grid-template-columns: [lab] 50% [inp] 50%;
+            grid-template-rows: auto;
+            padding-bottom: .5rem;
+
+            & label {
+                grid-column: lab;
+                padding: 10px 0;
+                font-size: 16px;
+                color: #974D17;
+                // Al hacer click no nos mandará al input como hace normalmente
+                pointer-events: none;
+                transition: .5s;
+            }
+
+            & input {
+                width: 100%;
+                padding: 10px 0;
+                font-size: 10px;
+                margin-bottom: 30px;
+                border: none;
+                border-bottom: 1px solid $bg-color--secundario;
+                // La línea que muestra el input como seleccionado
+                outline: none;
+                background: transparent;
+                grid-column: inp;
+            }
+        }
+
+        &__Contbtn {
+            display: flex;
+            justify-content: center;
+
+            &__btn {
+    
+                display: flex;
+                flex-direction: row;
+                flex-wrap: nowrap;
+                
+                &--submit {
+                    
+                    margin-bottom: 2rem;
+                    padding: 5px;
+                    color: #974D17;
+                    font-size: $font-family__p;
+                    text-align: center;
+                    text-decoration: none; //Quitamos el subrayado
+                    text-transform: uppercase; //Lo ponemos en mayúsculas
+                    overflow: hidden;
+                    transition: .5s;
+                    letter-spacing: .2px;
+                    border: .5px solid #974D17;
+                    cursor: pointer;
+
+                    &:hover {
+                        background: $bg-color-alt1; //#a56334;
+                        color: $bg-color--principal;
+                        border-radius: 5px;
+                        box-shadow: 0 0 5px #a56334, 0 0 25px #a56334, 0 0 50px #a56334, 0 0 100px #a56334;
+                    }
+                }
+            }
+        }
+
+        &__contenedor {
+            width: 60%;
+            height: fit-content;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: nowrap;
+            align-items: center;
+
+            & input {
+                background: transparent;
+            }
+
+
+        }
+
+        &__user {
+            flex: 1 1 100%;
+        }
+
+        &__btn {
+            margin-top: 5rem;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+
+            &--submit {
+
+                padding: 5px 10px;
+                color: #974D17;
+                font-size: 16px;
+                text-align: center;
+                text-decoration: none; //Quitamos el subrayado
+                text-transform: uppercase; //Lo ponemos en mayúsculas
+                overflow: hidden;
+                transition: .5s;
+                letter-spacing: 4px;
+                border: 1px solid #974D17;
+
+                &:hover {
+                    background: $bg-color-alt1; //#a56334;
+                    color: $bg-color--principal;
+                    border-radius: 5px;
+                    box-shadow: 0 0 5px #a56334, 0 0 25px #a56334, 0 0 50px #a56334, 0 0 100px #a56334;
+                }
+            }
+        }
+    }
+}

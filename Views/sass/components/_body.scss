@@ -1,0 +1,25 @@
+#cuerpo {
+    width: 100vw;
+    height: fit-content;
+    margin-top: 2.5vh;
+
+    &>h1 {
+        text-align: center;
+        margin: auto;
+        font-weight: bold;
+        color: $color--principal;
+        font-family: $font-family__nav;
+    }
+}
+
+#footer {
+    width: 100vw;
+    height: fit-content;
+    overflow: hidden;
+    position: absolute;
+    bottom: 0%;
+
+    & * {
+        justify-content: center;
+    }
+}

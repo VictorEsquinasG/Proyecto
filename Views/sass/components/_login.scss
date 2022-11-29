@@ -1,0 +1,165 @@
+.c-login {
+    &__cajaLogin {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 400px;
+        padding: 40px;
+        transform: translate(-50%, -50%);
+        background: $bg-color--principal-2 ;
+        box-shadow: 0 15px 25px $color-shadow--principal;
+        border-radius: 10px;
+
+        &>h2 {
+            margin: 0 0 30px;
+            padding: 0;
+            font-family: monospace;
+            font-weight: bold;
+            font-size: 22px;
+            color: $bg-color--secundario;
+            text-align: center;
+        }
+    }
+
+    &__user {
+
+        & input {
+            position: relative;
+            width: 100%;
+            padding: 10px 0;
+            font-size: 10px;
+            // color: #fff;
+            margin-bottom: 30px;
+            border: none;
+            border-bottom: 1px solid $bg-color--secundario;
+            outline: none;
+            background: transparent;
+
+            &:focus~label {
+                top: -85px;
+                left: 0;
+                color: $color-shadow--principal;
+                font: 12px;
+            }
+
+            &:focus~valid {
+                top: -85px;
+                left: 0;
+                color: $color-shadow--principal;
+                font: 12px;
+            }
+        }
+
+        & label {
+            position: relative;
+            left: 0;
+            top: -60px;
+            padding: 10px 0;
+            font-size: 16px;
+            color: #974D17;
+            pointer-events: none;
+            transition: .5s;
+        }
+    }
+
+    &__recuerdame {
+        @include radio;
+
+        & label {
+            color: #FDB750;
+            font-weight: bold;
+            font-family: Inter;
+        }
+    }
+/*
+        input[type="checkbox"] {
+            display: none;
+
+            &+label {
+                display: block;
+                position: relative;
+                padding-left: 35px;
+                margin-bottom: 20px;
+                font: 14px 'Open Sans', Arial, sans-serif;
+                cursor: pointer;
+                user-select: none;
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+
+                &:before {
+                    content: '';
+                    display: block;
+                    width: 20px;
+                    height: 20px;
+                    border: 1px solid #b85c15;
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    opacity: 0.6;
+                    transition: all .12s, border-color .08s;
+                }
+            }
+
+            &:checked+label::before {
+                width: 10px;
+                top: -5px;
+                left: 5px;
+                border-radius: 0;
+                opacity: 1;
+                border-top-color: transparent;
+                border-left-color: transparent;
+                -webkit-transform: rotate(45deg);
+                transform: rotate(45deg);
+            }
+        }*/
+
+    &__Registrarse {
+        font-size: 14px;
+        text-decoration: none;
+        color: #974D17;
+        margin: auto;
+        width: 60%;
+        text-align: center;
+
+        & a {
+            margin: auto;
+            color: #a56334;
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+                font-weight: bold;
+            }
+        }
+    }
+
+    &__btn {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        margin-top: 20px;
+
+        &--submit {
+
+            padding: 5px 1px;
+            color: #974D17;
+            font-size: 16px;
+            text-align: center;
+            text-decoration: none; //Quitamos el subrayado
+            text-transform: uppercase; //Lo ponemos en mayúsculas
+            overflow: hidden;
+            transition: .5s;
+            letter-spacing: 4px;
+            border: 1px solid #974D17;
+
+            &:hover {
+                background: #a56334;
+                color: $bg-color--principal;
+                border-radius: 5px;
+                box-shadow: 0 0 5px #a56334, 0 0 25px #a56334, 0 0 50px #a56334, 0 0 100px #a56334;
+            }
+        }
+    }
+}
