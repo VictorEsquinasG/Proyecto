@@ -3,13 +3,12 @@
 class Banda
 {
     /* PROPIEDADES */
-    private int $id;
-    private int $idConcurso;
+    private int | null $id;
+    private int | null $idConcurso;
     private string $nombre;
     private int $distancia;
     private int $min_rango;
     private int $max_rango;
-
 
     /**
      * Constructor
@@ -34,6 +33,18 @@ class Banda
         $this->setDistancia($banda['distancia']);
         $this->setMin_rango($banda['max']);
         $this->setMax_rango($banda['min']);
+    }
+    /**
+     * Constructor
+     */
+    public function rellenaBandaArrayNum($banda)
+    {
+        $this->setId($banda[0]);
+        $this->setNombre($banda[1]);
+        $this->setDistancia($banda[2]);
+        $this->setMin_rango($banda[4]);
+        $this->setMax_rango($banda[3]);
+        $this->setIdConcurso($banda[5]);
     }
 
     /**

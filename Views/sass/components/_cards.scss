@@ -1,0 +1,66 @@
+.c-card {
+    /* estilos generales de la tarjeta */
+    display: flex;
+    flex-direction: column;
+    background-color: $card-bg;
+    min-width: 0;
+    /* el mínimo tamaño de ancho */
+    border: 1px solid rgba(255, 136, 0, 0.175);
+    @include border-radius-m;
+    text-indent: 0;
+    &__img {
+        width: auto;
+        max-height: 284px;
+        margin: auto;
+        /* Eliminamos el border-radius de la parte superior */
+        @include delete-border-radius-top;
+    }
+    &__body {
+        /* 
+            Le añadimos padding según las 
+            variables anteriormente definidas
+        */
+        @include padding-m;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        &>p{
+            margin-bottom: 10px;
+        }
+    }
+    &__title {
+        /* Centramos */
+        margin: auto;
+        /* Aplicamos un margen al título de la Carta */
+        margin-bottom: 0.5rem;
+        font-weight: bold;
+        color: $bg-color-alt2;
+    }
+    &__btn {
+        display: inline-block;
+        padding: 0.36rem 0.3rem;
+        font-size: 1rem;
+        font-weight: 450px;
+        text-align: center;
+        text-decoration: none;
+        font-weight: bold;  
+        /* Quitamos el subrayado al link */
+        @include boton;
+        border: 1px solid transparent;
+        border-radius: 0.375rem;
+        background-color: transparent;
+    
+        &--primary {
+            /* Color de letra blanco para fondo azul */
+            @include colores__btn--principal;
+            
+        }
+        &--secundary{
+            @include colores__btn--secundario;
+      
+        }
+        &:hover {
+            @include colores__btn--hover;
+        }
+    }
+}

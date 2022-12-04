@@ -1,14 +1,10 @@
 <?php
 class Login
 {
-    public static function Identifica(string $usuario,string $contrasena,bool $recuerdame)
+    public static function Identifica(string $usuario,string $contrasena,bool $recuerdame):bool
     {
-        $valida = new Validacion();
-        $valida->Requerido($usuario);
-        $valida->Requerido($contrasena);
-
-        if ( Login::ExisteUsuario($usuario, $contrasena)) {
-            
+        $user = Login::ExisteUsuario($usuario, $contrasena);
+        if (!is_null($user)) {
             # 
             if ($recuerdame) //Si ha marcado RECUERDAME le guardamos sus credenciales en una COOKIE
             {
@@ -16,29 +12,38 @@ class Login
                 setcookie("recuerdame[user]",$usuario,time()+2630000);
                 setcookie("recuerdame[pass]",$contrasena,time()+2630000);
             } 
-            Sesion::iniciar();
-            // Encontramos al usuario
-            $rp = new repUsuarios(gbd::getConexion());
-            $campovalor = ['email',$usuario];
-            $user = $rp->findByOne($campovalor);
             // Guardamos su mail y su rol
-            Sesion::escribir('user', $user['email']);
-            Sesion::escribir('rol', $user['rol']);
+            Sesion::escribir('user', $user);
+            Sesion::escribir('rol', $user->getRol());
+            return true;
+        }else{
+            return false;
         }
     }
 
-    private static function ExisteUsuario(string $usuario,string $contrasena=null):bool
+    private static function ExisteUsuario(string $usuario,string $contrasena=null):Usuario | null
     {
         # A priori no existe el usuario
-        $existe = false;
+        $existe = null;
         # Pasamos las comprobaciones
         $rp = new repUsuarios(gbd::getConexion());
         # Preparamos el Array asociativo que necesita el FindByOne => array[nombreCol] = valor;
-        $nombre['Nombre'] = $usuario;
-        $us = $rp->findByOne($nombre);
-        # Si el usuario existe con el mismo nombre y la misma contraseña
-        if (!is_null($us) && $us->getPssword() === $contrasena) {
-            $existe = true;
+        $nombre['email'] = $usuario;
+        $iden['indicativo'] = $usuario;
+
+        if (!is_null($us = $rp->findByOne($nombre))) {
+            $user = $us;
+        }else {
+            $us2 = $rp->findByOne($iden);
+            $user = $us2;
+        }
+        
+         
+        # Si el usuario existe con el mismo identificativo/mail y la misma contraseña
+        if (
+            (!is_null($user) && (($user->getPssword() === $contrasena)))
+        ) {
+            $existe = $user;
         }
         return $existe;
     }

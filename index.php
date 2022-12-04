@@ -10,7 +10,6 @@ class Principal
 Principal::main();
 
 // PRUEBAS DE REPOSITORIOS
-echo "<br><br><br><br><br><br><br><br><br>";
 // $con =  gbd::getConexion();
 // $rp = new repUsuarios($con);
 // $rp->getById(5);

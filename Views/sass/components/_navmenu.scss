@@ -58,7 +58,7 @@ nav {
                 padding-right: 10px;
 
                 /*border-top: 3px solid rgb(2, 6, 34);  */
-                &:not(#c-btn-home, .c-nav__login):hover {
+                &:not(#c-btn-home, #c-nav__login):hover {
                     height: inherit;
 
                     &>* {
@@ -81,14 +81,6 @@ nav {
             }
         }
 
-        &__login {
-            overflow: hidden;
-
-            &>a {
-                vertical-align: middle;
-            }
-        }
-
         & .c-btn-home {
             width: 5vw;
             height: inherit;
@@ -102,6 +94,40 @@ nav {
             float: right;
             vertical-align: middle;
             margin-right: 3.25%;
+        }
+    }
+
+    #c-nav {
+        &__login {
+            overflow: hidden;
+            margin-left: 2.75;
+            margin-right: 2.75rem;
+            display: grid;
+            grid-template-columns: [p] 80% [img] 20%;
+            grid-template-rows: auto;
+            grid-gap: 0px;
+
+
+            & img {
+                grid-row: 1 / -1;
+                grid-column: img;
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                cursor: pointer;
+            }
+
+            & ul {
+                display: none;
+            }
+
+            & p,
+            a {
+                text-decoration: none;
+                margin-right: 10px;
+                grid-column: p;
+                vertical-align: middle;
+            }
         }
     }
 }

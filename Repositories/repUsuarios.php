@@ -116,30 +116,31 @@ class repUsuarios
      * @example ['nombre','Diego']
      * @return Usuario El resultado de la consulta (Usuario con dichos parámetros)
      */
-    public function findByOne($campovalor): Usuario
+    public function findByOne($campovalor): Usuario | null
     {
-        $sql = "select * from participante where " . 
-        array_keys($campovalor)[0] . " = '" . array_values($campovalor)[0] . "'";
+        $sql = "select id,indicativo,email,password,". 
+        "rol,ST_X(gps) as lat,ST_Y(gps) as lon,imagen,nombre,ap1,ap2". 
+        " from participante where " . array_keys($campovalor)[0] . " LIKE '" . array_values($campovalor)[0] . "'";
         try {
             $consulta = $this->conexion->prepare($sql);
             $consulta->execute();
             $datos = $consulta->fetchAll(PDO::FETCH_ASSOC);
 
-            $id = $datos[0]['id'];
-            $indicativo = $datos[0]['indicativo'];
-            $mail = $datos[0]['email'];
-            $passwd = $datos[0]['password'];
-            $rol = $datos[0]['rol'];
-            $gps = $datos[0]['gps'];
-            $img = $datos[0]['imagen'];
-            $nombre = $datos[0]['nombre'];
-            $ap1 = $datos[0]['ap1'];
-            $ap2 = $datos[0]['ap2'];
-
-            $usuario = new Usuario();
-            $usuario->rellenaUsuario($id, $indicativo, $mail, $passwd, $nombre, $ap1, $ap2, $gps, $rol, $img);
-
-            return $usuario;
+            #si ha devuelto un resultado
+            if (count($datos)>0) {
+                // Creamos el usuario
+                $usuario = new Usuario();
+                // Lo rellenamos
+                $usuario->rellenaUsuario($datos[0]['id'], $datos[0]['indicativo'], 
+                $datos[0]['email'], $datos[0]['password'], $datos[0]['nombre'], 
+                $datos[0]['ap1'], $datos[0]['ap2'], new Gps( (int) $datos[0]['lat'], (int) $datos[0]['lon']), 
+                $datos[0]['rol'], $datos[0]['imagen']);
+                
+                            # Devolvemos el usuario si el rol existe
+                            return (($usuario->getRol()!=null) ? $usuario : null);
+            }else {
+                return null;
+            }
         } catch (PDOException $e) {
             throw new PDOException("Error leyendo por clave primaria: " . $e->getMessage());
         }
@@ -162,8 +163,7 @@ class repUsuarios
         $sql = "INSERT INTO participante VALUES ($id,$indicativo,$mail,$passwd,$rol,$gps,$img,$nombre,$ap1,$ap2)";
         try {
             // Ejecutamos la instrucción
-            $insert = $this->conexion->exec($sql);
-            return $insert;
+            return $this->conexion->exec($sql);
         } catch (PDOException $e) {
             throw new PDOException("Error al insertar: " . $e->getMessage());
         }

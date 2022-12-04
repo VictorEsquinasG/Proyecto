@@ -12,14 +12,26 @@ table,th,tr,td {
     font-family: $font-family__p;
 }
 th {
-    background-color: rgba(109, 72, 8, 0.5);
-    color: white;
     font-weight: bold;
+    color: rgb(255, 255, 255);
+    background-color: rgba(132, 74, 4, 0.85);
 }
 
 tr:nth-child(even) {
-    color: white;
-    background-color: rgba(132, 74, 4, 0.85);
+    background-color: rgba(163, 134, 84, 0.5);
+    color: rgb(255, 255, 255);
+}
+
+.cambiaImg {
+    cursor: pointer;
+    &__img{
+        display: none;
+        width: 25%;
+        height: auto;
+        &:hover  {
+            display: block;
+        }
+    }
 }
 
 .editar {
@@ -27,4 +39,18 @@ tr:nth-child(even) {
     height: 20px;
     background: url("https://www.flaticon.es/icono-gratis/lapiz_872350?term=edit&page=1&position=7&page=1&position=7&related_id=872350&origin=search");
     image-orientation: 50% 50%;
+}
+.tablas {
+    padding: $padding-vert--2;
+    margin: 0px 15%;
+    margin-top: 5vh;
+    display: flex;
+    justify-content: center;
+    background-color: $bg-color--principal-2;
+    border-radius: 5px;
+    box-shadow: 0px 5px 50px darkgoldenrod;   
+    &:hover {
+        border-radius: 10px;
+        transition: .5s;
+    }
 }

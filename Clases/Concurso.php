@@ -3,7 +3,7 @@
 class Concurso {
 
     /* PROPIEDADES */
-    private int $id;
+    private int | null $id;
     private string $nombre;
     private string $desc;
     // FECHAS DE INICIO/FIN INSCRIPCIÓN
@@ -13,7 +13,7 @@ class Concurso {
     private DateTimeImmutable $fechInicio;
     private DateTimeImmutable $fechFin;
     // LA IMAGEN DEL CONCURSO
-    private string $cartel;
+    private string | null $cartel;
     // PROPIEDADES NO DE CONCURSO
     private $bandas = [];
     private $modos = [];
@@ -57,11 +57,26 @@ class Concurso {
         $this->setFechFinInsc($fechaFinInsc);
         $this->setFechInicio($fechInicio);
         $this->setFechFin($fechFin);
-        if (isset($cartel) && !(is_null($cartel))) {
+        // if (isset($cartel) && !(is_null($cartel))) {
+            // PERMITIMOS QUE SEA NULL
             $this->setCartel($cartel);
-        }
+        // }
         // $this->setBandas($bandas);
         // $this->setModos($modos);
+    }
+
+    public function tieneCartel()
+    {
+        # Si tiene cartel no dará error
+        try {
+            //Cogemos el valor del cartel
+            $this->getCartel();
+            $cartel = true;
+        } catch (Error $e) { // ERROR COUGTH
+            //El cartel no se puede acceder si no está inicializado
+            $cartel = false;
+        }
+        return $cartel;
     }
     
 
@@ -286,7 +301,10 @@ class Concurso {
      */ 
     public function setModos($modos)
     {
-        $this->modos = $modos;
+        if ($modos!=null) {
+            # Asignamos el/los modos
+            $this->modos = $modos;
+        }
 
         return $this;
     }

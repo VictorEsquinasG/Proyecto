@@ -1,6 +1,7 @@
 /* Definimos variables globales */
 $ml-s:16px;
 $mt-s:14px;
+$mt-xl:14rem;
 $bg-color-alt1:linear-gradient(80deg,#FDB750,orangered);
 $bg-color-alt2: #974D17;//rgba(36, 86, 35);
 $bg-color__footer:black;
@@ -23,7 +24,13 @@ $padding-vert: 1.5px;
 $padding-vert--2: 1.5%;
 $padding-hor: 10px;
 $font-family__nav: Cambria;
+$txtclor--principal: #eee;
+$txtclor--principal__hover: #fff;
+$bg-color: #666;
+$bg-color--secundario: #888;
 $font-family__p: Inter;
+$font-family--1: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 /* TAMAÑOS */
 $txt-tamanio--xl: 18.25px;
 $txt-tamanio--m: 14px;
@@ -35,3 +42,15 @@ $padding-y-base: 6px;
 $padding-y-lg: 10px;
 $padding-x-lg: 20px;
 $font-size: 16px;
+$font-size-m: 18px;
+$font-size__h: 22px;
+/* CARDS */
+$color__h4: rgba(144, 66, 7, 0.721);
+$card-bg:#fff;
+$card-bg--alt:#566;
+$btn-hover-color:#fff;
+$card-color--principal:#d7900b;
+$bg-color-cajas:#D9D9D9;
+$bg-color-form: rgba(235, 140, 63, 0.582);
+$bg-color-btn: rgba(255, 81, 0, 0.703);
+$bg-color-btn2: rgba(147, 117, 45, 0.721);

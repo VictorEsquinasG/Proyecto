@@ -14,7 +14,7 @@ class Sesion
      * @param string Nombre del campo del array asociativo de SESION
      * @return any Valor del campo solicitado
      */
-    public static function leer(string $clave):bool
+    public static function leer(string $clave)
     {
         return $_SESSION[$clave]; 
     }

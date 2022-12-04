@@ -145,9 +145,9 @@ class Validacion
     /**
      * Comprueba si hay errores
      *
-     * @return void
+     * @return bool
      */
-    public function ValidacionPasada()
+    public function ValidacionPasada():bool
     {
         if(count($this->errores)!=0)
         {

@@ -1,5 +1,20 @@
-input{
+input {
     &--error {
         border-color: $colorError;
+    }
+}
+
+.c-add__img {
+    & input[type="file"] {
+        display: none;
+    }
+    & .img {
+        border-radius: 5px;
+        text-align: center;
+        color: $bg-color-alt2;
+        border: 0.5px dotted rgb(159, 96, 18);
+        display: inline-block;
+        padding: 6px 12px;
+        cursor: pointer;
     }
 }

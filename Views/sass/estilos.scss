@@ -5,8 +5,10 @@
 @import "./utils/functions/tamanio-fuentes";
 /* VARIABLES */
 @import "./utils/variables";
+@import "./utils/panel-variables";
 /* PROCESOS */
 @import "./utils/functions/mixin";
+@import "./utils/functions/funciones";
 /* MENU DE NAVEGACION */
 @import "./components/navmenu";
 @import "./components/input";
@@ -19,5 +21,11 @@
 @import "./components/login";
 /* LOGIN */
 @import "./components/registro";
+/* MANTENIMIENTO */
+@import "./components/mantenimiento";
+@import "./components/panel";
+@import "./components/cards";
+/* PÁGINA PROPIA DEL CONCURSO */
+@import "./components/concurso";
 /* SERVIDOR  DE CORREO */
 @import "./components/mail";

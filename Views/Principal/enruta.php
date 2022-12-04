@@ -16,11 +16,20 @@ if (isset($_GET['menu'])) {
         require_once './Views/Mantenimiento/listadoconcursos.php';
     }else if ($_GET['menu'] == "regist") {
         require_once './Views/Login/registro.php';
+    }else if ($_GET['menu'] == "modo") {
+        require_once './Views/Mantenimiento/modos.php';
+    }else if ($_GET['menu'] == "banda") {
+        require_once './Views/Mantenimiento/bandas.php';
+    }else if ($_GET['menu'] == "concurso") {
+        require_once './Views/Mantenimiento/concursos.php';
+    }else if ($_GET['menu'] == "edicion") {
+        require_once './Views/Mantenimiento/edicion.php';
     }
-
     
-
-    
+}else if (isset($_GET['concurso'])) {
+    # Cargamos el concurso que sea
+    require_once './Views/Mantenimiento/concurso.php';#.'?id='.$_GET['concurso'];
+    setcookie('id',$_GET['concurso']);
 }
 
     

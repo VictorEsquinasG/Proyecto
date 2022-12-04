@@ -116,7 +116,11 @@ a {
 /* NAV */
 /* TAMAÑOS */
 /* BOTONES */
+/* CARDS */
+/* TAMAÑOS */
+/* COLORES */
 /* PROCESOS */
+/* Función que calcula el tamaño de la font-size */
 /* MENU DE NAVEGACION */
 header {
   width: 100vw;
@@ -171,26 +175,20 @@ nav > .c-nav__contenedor > div {
   /*border-top: 3px solid rgb(2, 6, 34);  */
   padding: 1.5px 10px;
 }
-nav > .c-nav__contenedor > div:not(#c-btn-home, .c-nav__login):hover {
+nav > .c-nav__contenedor > div:not(#c-btn-home, #c-nav__login):hover {
   height: inherit;
   cursor: pointer;
   opacity: 89%;
   border-color: #974D17;
-  border-bottom: 2px solid #a56334;
+  border-bottom: 2px solid #888;
 }
-nav > .c-nav__contenedor > div:not(#c-btn-home, .c-nav__login):hover > * {
+nav > .c-nav__contenedor > div:not(#c-btn-home, #c-nav__login):hover > * {
   color: #974D17;
   text-decoration: none;
 }
 nav > .c-nav__contenedor > form {
   margin-right: 35px;
   margin-top: 3em;
-}
-nav > .c-nav__login {
-  overflow: hidden;
-}
-nav > .c-nav__login > a {
-  vertical-align: middle;
 }
 nav > .c-nav .c-btn-home {
   width: 5vw;
@@ -205,9 +203,49 @@ nav > .c-nav > form {
   vertical-align: middle;
   margin-right: 3.25%;
 }
+nav #c-nav__login {
+  overflow: hidden;
+  margin-left: 2.75;
+  margin-right: 2.75rem;
+  display: grid;
+  grid-template-columns: [p] 80% [img] 20%;
+  grid-template-rows: auto;
+  grid-gap: 0px;
+}
+nav #c-nav__login img {
+  grid-row: 1/-1;
+  grid-column: img;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+nav #c-nav__login ul {
+  display: none;
+}
+nav #c-nav__login p,
+nav #c-nav__login a {
+  text-decoration: none;
+  margin-right: 10px;
+  grid-column: p;
+  vertical-align: middle;
+}
 
 input--error {
   border-color: rgb(93, 34, 21);
+}
+
+.c-add__img input[type=file] {
+  display: none;
+}
+.c-add__img .img {
+  border-radius: 5px;
+  text-align: center;
+  color: #974D17;
+  border: 0.5px dotted rgb(159, 96, 18);
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
 }
 
 .c-btn {
@@ -232,7 +270,7 @@ input--error {
 }
 .c-btn--secundary {
   color: white;
-  background: #a56334;
+  background: #888;
   border-color: white;
 }
 .c-btn--secundary__form {
@@ -251,13 +289,14 @@ input--error {
 }
 .c-btn:hover {
   font-weight: bold;
-  color: purple;
+  color: rgba(255, 81, 0, 0.703);
   background: white;
-  border-color: purple;
+  border-color: rgba(255, 81, 0, 0.703);
   border-width: 2px;
 }
 
 /* BODY */
+/* ATRIBUTOS GENERALES */
 #cuerpo {
   width: 100vw;
   height: fit-content;
@@ -272,14 +311,79 @@ input--error {
 }
 
 #footer {
-  width: 100vw;
+  position: absolute;
+  display: flex;
+  width: 100%;
+  bottom: 0px;
+  padding: 5px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   height: fit-content;
   overflow: hidden;
-  position: absolute;
-  bottom: 0%;
 }
 #footer * {
   justify-content: center;
+}
+#footer > .container {
+  margin: auto;
+}
+
+/* PAGINA PRINCIPAL */
+.c-Quienes {
+  margin: 0px 14rem;
+  padding: 10px 1.5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 5px;
+  background: linear-gradient(80deg, #FDB750, orangered);
+  color: white;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+.c-Quienes > h2 {
+  font-weight: bold;
+  font-size: 22px;
+  letter-spacing: 2px;
+  margin: auto;
+}
+.c-Quienes > p {
+  /*
+  font-family: $font-family__p;
+  font-weight: bold;
+  */
+  font-weight: 900;
+  font-size: 18px;
+  text-indent: 2.5%;
+  margin: 16px;
+}
+.c-Quienes:hover {
+  border-radius: 15px;
+  transition: 0.5s;
+}
+
+.c-QyA {
+  margin: 10px 14rem;
+  padding: 10px 1.5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 5px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  background: #974D17;
+  color: white;
+}
+.c-QyA > h2 {
+  margin: auto;
+  font-weight: bold;
+}
+.c-QyA > p {
+  font-weight: 900;
+  font-size: 18px;
+  text-indent: 2.5%;
+  margin: 16px;
+}
+.c-QyA:hover {
+  border-radius: 15px;
+  transition: 0.5s;
 }
 
 /* TABLAS */
@@ -299,14 +403,26 @@ table, th, tr, td {
 }
 
 th {
-  background-color: rgba(109, 72, 8, 0.5);
-  color: white;
   font-weight: bold;
+  color: rgb(255, 255, 255);
+  background-color: rgba(132, 74, 4, 0.85);
 }
 
 tr:nth-child(even) {
-  color: white;
-  background-color: rgba(132, 74, 4, 0.85);
+  background-color: rgba(163, 134, 84, 0.5);
+  color: rgb(255, 255, 255);
+}
+
+.cambiaImg {
+  cursor: pointer;
+}
+.cambiaImg__img {
+  display: none;
+  width: 25%;
+  height: auto;
+}
+.cambiaImg__img:hover {
+  display: block;
 }
 
 .editar {
@@ -314,6 +430,21 @@ tr:nth-child(even) {
   height: 20px;
   background: url("https://www.flaticon.es/icono-gratis/lapiz_872350?term=edit&page=1&position=7&page=1&position=7&related_id=872350&origin=search");
   image-orientation: 50% 50%;
+}
+
+.tablas {
+  padding: 1.5%;
+  margin: 0px 15%;
+  margin-top: 5vh;
+  display: flex;
+  justify-content: center;
+  background-color: rgba(223, 223, 223, 0.703);
+  border-radius: 5px;
+  box-shadow: 0px 5px 50px darkgoldenrod;
+}
+.tablas:hover {
+  border-radius: 10px;
+  transition: 0.5s;
 }
 
 /* LOGIN (SIGN UP) */
@@ -379,7 +510,7 @@ tr:nth-child(even) {
   font-family: monospace;
   font-weight: bold;
   font-size: 22px;
-  color: #a56334;
+  color: #888;
   text-align: center;
 }
 .c-login__user input {
@@ -389,7 +520,7 @@ tr:nth-child(even) {
   font-size: 10px;
   margin-bottom: 30px;
   border: none;
-  border-bottom: 1px solid #a56334;
+  border-bottom: 1px solid #888;
   outline: none;
   background: transparent;
 }
@@ -451,7 +582,8 @@ tr:nth-child(even) {
   margin-top: 20px;
 }
 .c-login__btn--submit {
-  padding: 5px 1px;
+  cursor: pointer;
+  padding: 5px 5px;
   color: #974D17;
   font-size: 16px;
   text-align: center;
@@ -459,7 +591,7 @@ tr:nth-child(even) {
   text-transform: uppercase;
   overflow: hidden;
   transition: 0.5s;
-  letter-spacing: 4px;
+  letter-spacing: 1px;
   border: 1px solid #974D17;
 }
 .c-login__btn--submit:hover {
@@ -478,43 +610,48 @@ tr:nth-child(even) {
   justify-content: center;
 }
 #registro .c-registro {
-  width: 400px;
   height: fit-content;
-  margin-top: 10vh;
   padding: 3%;
   background: rgba(223, 223, 223, 0.703);
   box-shadow: 0 15px 25px rgba(86, 62, 35, 0.7);
   border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: center;
 }
 #registro .c-registro > h2 {
-  margin: 0 0 30px;
   padding: 0;
   font-family: monospace;
   font-weight: bold;
   font-size: 22px;
-  color: #a56334;
+  grid-column: span 3;
+  color: #888;
   text-align: center;
 }
 #registro .c-registro form {
   height: fit-content;
   width: auto;
 }
-#registro .c-registro__user {
+#registro .c-registro__txt {
+  grid-column: 1/2;
+}
+#registro .c-registro__txt__user {
   width: 100%;
-  height: fit-content;
   display: grid;
   grid-template-columns: [a1] 40% [a2] 60%;
   grid-template-rows: auto;
 }
-#registro .c-registro__user label {
+#registro .c-registro__txt__user label {
   grid-column: a1;
+  height: fit-content;
   padding: 10px 0;
   font-size: 16px;
   color: #974D17;
   pointer-events: none;
   transition: 0.5s;
 }
-#registro .c-registro__user input {
+#registro .c-registro__txt__user input {
   width: 100%;
   padding: 10px 0;
   font-size: 10px;
@@ -524,8 +661,13 @@ tr:nth-child(even) {
   background: transparent;
   grid-column: a2;
 }
-#registro .c-registro__user input:not([type=file]) {
-  border-bottom: 1px solid #a56334;
+#registro .c-registro__txt__user input:not([type=file]) {
+  border-bottom: 1px solid #888;
+}
+#registro .c-registro__img {
+  margin-top: 50%;
+  margin-left: 50%;
+  grid-column: 3;
 }
 #registro .c-registro__img input[type=file] {
   display: none;
@@ -541,13 +683,16 @@ tr:nth-child(even) {
   padding: 6px 12px;
   cursor: pointer;
 }
-#registro .c-registro__ubi {
+#registro .c-registro__ContUbi {
+  grid-column: 3;
+}
+#registro .c-registro__ContUbi__ubi {
   display: grid;
   grid-template-columns: [lab] 50% [inp] 50%;
   grid-template-rows: auto;
   padding-bottom: 0.5rem;
 }
-#registro .c-registro__ubi label {
+#registro .c-registro__ContUbi__ubi label {
   grid-column: lab;
   padding: 10px 0;
   font-size: 16px;
@@ -555,13 +700,13 @@ tr:nth-child(even) {
   pointer-events: none;
   transition: 0.5s;
 }
-#registro .c-registro__ubi input {
+#registro .c-registro__ContUbi__ubi input {
   width: 100%;
   padding: 10px 0;
   font-size: 10px;
   margin-bottom: 30px;
   border: none;
-  border-bottom: 1px solid #a56334;
+  border-bottom: 1px solid #888;
   outline: none;
   background: transparent;
   grid-column: inp;
@@ -576,7 +721,7 @@ tr:nth-child(even) {
   flex-wrap: nowrap;
 }
 #registro .c-registro__Contbtn__btn--submit {
-  margin-bottom: 2rem;
+  cursor: pointer;
   padding: 5px;
   color: #974D17;
   font-size: Inter;
@@ -587,22 +732,25 @@ tr:nth-child(even) {
   transition: 0.5s;
   letter-spacing: 0.2px;
   border: 0.5px solid #974D17;
-  cursor: pointer;
 }
 #registro .c-registro__Contbtn__btn--submit:hover {
   background: linear-gradient(80deg, #FDB750, orangered);
   color: white;
   border-radius: 5px;
-  box-shadow: 0 0 5px #a56334, 0 0 25px #a56334, 0 0 50px #a56334, 0 0 100px #a56334;
+  box-shadow: 0 0 5px #888, 0 0 25px #888, 0 0 50px #888, 0 0 100px #888;
 }
 #registro .c-registro__contenedor {
-  width: 60%;
+  width: inherit;
   height: fit-content;
+  margin: 5px;
+  padding: 12px;
+  display: grid;
+  grid-template-columns: repeat(3, 1.5fr);
+  grid-auto-flow: dense;
+  grid-gap: 1rem;
+}
+#registro .c-registro__contenedor > * {
   margin: auto;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  align-items: center;
 }
 #registro .c-registro__contenedor input {
   background: transparent;
@@ -627,12 +775,264 @@ tr:nth-child(even) {
   transition: 0.5s;
   letter-spacing: 4px;
   border: 1px solid #974D17;
+  cursor: pointer;
 }
 #registro .c-registro__btn--submit:hover {
   background: linear-gradient(80deg, #FDB750, orangered);
   color: white;
   border-radius: 5px;
-  box-shadow: 0 0 5px #a56334, 0 0 25px #a56334, 0 0 50px #a56334, 0 0 100px #a56334;
+  box-shadow: 0 0 5px #888, 0 0 25px #888, 0 0 50px #888, 0 0 100px #888;
+}
+
+/* MANTENIMIENTO */
+.c-mantenimiento {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  /* CENTRAMOS LAS OPCIONES */
+  justify-content: center;
+  flex: 1 1 100%;
+}
+.c-mantenimiento > div {
+  margin: 16px;
+}
+
+.c-forMantenimiento {
+  display: grid;
+  grid-template-columns: [formu] 25% [tabla] 75%;
+  grid-template-rows: auto;
+  grid-gap: 10px;
+}
+.c-forMantenimiento__formu {
+  box-shadow: 2px 2rem 3 rgba(86, 62, 35, 0.7);
+  margin: 16px;
+  grid-column: formu;
+}
+.c-forMantenimiento__formu h5 {
+  font-weight: 600;
+  text-align: center;
+  color: #888;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  padding: 10px 0px;
+  margin: auto;
+}
+.c-forMantenimiento__formu h1 {
+  color: rgba(86, 62, 35, 0.7);
+  font-weight: bold;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+.c-forMantenimiento__tabla {
+  grid-column: tabla;
+}
+.c-forMantenimiento__input {
+  /* DENTRO DIRECTAMENTE O NO */
+}
+.c-forMantenimiento__input input {
+  position: relative;
+  width: 99%;
+  padding: 10px 0;
+  font-size: 10px;
+  margin-bottom: 30px;
+  border: none;
+  border-bottom: 1px solid #888;
+  outline: none;
+  background: transparent;
+}
+.c-forMantenimiento__input input:focus ~ label {
+  top: -85px;
+  left: 0;
+  color: rgba(86, 62, 35, 0.7);
+  font: 12px;
+}
+.c-forMantenimiento__input input:focus ~ valid {
+  top: -85px;
+  left: 0;
+  color: rgba(86, 62, 35, 0.7);
+  font: 12px;
+}
+.c-forMantenimiento__input label {
+  position: relative;
+  left: 0;
+  top: -60px;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #974D17;
+  pointer-events: none;
+  transition: 0.5s;
+}
+
+/*
+.l-panel {
+    @include flexColumn;
+}*/
+.c-panel {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 16px;
+  width: 90vw;
+  height: auto;
+  margin: 14px;
+  margin-left: 4.5vw; /* No lo centramos en 5vw para compensar la barra de scroll que da la sensación que hay menos espacio */
+  /* A TODOS (TÍTULO,PÁRRAFO) LE APLICAMOS EL BORDE */
+  /* LA IMAGEN */
+  /* EL TÍTULO */
+  /* EL CUERPO */
+}
+.c-panel > * {
+  border-radius: 5px;
+  border: 0.5px solid #974D17;
+}
+.c-panel__img {
+  width: inherit;
+  margin: auto;
+  border-top-left-radius: 0%;
+  border-top-right-radius: 0%;
+}
+.c-panel__h {
+  /* QUITAMOS EL BORDE DE LA PARTE INFERIOR */
+  border-bottom-left-radius: 0%;
+  border-bottom-right-radius: 0%;
+  /* ELIMINAMOS EL BORDE SUPERIOR */
+  border-bottom: 0ch;
+  /* LE DAMOS EL COLOR QUE TOQUE */
+  background-color: #974D17;
+  color: white;
+  text-align: center;
+  font-size: 20px;
+  /* Espaciamos */
+  padding: 1% 1%;
+}
+.c-panel__body {
+  height: fit-content;
+  /* QUITAMOS EL BORDE DE LA PARTE SUPERIOR */
+  border-top-left-radius: 0%;
+  border-top-right-radius: 0%;
+  /* ELIMINAMOS EL BORDE SUPERIOR */
+  border-top: 0ch;
+  /* LE DAMOS EL COLOR QUE TOQUE */
+  background-color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  text-indent: 20px;
+  padding: 1% 1%;
+}
+.c-panel__body > div {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+.c-panel--peligro {
+  /* CAMBIAMOS EL COLOR DEL BORDE */
+  border-radius: 5px;
+  border: 0.5px solid rgb(137, 35, 35);
+}
+.c-panel--peligro > .c-panel__h {
+  /* CAMBIAMOS EL COLOR DEL TÍTULO */
+  color: white;
+  font-size: 20px;
+  /* CAMBIAMOS EL COLOR DE FONDO */
+  background-color: rgb(137, 35, 35);
+}
+
+.c-card {
+  /* estilos generales de la tarjeta */
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  min-width: 0;
+  /* el mínimo tamaño de ancho */
+  border: 1px solid rgba(255, 136, 0, 0.175);
+  border-radius: 30px;
+  text-indent: 0;
+}
+.c-card__img {
+  width: auto;
+  max-height: 284px;
+  margin: auto;
+  /* Eliminamos el border-radius de la parte superior */
+  border-top-left-radius: 0%;
+  border-top-right-radius: 0%;
+}
+.c-card__body {
+  /* 
+      Le añadimos padding según las 
+      variables anteriormente definidas
+  */
+  padding: 3.5% 5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.c-card__body > p {
+  margin-bottom: 10px;
+}
+.c-card__title {
+  /* Centramos */
+  margin: auto;
+  /* Aplicamos un margen al título de la Carta */
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: #974D17;
+}
+.c-card__btn {
+  display: inline-block;
+  padding: 0.36rem 0.3rem;
+  font-size: 1rem;
+  font-weight: 450px;
+  text-align: center;
+  text-decoration: none;
+  font-weight: bold;
+  /* Quitamos el subrayado al link */
+  text-decoration: none;
+  vertical-align: middle;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: 0.375rem;
+  background-color: transparent;
+}
+.c-card__btn--primary {
+  /* Color de letra blanco para fondo azul */
+  color: #fff;
+  background: linear-gradient(80deg, #FDB750, orangered);
+  border-color: #D9D9D9;
+}
+.c-card__btn--secundary {
+  color: white;
+  background: #fff;
+  border-color: white;
+}
+.c-card__btn:hover {
+  color: rgba(255, 81, 0, 0.703);
+  background: #fff;
+  border-color: rgba(147, 117, 45, 0.721);
+}
+
+/* PÁGINA PROPIA DEL CONCURSO */
+.c-contConcurso {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  grid-gap: 10px;
+  margin: 14px;
+}
+.c-contConcurso__h {
+  grid-column: span 3;
+}
+.c-contConcurso__desc {
+  grid-column: span 2;
+  margin-left: 16px;
+}
+
+.c-concursos {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+.c-concursos__disp {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  flex: 1 1 100%;
+  justify-content: center;
+  margin: 16px;
 }
 
 /* SERVIDOR  DE CORREO */

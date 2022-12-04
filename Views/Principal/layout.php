@@ -26,7 +26,5 @@
     <?php
     require_once './Views/Principal/footer.php';
     ?>
-
 </body>
-
 </html>

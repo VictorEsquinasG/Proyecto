@@ -3,7 +3,7 @@
 class Modo
 {
     /* PROPIEDADES */
-    private int $id;
+    private int | null $id;
     private string $nombre;
 
 

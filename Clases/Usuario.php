@@ -2,7 +2,7 @@
 
 class Usuario
 {
-    use Rol;
+    // use Rol;
     /* PROPIEDADES */
     private $id;
     private $identificativo;
@@ -11,7 +11,7 @@ class Usuario
     private $ap2;
     private $email;
     private $pssword;
-    private Rol $rol;
+    private $rol;
     private Gps $gps;
     private $img;
 
@@ -69,6 +69,13 @@ class Usuario
         $this->nombre = $nombre;
 
         return $this;
+    }
+
+    public function getNombreCompleto():string
+    {
+        # Componemos el nombre completo
+        $nombre = $this->getNombre() . " " . $this->getAp1() . " " . $this->getAp2();
+        return $nombre;
     }
 
     /**
@@ -158,7 +165,7 @@ class Usuario
     /**
      * Get el valor de  pssword
      */
-    public function getPssword()
+    public function getPssword():string
     {
         $pass = $this->pssword;
         return $pass;
@@ -200,7 +207,7 @@ class Usuario
     /**
      * Get el valor de  rol
      */
-    public function getRol():Rol
+    public function getRol()
     {
         $role = $this->rol;
         return $role;
@@ -213,7 +220,7 @@ class Usuario
      */
     private function setRol($rol)
     {
-        if (($rol === Rol::user) || ($rol === Rol::admin)) {
+        if (($rol === 'user') || ($rol === 'admin')) {
             $this->rol = $rol;
             return $this;
         }else {

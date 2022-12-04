@@ -1,0 +1,66 @@
+/*
+.l-panel {
+    @include flexColumn;
+}*/ 
+
+.c-panel {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: $font-size-p;
+    width: 90vw;
+    height: auto;
+    margin: $mt-s;  
+    margin-left: 4.5vw; /* No lo centramos en 5vw para compensar la barra de scroll que da la sensación que hay menos espacio */
+
+    /* A TODOS (TÍTULO,PÁRRAFO) LE APLICAMOS EL BORDE */
+    &>* {
+        @include border-radius-xs;
+        border: 0.5px solid $color--principal;
+    }
+
+    /* LA IMAGEN */
+    &__img {
+        width: inherit;
+        margin: auto;
+        @include delete-border-radius-top;
+    }
+
+    /* EL TÍTULO */
+    &__h {
+        /* QUITAMOS EL BORDE DE LA PARTE INFERIOR */
+        @include delete-border-bottom;
+        /* LE DAMOS EL COLOR QUE TOQUE */
+        background-color: $color--principal;
+        color: $panel-color--principal;
+        text-align: center;
+        font-size: $font-size-title;
+        /* Espaciamos */
+        @include padding-s;
+    }
+
+    /* EL CUERPO */
+    &__body {
+        
+        height: fit-content;
+        /* QUITAMOS EL BORDE DE LA PARTE SUPERIOR */
+        @include delete-border-top;  
+        /* LE DAMOS EL COLOR QUE TOQUE */
+        background-color: $panel-color--principal;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: $font-size-p;
+        text-indent: 20px; //Comienzo de párrafo con cierta identación
+        @include padding-s;
+        &>div{
+            @include flexRow;
+        }
+    }
+
+    &--peligro {
+
+        @include color--peligro;
+
+
+        &>.c-panel__h {
+            @include panel__titulo;
+        }
+    }
+}

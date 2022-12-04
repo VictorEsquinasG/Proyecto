@@ -1,28 +1,18 @@
 /* CONVERTIMOS TABLAS A TABLAS EDITABLES */
 
-// POR DEFECTO LA TABLA ESTÁ CON LA EDICIÓN DESACTIVADA
-HTMLTableElement.prototype.edicionActivada = false;
-// POR DEFECTO UNA CELDA NO ESTÁ EN ESTADO DE EDICIÓN
-HTMLTableCellElement.prototype.enEdicion = false;
 
 HTMLTableElement.prototype.editable = function () {
     // COGEMOS LOS ELEMENTOS DE LA TABLA
     var tabla = this;
-    var thead = tabla.querySelector('thead');
 
     // var tfoot = tabla.querySelector('tfoot');
 
-    //AL HACER DOBLE CLICK SE ACTIVA LA EDICIÓN
-    thead.addEventListener('dblclick', function () {
-        if (!tabla.edicionActivada) {
+    //AL SER ADMIN SE LLAMARÁ A ESTA FUNCIÓN QUE ACTIVA LA EDICIÓN
+    function editarAdmin() {
             tabla.editar();
-        } else {
-            tabla.desEditar();
-        }
         //Pase lo que pase, el estado cambia
-        tabla.edicionActivada = !tabla.edicionActivada;
-        // AÑADIMOS LOS CAMPOS QUE SE ENCUENTREN EN LOCAL_STORAGE 
-    })
+    }
+ 
 }
 
 HTMLTableElement.prototype.guardar = function () {
@@ -32,14 +22,14 @@ HTMLTableElement.prototype.guardar = function () {
 
     for (let i = 0; i < filas.length; i++) {
 
-        const alumnos = [];
+        const datos = [];
         for (let j = 0; j < filas[i].cells.length; j++) {
             // LOS TDS
             if (filas[i].cells[j].className !== "AutomaticoByTablaEditable") {
-                alumnos.push(filas[i].cells[j].innerHTML);
+                datos.push(filas[i].cells[j].innerHTML);
             }
         }
-        datosFila.push(alumnos);
+        datosFila.push(datos);
 
     }
 
@@ -56,7 +46,6 @@ HTMLTableCellElement.prototype.editar = function () {
         txt.value = this.innerHTML;
         txt.addEventListener('keypress', function (evento) {
             if (evento.key === "Enter") {
-                this.parentElement.enEdicion = false;
                 this.parentElement.innerHTML === this.value;
             }
         })
@@ -72,13 +61,13 @@ HTMLTableElement.prototype.editar = function () {
     var thead = tabla.querySelector('thead');
     var tbody = tabla.querySelector('tbody');
     var tfoot = tabla.querySelector('tfoot');
-    var th = document.createElement('th');
+    // var th = document.createElement('th');
 
-    th.setAttribute("rowspan", thead.rows.length); // MIDA LO QUE MIDA LA TABLA
-    th.className = "AutomaticoByTablaEditable"; // TODOS LOS TH QUE SE CREAN SE LES PONE UNA CLASE IDENTIFICADORA
-    th.innerHTML = "⚙";
-    thead.querySelector('tr').appendChild(th);
-    for (let i = 0; i < tbody.rows.length; i++) {
+    // th.setAttribute("rowspan", thead.rows.length); // MIDA LO QUE MIDA LA TABLA
+    // th.className = "AutomaticoByTablaEditable"; // TODOS LOS TH QUE SE CREAN SE LES PONE UNA CLASE IDENTIFICADORA
+    // th.innerHTML = "⚙";
+    // thead.querySelector('tr').appendChild(th);
+    for (let i = 1; i < tbody.rows.length; i++) {
         let td = document.createElement('td');
         td.className = "AutomaticoByTablaEditable";
         tbody.rows[i].appendChild(td);
@@ -182,8 +171,8 @@ HTMLTableElement.prototype.editar = function () {
     // function annadir(dni = null, nombre = null) {
     //     // if (dni == null) // SI NO SE NOS PASA EL DNI, SE QUIERE COGER DE LOCAL_STORAGE
     //     // {
-    //     //     dni = localStorage.getItem('alumnos')[0][0];
-    //     //     nombre = localStorage.getItem('alumnos')[0][1];
+    //     //     dni = localStorage.getItem('datos')[0][0];
+    //     //     nombre = localStorage.getItem('datos')[0][1];
     //     // } else {
     //     dni = dni.value;
     //     nombre = nombre.value;
@@ -220,9 +209,27 @@ window.onload = function () {
         tablas[i].editable();
     }
 
-    // var btnGuardar = document.getElementById('btnGuardar');
-    // btnGuardar.addEventListener('click',
-    
+    var btnGuardar = document.getElementById('btnGuardar');
+    btnGuardar.addEventListener('click', () => {
+        const datosFila = [];
+        var tBody = document.getElementsByTagName("tbody")[0];
+        var filas = tBody.rows;
+
+        for (let i = 0; i < filas.length; i++) {
+
+            const datos = [];
+            for (let j = 0; j < filas[i].cells.length; j++) {
+                // LOS TDS
+                if (filas[i].cells[j].className !== "AutomaticoByTablaEditable") {
+                    datos.push(filas[i].cells[j].innerHTML);
+                }
+            }
+            datosFila.push(datos);
+
+        }
+        localStorage.setItem("Datos", JSON.stringify(datosFila));
+    });
+
     //     function () {
     //         const datosFila = [];
     //         var tBody = document.getElementsByTagName("tbody")[0];
@@ -230,14 +237,14 @@ window.onload = function () {
 
     //         for (let i = 0; i < filas.length; i++) {
 
-    //             const alumnos = [];
+    //             const datos = [];
     //             for (let j = 0; j < filas[i].cells.length; j++) {
     //                 // LOS TDS
     //                 if (filas[i].cells[j].className !== "AutomaticoByTablaEditable") {
-    //                     alumnos.push(filas[i].cells[j].innerHTML);
+    //                     datos.push(filas[i].cells[j].innerHTML);
     //                 }
     //             }
-    //             datosFila.push(alumnos);
+    //             datosFila.push(datos);
 
     //         }
 

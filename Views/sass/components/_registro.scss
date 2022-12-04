@@ -6,67 +6,80 @@
     justify-content: center;
 
     & .c-registro {
-        width: 400px;
+        // width: 75%;
         height: fit-content;
-        margin-top: 10vh;
         padding: 3%;
         background: $bg-color--principal-2;
         box-shadow: 0 15px 25px $color-shadow--principal;
         border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        align-items: center;
 
         &>h2 {
-            margin: 0 0 30px;
+            // margin: 0 0 30px;
             padding: 0;
             font-family: monospace;
             font-weight: bold;
             font-size: 22px;
+            grid-column: span 3;
             color: $bg-color--secundario;
             text-align: center;
         }
 
         & form {
+
             height: fit-content;
             width: auto;
         }
 
-        &__user {
-            width: 100%;
-            height: fit-content;
-            display: grid;
-            grid-template-columns: [a1] 40% [a2] 60%;
-            grid-template-rows: auto;
+        &__txt {
+            grid-column: 1 / 2;
 
-            & label {
-                grid-column: a1;
-                padding: 10px 0;
-                font-size: 16px;
-                color: #974D17;
-                // Al hacer click no nos mandará al input como hace normalmente
-                pointer-events: none;
-                transition: .5s;
-            }
-
-            & input {
+            &__user {
                 width: 100%;
-                padding: 10px 0;
-                font-size: 10px;
-                margin-bottom: 30px;
-                border: none;
-                // La línea que muestra el input como seleccionado
-                outline: none;
-                background: transparent;
-                grid-column: a2;
+                display: grid;
+                grid-template-columns: [a1] 40% [a2] 60%;
+                grid-template-rows: auto;
 
-                // Si es de tipo File (la imagen) no le pondremos el "subrayado"
-                &:not([type="file"]) {
-                    border-bottom: 1px solid $bg-color--secundario;
+                & label {
+                    grid-column: a1;
+                    height: fit-content;
+                    padding: 10px 0;
+                    font-size: 16px;
+                    color: #974D17;
+                    // Al hacer click no nos mandará al input como hace normalmente
+                    pointer-events: none;
+                    transition: .5s;
+                }
+
+                & input {
+                    width: 100%;
+                    padding: 10px 0;
+                    font-size: 10px;
+                    margin-bottom: 30px;
+                    border: none;
+                    // La línea que muestra el input como seleccionado
+                    outline: none;
+                    background: transparent;
+                    grid-column: a2;
+
+                    // Si es de tipo File (la imagen) no le pondremos el "subrayado"
+                    &:not([type="file"]) {
+                        border-bottom: 1px solid $bg-color--secundario;
+                    }
+
                 }
 
             }
-
         }
 
         &__img {
+
+            margin-top: 50%;
+            margin-left: 50% ;
+            grid-column: 3;
 
             & input[type="file"] {
                 display: none;
@@ -78,7 +91,7 @@
                 grid-column-end: a2;
                 border-radius: 5px;
                 text-align: center;
-                color: #974D17;
+                color: $bg-color-alt2;
                 border: 0.5px dotted rgb(159, 96, 18);
                 display: inline-block;
                 padding: 6px 12px;
@@ -86,34 +99,39 @@
             }
         }
 
-        &__ubi {
-            display: grid;
-            grid-template-columns: [lab] 50% [inp] 50%;
-            grid-template-rows: auto;
-            padding-bottom: .5rem;
+        &__ContUbi {
+            grid-column: 3;
 
-            & label {
-                grid-column: lab;
-                padding: 10px 0;
-                font-size: 16px;
-                color: #974D17;
-                // Al hacer click no nos mandará al input como hace normalmente
-                pointer-events: none;
-                transition: .5s;
+            &__ubi {
+                display: grid;
+                grid-template-columns: [lab] 50% [inp] 50%;
+                grid-template-rows: auto;
+                padding-bottom: .5rem;
+
+                & label {
+                    grid-column: lab;
+                    padding: 10px 0;
+                    font-size: 16px;
+                    color: #974D17;
+                    // Al hacer click no nos mandará al input como hace normalmente
+                    pointer-events: none;
+                    transition: .5s;
+                }
+
+                & input {
+                    width: 100%;
+                    padding: 10px 0;
+                    font-size: 10px;
+                    margin-bottom: 30px;
+                    border: none;
+                    border-bottom: 1px solid $bg-color--secundario;
+                    // La línea que muestra el input como seleccionado
+                    outline: none;
+                    background: transparent;
+                    grid-column: inp;
+                }
             }
 
-            & input {
-                width: 100%;
-                padding: 10px 0;
-                font-size: 10px;
-                margin-bottom: 30px;
-                border: none;
-                border-bottom: 1px solid $bg-color--secundario;
-                // La línea que muestra el input como seleccionado
-                outline: none;
-                background: transparent;
-                grid-column: inp;
-            }
         }
 
         &__Contbtn {
@@ -121,14 +139,14 @@
             justify-content: center;
 
             &__btn {
-    
+
                 display: flex;
                 flex-direction: row;
                 flex-wrap: nowrap;
-                
+
                 &--submit {
-                    
-                    margin-bottom: 2rem;
+
+                    cursor: pointer;
                     padding: 5px;
                     color: #974D17;
                     font-size: $font-family__p;
@@ -139,26 +157,30 @@
                     transition: .5s;
                     letter-spacing: .2px;
                     border: .5px solid #974D17;
-                    cursor: pointer;
 
                     &:hover {
                         background: $bg-color-alt1; //#a56334;
                         color: $bg-color--principal;
                         border-radius: 5px;
-                        box-shadow: 0 0 5px #a56334, 0 0 25px #a56334, 0 0 50px #a56334, 0 0 100px #a56334;
+                        box-shadow: 0 0 5px $bg-color--secundario, 0 0 25px $bg-color--secundario, 0 0 50px $bg-color--secundario, 0 0 100px $bg-color--secundario;
                     }
                 }
             }
         }
 
         &__contenedor {
-            width: 60%;
+            width: inherit;
             height: fit-content;
-            margin: auto;
-            display: flex;
-            flex-direction: column;
-            flex-wrap: nowrap;
-            align-items: center;
+            margin: 5px;
+            padding: $padding-x-base;
+            display: grid;
+            grid-template-columns: repeat(3, 1.5fr);
+            grid-auto-flow: dense;
+            grid-gap: 1rem;
+
+            &>*{
+                margin: auto;
+            }
 
             & input {
                 background: transparent;
@@ -176,9 +198,8 @@
             display: flex;
             flex-direction: row;
             flex-wrap: nowrap;
-
+            
             &--submit {
-
                 padding: 5px 10px;
                 color: #974D17;
                 font-size: 16px;
@@ -189,12 +210,13 @@
                 transition: .5s;
                 letter-spacing: 4px;
                 border: 1px solid #974D17;
+                cursor: pointer;
 
                 &:hover {
                     background: $bg-color-alt1; //#a56334;
                     color: $bg-color--principal;
                     border-radius: 5px;
-                    box-shadow: 0 0 5px #a56334, 0 0 25px #a56334, 0 0 50px #a56334, 0 0 100px #a56334;
+                    box-shadow: 0 0 5px $bg-color--secundario, 0 0 25px $bg-color--secundario, 0 0 50px $bg-color--secundario, 0 0 100px $bg-color--secundario;
                 }
             }
         }

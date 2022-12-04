@@ -1,3 +1,4 @@
+/* ATRIBUTOS GENERALES */
 #cuerpo {
     width: 100vw;
     height: fit-content;
@@ -13,13 +14,81 @@
 }
 
 #footer {
-    width: 100vw;
+    position: absolute;
+    display: flex;
+    width: 100%;
+    bottom: 0px;
+    padding: 5px;
+    font-family: $font-family--1;
     height: fit-content;
     overflow: hidden;
-    position: absolute;
-    bottom: 0%;
 
     & * {
         justify-content: center;
+    }
+    & > .container {
+        margin: auto;
+    }
+}
+
+/* PAGINA PRINCIPAL */
+.c-Quienes {
+    margin: 0px $mt-xl;
+    padding: $padding-hor $padding-vert;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 5px;
+    background: $bg-color-alt1;
+    color: $bg-color--principal;
+    font-family: $font-family--1;
+
+    &>h2 {
+        font-weight: bold;
+        font-size: $font-size__h;
+        letter-spacing: 2px;
+        margin: auto;
+    }
+
+    &>p {
+        /*
+        font-family: $font-family__p;
+        font-weight: bold;
+        */
+        font-weight: 900;
+        font-size: $font-size-m;
+        text-indent: 2.5%;
+        margin: $ml-s;
+    }
+
+    &:hover {
+        border-radius: 15px;
+        transition: .5s;
+    }
+}
+
+.c-QyA {
+    margin: 10px $mt-xl;
+    padding: $padding-hor $padding-vert;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 5px;
+    font-family: $font-family--1;
+    background: $bg-color-alt2;
+    color: $bg-color--principal;
+    &>h2{
+        margin: auto;
+        font-weight: bold;
+    }
+    &>p{
+        font-weight: 900;
+        font-size: $font-size-m;
+        text-indent: 2.5%;
+        margin: $ml-s;
+    }
+    &:hover {
+        border-radius: 15px;
+        transition: .5s;
     }
 }

@@ -1,0 +1,123 @@
+/* Función que calcula el tamaño de la font-size */
+@use "sass:math";
+
+@function getFontSize ($index) {
+    @return (math.pow(1.2, $index) * 16);
+}
+
+@mixin titulo {
+    font-weight: bold;
+    text-transform: uppercase;
+    margin: auto;
+    justify-content: center;
+}
+
+@mixin border-radius-xs {
+    border-radius: 5px;
+}
+
+@mixin border-radius-s {
+    border-radius: 10px;
+}
+
+@mixin border-radius-m {
+    border-radius: 30px;
+}
+
+@mixin link-styleReset {
+    text-decoration: none;
+}
+
+@mixin boton {
+    @include link-styleReset;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+@mixin paddding__info {
+    padding-top: 1.5%;
+    padding-bottom: 0.15%;
+}
+
+@mixin padding-s {
+    padding: 1% 1%;
+}
+
+@mixin padding-m {
+    padding: 3.5% 5%;
+}
+
+@mixin padding-formu {
+    padding: 0.5% 2%;
+}
+
+
+@mixin flex {
+    display: flex;
+}
+
+@mixin flexRow {
+    @include flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+@mixin flexColumn {
+    @include flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}
+
+@mixin colores__btn--principal {
+    color: $card-bg;
+    background: $bg-color-alt1;
+    border-color: $bg-color-cajas;
+}
+
+@mixin colores__btn--secundario {
+    color: $bg-color--principal;
+    background: $card-bg;
+    border-color: $bg-color--principal;
+}
+
+@mixin colores__btn--hover {
+    color: $bg-color-btn;
+    background: $btn-hover-color;
+    border-color: $bg-color-btn2;
+}
+
+@mixin delete-border-radius-top {
+    border-top-left-radius: 0%;
+    border-top-right-radius: 0%;
+}
+
+@mixin delete-border-radius-bottom {
+    border-bottom-left-radius: 0%;
+    border-bottom-right-radius: 0%;
+}
+
+@mixin delete-border-bottom {
+    @include delete-border-radius-bottom();
+    /* ELIMINAMOS EL BORDE SUPERIOR */
+    border-bottom: 0ch;
+}
+
+@mixin delete-border-top {
+    @include delete-border-radius-top();
+    /* ELIMINAMOS EL BORDE SUPERIOR */
+    border-top: 0ch;
+}
+
+@mixin color--peligro {
+    /* CAMBIAMOS EL COLOR DEL BORDE */
+    border-radius: 5px;
+    border: 0.5px solid $bg-color--peligro;
+}
+
+@mixin panel__titulo {
+    /* CAMBIAMOS EL COLOR DEL TÍTULO */
+    color: $panel-color--principal;
+    font-size: $font-size-title;
+    /* CAMBIAMOS EL COLOR DE FONDO */
+    background-color: $bg-color--peligro;
+}

@@ -1,0 +1,38 @@
+.c-contConcurso {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-template-rows: repeat(4,1fr);
+    font-family: $font-family--1;
+    grid-gap: 10px;
+    margin: $mt-s;
+    &__h {
+        grid-column: span 3;
+    }
+    &__desc {
+        grid-column: span 2;
+        margin-left: $ml-s;
+    }
+}
+.c-concursos{
+    font-family: $font-family--1;
+    // &__h {
+    //     margin: $mt-s;
+    //     background-color: $color--principal;
+    //     color: $bg-color--principal;
+    //     &>h2{
+    //         font-weight: 900;
+    //         padding: $padding-y-base$padding-x-lg;
+    //     }
+    //     &>p {
+    //         padding: $padding-x-lg;
+    //     }
+    // }
+    &__disp {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        flex: 1 1 100%;
+        justify-content: center;
+        margin: $ml-s;
+    }
+}
