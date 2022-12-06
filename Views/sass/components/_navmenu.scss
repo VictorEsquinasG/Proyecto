@@ -3,7 +3,7 @@ header {
     height: fit-content;
     background-color: rgb(255, 255, 255);
     position: sticky;
-    overflow-x: hidden;
+    overflow: hidden;
     z-index: 3;
     /* Nos aseguramos que queda por encima */
 }
@@ -16,7 +16,7 @@ nav {
     height: inherit;
     // position: fixed;
     background-color: $bg-nav;
-    overflow-x: hidden;
+    overflow: hidden;
 
     &>.c-nav {
         &__contenedor {
@@ -45,6 +45,10 @@ nav {
                 text-decoration: none;
                 font-weight: bold;
                 font-family: $font-family__nav;
+                &>img {
+                    width: 50px;
+                    height: auto;
+                }
             }
 
             &>#c-btn-home {

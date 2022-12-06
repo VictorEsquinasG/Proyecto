@@ -17,15 +17,17 @@ if (isset($_COOKIE['id'])) {
     }
     $participantes = $repP->getParticipantes($idConcurso);
     $concursosD = $rp->getConcursosDisponibles();
-    for ($i=0; $i < count($participantes); $i++) { 
-        # comprobamos todos los IDs
-        if (($concursosD[$i] === $concurso) && (Sesion::leer('user')->getId() !== $participantes[$i])) { 
-            #TODO
-            # Si el concurso existiera y el usuario no está en él
-            echo "<form action='' method='POST'>";
-            echo "<input type='submit' name='submit' value='Unirse'>";
-            echo "</form>";
-            // echo "<button onclick='unirse($idConcurso)'>Unirse</button>";
+    for ($i = 0; $i < count($participantes); $i++) {
+        # comprobamos todos los IDs en todos los concursos disponibles
+        for ($j = 0; $j < count($concursosD); $j++) {
+            if (($concursosD[$j] === $concurso) && (Sesion::leer('user')->getId() !== $participantes[$i])) {
+                #TODO
+                # Si el concurso existiera y el usuario no está en él
+                echo "<form action='' method='POST'>";
+                echo "<input type='submit' name='submit' value='Unirse'>";
+                echo "</form>";
+                // echo "<button onclick='unirse($idConcurso)'>Unirse</button>";
+            }
         }
     }
     print "</div>";
@@ -46,10 +48,16 @@ if (isset($_COOKIE['id'])) {
     # Listamos
     for ($i = 0; $i < $tamanio2; $i++) {
         echo "<tr>";
-        echo "<td>" . $modos[$i]->getNombre() . "</td>";
-        for ($j = 0; $j < $tamanio; $j++) {
-            echo "<td>" . $bandas[$j]->getNombre() . "</td>";
+        $j = 0;
+        while ($j < $tamanio) {
+            # si o si entra aquí, si no hay banda o modo -> <td></td>
+            $mode = $modos[$i]->getNombre()!=null?"<td>" . $modos[$i]->getNombre() . "</td>":"<td></td>";
+            $band = $bandas[$j]->getNombre()!=null?"<td>" . $bandas[$j]->getNombre() . "</td>":"<td></td>";
+            $j++;
         }
+            
+        echo $mode;
+        echo $band;
         echo "</tr>";
     }
     echo "</tbody>";
@@ -60,7 +68,6 @@ if (isset($_COOKIE['id'])) {
 
     # Matamos la cookie
     setcookie('id', $_COOKIE['id'], time() - 300);
-    
 } else {
     # si no tiene la cookie ni ha hecho submit -> Index.php
     header("Location:?menu=inicio");
@@ -69,9 +76,9 @@ if (isset($_POST['submit'])) {
     # Cogemos el concursante y creamos la participación
     $part = new Participacion();
     $usuario = Sesion::leer("user")->getId(); #TODO idConcurso no existe pero la cookie tampoco
-    $part->rellenaParticipacion(null,'user',$idConcurso,$usuario); # Por defecto -> No es juez
+    $part->rellenaParticipacion(null, 'user', $idConcurso, $usuario); # Por defecto -> No es juez
     # Lo unimos al concurso
-    if ($repP->set($part)!=false) {
+    if ($repP->set($part) != false) {
         # Si se insertó hacemos alguna señal
         echo "<h1>ENTRADO</h1>";
         header("Location:?concurso=$idConcurso");

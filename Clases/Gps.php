@@ -34,5 +34,10 @@ class Gps {
         return $this->x;
     }
 
+    public function __toString()
+    {
+        return "POINT(".$this->getX().",".$this->getY().")";
+    }
+    
    
 }

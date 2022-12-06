@@ -15,9 +15,10 @@
 
 .c-forMantenimiento {
     display: grid;
-    grid-template-columns: [formu] 25% [tabla] 75%;
+    grid-template-columns: [formu] 20% [tabla] 80%;
     grid-template-rows: auto;
     grid-gap: 10px;
+    overflow-x: hidden;
     
     &__formu {
         box-shadow: 2px 2rem 3 $color-shadow--principal;

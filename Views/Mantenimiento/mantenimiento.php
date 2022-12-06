@@ -12,7 +12,7 @@ if ((Sesion::existe('user')) && (Sesion::leer('user')->getRol() === 'admin')) {
 ?>
 <article class="c-mantenimiento">
     <div class="c-card" style="width: 18rem;">
-        <img src="./images/perfil.png" width="100px" class="c-card__img" alt="...">
+        <img src="./images/ajustamiento.png" width="100px" class="c-card__img" alt="...">
         <div class="c-card__body">
             <h5 class="c-card__title">Modos</h5>
             <p class="c-card__desc">
@@ -22,7 +22,7 @@ if ((Sesion::existe('user')) && (Sesion::leer('user')->getRol() === 'admin')) {
         </div>
     </div>
     <div class="c-card" style="width: 18rem;">
-        <img src="./images/perfil.png" width="100px" class="c-card__img" alt="...">
+        <img src="./images/podcast.png" width="100px" class="c-card__img" alt="...">
         <div class="c-card__body">
             <h5 class="c-card__title">Bandas</h5>
             <p class="c-card__desc">
@@ -32,7 +32,7 @@ if ((Sesion::existe('user')) && (Sesion::leer('user')->getRol() === 'admin')) {
         </div>
     </div>
     <div class="c-card" style="width: 18rem;">
-        <img src="./images/perfil.png" width="100px" class="c-card__img" alt="...">
+        <img src="./images/conversacion.png" width="100px" class="c-card__img" alt="...">
         <div class="c-card__body">
             <h5 class="c-card__title">Mensajes</h5>
             <p class="c-card__desc">

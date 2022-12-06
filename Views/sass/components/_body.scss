@@ -1,4 +1,7 @@
 /* ATRIBUTOS GENERALES */
+body {
+    height: 100vh;
+}
 #cuerpo {
     width: 100vw;
     height: fit-content;
@@ -91,4 +94,9 @@
         border-radius: 15px;
         transition: .5s;
     }
+}
+.c-centrado{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
 }

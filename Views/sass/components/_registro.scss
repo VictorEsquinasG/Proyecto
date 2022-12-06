@@ -4,9 +4,10 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-
+    
     & .c-registro {
-        // width: 75%;
+        width: 75%;
+        margin-bottom: 5rem;
         height: fit-content;
         padding: 3%;
         background: $bg-color--principal-2;

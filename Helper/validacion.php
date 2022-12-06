@@ -159,7 +159,7 @@ class Validacion
     public function ImprimirError($campo)
     {
         return
-        isset($this->errores[$campo])?'<span class="error_mensaje">'.$this->errores[$campo].'</span>':'';
+        isset($this->errores[$campo])?'<span class="input--error">'.$this->errores[$campo].'</span>':'';
     }
 
     public function getValor($campo)

@@ -148,22 +148,28 @@ class repUsuarios
 
     public function addUser(Usuario $a):bool
     {
+        // Aceptamos carácteres especiales como el @
+        // $this->conexion->exec('default_charset = "utf-8"');
         // Obtenemos los parámetros del usuario dado
-        $id = $a->getId();
+        // $id = $a->getId();
         $indicativo = $a->getIdentificativo();
         $mail = $a->getEmail();
         $passwd = $a->getPssword();
         $rol = $a->getRol();
-        $gps = $a->getGps();
-        $img = $a->getImg();
+        $gps = $a->getGps()->__toString();
+        // $x = $gps->getX();
+        // $y = $gps->getY();
+        // $gps = "GeomFromText('POINT(".$x." ".$y.")')"; #pasamos a POINT
+        $a->getImg()!=null ? $img = $a->getImg() : $img = null;
         $nombre = $a->getNombre();
         $ap1 = $a->getAp1();
         $ap2 = $a->getAp2();
         // Preparamos y realizamos el insert
-        $sql = "INSERT INTO participante VALUES ($id,$indicativo,$mail,$passwd,$rol,$gps,$img,$nombre,$ap1,$ap2)";
+        $sql = "INSERT INTO participante VALUES (null,'$indicativo','$mail','$passwd','$rol',$gps,'$img','$nombre','$ap1','$ap2')";
         try {
             // Ejecutamos la instrucción
-            return $this->conexion->exec($sql);
+            $prep = $this->conexion->prepare($sql);
+            return $prep->execute();
         } catch (PDOException $e) {
             throw new PDOException("Error al insertar: " . $e->getMessage());
         }

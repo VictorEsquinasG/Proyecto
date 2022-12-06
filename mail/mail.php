@@ -32,4 +32,6 @@
       echo "Error" . $mail->ErrorInfo;
     } else {
       echo "Enviado";
+      # Lo redireccionamos a la página principal
+      header("Location:?menu=inicio");
     }

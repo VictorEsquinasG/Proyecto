@@ -4,14 +4,14 @@ class Concurso {
 
     /* PROPIEDADES */
     private int | null $id;
-    private string $nombre;
-    private string $desc;
+    private string | null $nombre;
+    private string | null $desc;
     // FECHAS DE INICIO/FIN INSCRIPCIÓN
-    private DateTimeImmutable $fechInicioInsc;
-    private DateTimeImmutable $fechFinInsc;
+    private DateTimeImmutable | null $fechInicioInsc;
+    private DateTimeImmutable | null $fechFinInsc;
     // FECHAS DE INICIO/FIN DEL CONCURSO
-    private DateTimeImmutable $fechInicio;
-    private DateTimeImmutable $fechFin;
+    private DateTimeImmutable | null $fechInicio;
+    private DateTimeImmutable | null $fechFin;
     // LA IMAGEN DEL CONCURSO
     private string | null $cartel;
     // PROPIEDADES NO DE CONCURSO
@@ -27,25 +27,54 @@ class Concurso {
     {
         $this->setId($concurso['id']);
         $this->setNombre($concurso['nombre']);
-        $this->setDesc($concurso['desc']);
-        $this->setFechInicioInsc($concurso['fechaInicioInsc']);
-        $this->setFechFinInsc($concurso['fechaFinInsc']);
-        $this->setFechInicio($concurso['fechInicio']);
-        $this->setFechFin($concurso['fechFin']);
+        if (isset($concurso['descripcion'])) {
+            # 
+            $this->setDesc($concurso['descripcion']);
+        }else {
+            $this->setDesc($concurso['desc']);
+        }
+        if (isset($concurso['fechaInicioInsc'])) {
+            # 
+            $this->setFechInicioInsc($concurso['fechaInicioInsc']);
+        }else {
+            $this->setFechInicioInsc($concurso['fechaInicioInscripcion']);
+        }
+        if (isset($concurso['fechaFinInsc'])) {
+            # 
+            $this->setFechFinInsc($concurso['fechaFinInsc']);
+        }else{
+            $this->setFechFinInsc($concurso['fechaFinInscripcion']);
+        }
+        if (isset($concurso['fechInicio'])) {
+            # code...
+            $this->setFechInicio($concurso['fechInicio']);
+        }else{
+            $this->setFechInicio($concurso['fechaInicioConcurso']);
+        }
+        if (isset($concurso['fechFin'])) {
+            # code...
+            $this->setFechFin($concurso['fechFin']);
+        }else {
+            $this->setFechInicio($concurso['fechaFinConcurso']);
+        }
         if (isset($concurso['cartel']) && is_null($concurso['cartel'])) {
             $this->setCartel($concurso['cartel']);
         }
-        # Si es un array lo metemos en la propiedad, si no lo añadimos al array
-        if (is_array($concurso['bandas'])) {
-            $this->setBandas($concurso['bandas']);
-        }else {
-            $tamanio = count($concurso['bandas']);
-            for ($i=0; $i < $tamanio; $i++) { 
-                $banda = $concurso['bandas'][$i];
-                $this->addBandas($banda);
+        if (isset($concurso['bandas'])) {
+            # Si es un array lo metemos en la propiedad, si no lo añadimos al array
+            if (is_array($concurso['bandas'])) {
+                $this->setBandas($concurso['bandas']);
+            }else {
+                $tamanio = count($concurso['bandas']);
+                for ($i=0; $i < $tamanio; $i++) { 
+                    $banda = $concurso['bandas'][$i];
+                    $this->addBandas($banda);
+                }
             }
         }
-        $this->setModos($concurso['modos']);
+        if (isset($concurso['modos'])) {
+            $this->setModos($concurso['modos']);
+        }
     }
 
     public function rellenaConcurso($id,$nombre,$desc,$fechaInicioInsc,$fechaFinInsc,$fechInicio,$fechFin,$cartel = null)

@@ -10,7 +10,8 @@
     text-indent: 0;
     &__img {
         width: auto;
-        max-height: 284px;
+        padding-top: 5px; // Que no toque el borde de la tarjeta
+        max-height: 50px;
         margin: auto;
         /* Eliminamos el border-radius de la parte superior */
         @include delete-border-radius-top;

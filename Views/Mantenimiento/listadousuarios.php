@@ -17,7 +17,7 @@ echo "<br/>";
         <tbody id="tbody">
             <!-- La primera fila servirá para que los administradores creen nuevos concursos -->
             <?php
-            if (Sesion::existe('user') && Sesion::leer('rol') === 'admin') {
+            if (Sesion::existe('user') && Sesion::leer('user')->getRol() === 'admin') {
                 # Escribimos la fila de adición
                 $fila = <<<EOD
                 <tr id="crear">
@@ -27,7 +27,7 @@ echo "<br/>";
                 <td><input type="text" name="mail" id="mail" placeholder="email"></td>
                 <td><input type="text" name="ubi" id="ubi" placeholder="Ubicación"></td>
                 <td><input type="text" name="punt" id="punt" placeholder="Puntuación"></td>
-                    <td> <input type="submit" id="btnGuardar" value="Guardar"></td>    
+                    <td> <input type="submit" name="submit" id="btnGuardar" value="Guardar"></td>    
                 </tr>
                 <tr id="editar" style="display: none;">
                     <td><input type="text" name="id" id="edId" placeholder="Id"></td>
@@ -37,16 +37,22 @@ echo "<br/>";
                     <td><input type="text" name="ubi" id="edUbi" placeholder="Ubicación"></td>
                     <td><input type="text" name="punt" id="edPunt" placeholder="Puntuación"></td>
 
-                    <td><input type="submit" id="btnEditar" value="Modificar"></td>    
+                    <td><input type="submit" name="submit" id="btnEditar" value="Modificar"></td>    
                 </tr>
             EOD;
+            $fila = <<<EOD
+                <form action="" method="POST">
+                    <input class="c-card__btn c-btn--primary" id="annadir" type="submit" name="annadir" value="+">
+                </form>
+                <!-- El modal que añade usuarios -->
+                <script src="./js/api/participante.js"></script>
+            EOD;
+            echo $fila;
             }
             ?>
             <!-- EL RESTO DEL LISTADO -->
-
         </tbody>
         <tfoot>
-
         </tfoot>
     </table>
 </section>

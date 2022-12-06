@@ -1,18 +1,20 @@
 <?php
 /* Cargamos los scripts */
 echo "<script src='./js/profpic.js'></script>";
+echo "<script src='./js/camara.js'></script>";
 echo "<script src='./js/capturaGPS.js'></script>";
 
 if (isset($_COOKIE['recuerdame'])) {
     # Si ya se logueó
     header("Location:?menu=inicio");
 }
+var_dump($_FILES);
+var_dump($_POST);
 $valida = new Validacion();
-
 // Si el formulario se ha enviado
 if (isset($_POST['submit'])) {
     $valida->Requerido('usuario');
-    $valida->Patron('usuario',"[A-Z]{1,2}[0-9][A-Z]{1,3}");
+    $valida->Patron('usuario',"/^[A-Z]{1,2}[0-9][A-Z]{1,3}$/");
     $valida->Requerido('mail');
     $valida->Email('mail');
     $valida->Requerido('contrasena');
@@ -34,11 +36,11 @@ if (isset($_POST['submit'])) {
             $user['email'] = $_POST['mail'];
             $user['pssword'] = $_POST['contrasena'];
             $user['rol'] = 'user'; // Por defecto
-            if (isset($_POST['inpFile']) && $_POST['inpFile'] != '') {
+            if (isset($_POST['imagen']) && $_POST['imagen'] != '') {
                 # le añadimos la imagen
-                $imagen=file_get_contents($_FILES['inpFile']['tmp_name']);
+                $imagen=file_get_contents($_POST['imagen']);
                 $imagen=base64_encode($imagen);
-                $user['img'] = $_POST['img'];
+                $user['img'] = $imagen;
             } else {
                 # la imagen es Null
                 $user['img'] = null;
@@ -52,17 +54,18 @@ if (isset($_POST['submit'])) {
             $us->rellenaUsuarioArray($user);
             //Realizamos el insert
             if ($rep->addUser($us)) {
-                Sesion::iniciar();
-                Sesion::escribir("usuario", "$us");
-                header("Location:?menu=inicio");
+                // creamos la sesion
+                Sesion::escribir("user", $us);
+                // lo redireccionamos a la página principal
+                header("Location:?menu=inicio") ;
             }
         } catch (Exception $e) {
-            echo "Error: " . $e->getMessage();
+            echo "Error durante la creación del usuario: " . $e->getMessage();
         }
     }
+    // echo "<script>console.log(".var_dump($user).")</script>";
 }
 // var_dump($user);
-echo "<script>console.log($user)</script>";
 
 ?>
 <section id="registro">
@@ -94,15 +97,25 @@ echo "<script>console.log($user)</script>";
                         <?= $valida->ImprimirError('ap2') ?>
                     </div>
                 </div>
-                <div class="c-registro__img">
+                <!-- <div class="c-registro__img">
                     Hacer foto
-                </div>
-                <div class="c-registro__img" id="btnImg" onclick="getFile()">
-                    <label for="imagen" class="img">
-                        <i class="fa fa-cloud-upload"></i>
-                        Imagen de perfil
-                    </label>
-                    <input type="file" name="imagen" id="inpFile">
+                </div> -->
+                <div class="c-registro__img">
+                    <?php 
+                        if (true) {
+                            #TODO Si tiene cámara
+                            print '<video id="video" width="220" height="140" autoplay></video>';
+                            print '<canvas id="canvas" width="220" height="140"></canvas>';
+                            print '<button id ="btnFoto">Echar Foto</button>';
+                        }
+                    ?>
+                    <div id="btnImg">
+                        <label for="imagen" class="img">
+                            <i class="fa fa-cloud-upload"></i>
+                            Imagen de perfil
+                        </label>
+                        <input type="file" name="imagen" id="inpFile">
+                    </div>
                 </div>
                 <div class="c-registro__Contubi">
                     <div class="c-registro__ContUbi__ubi">
@@ -117,7 +130,7 @@ echo "<script>console.log($user)</script>";
                 </div>
                 <!-- <hr> -->
                 <div style="grid-column:span 3"> <!-- Ocupa las 3 columnas para estar centrado -->
-                    <input type="submit" class="c-registro__btn--submit" id='btnCaptura' value="Crear Cuenta">
+                    <input type="submit" name="submit" class="c-registro__btn--submit" id='btnCaptura' value="Crear Cuenta">
                 </div>
             </div>
 

@@ -2,43 +2,43 @@
 /* VALIDADOR */
 $valida = new Validacion();
 # SI SE MANDÓ EL FORMULARIO
-if (isset($_POST['submit'])) {
-    $valida->Requerido('nombre');
-    $valida->Requerido('dist');
-    $valida->Requerido('min');
-    $valida->EnteroRango('min');
-    $valida->Requerido('max');
-    $valida->EnteroRango('max');
-    //Comprobamos validacion
-    if ($valida->ValidacionPasada()) {
-        # Cogemos los valores de los campos 
-        $name = $_POST['nombre'];
-        $distance = $_POST['dist'];
-        $min = $_POST['min'];
-        $max = $_POST['max'];
-        # Creamos la BANDA
-        $banda = new Banda();
-        $banda->rellenaBanda(null,$name,(int)$distance,(int)$min,(int)$max);
-        # La insertamos
-        $rp = new repBanda(gbd::getConexion());
-        if (!$rp->add($banda)){
-            #si no pudo insertar
-            throw new Exception("Error al insertar nueva banda");
-            
-        }
-    }
-}
+// if (isset($_POST['submit'])) {
+//     $valida->Requerido('nombre');
+//     $valida->Requerido('dist');
+//     $valida->Requerido('min');
+//     $valida->EnteroRango('min');
+//     $valida->Requerido('max');
+//     $valida->EnteroRango('max');
+//     //Comprobamos validacion
+//     if ($valida->ValidacionPasada()) {
+//         # Cogemos los valores de los campos 
+//         $name = $_POST['nombre'];
+//         $distance = $_POST['dist'];
+//         $min = $_POST['min'];
+//         $max = $_POST['max'];
+//         # Creamos la BANDA
+//         $banda = new Banda();
+//         $banda->rellenaBanda(null,$name,(int)$distance,(int)$min,(int)$max);
+//         # La insertamos
+//         $rp = new repBanda(gbd::getConexion());
+//         if (!$rp->add($banda)){
+//             #si no pudo insertar
+//             throw new Exception("Error al insertar nueva banda");
+
+//         }
+//     }
+// }
 ?>
 <section class="c-forMantenimiento">
     <article class="c-login c-forMantenimiento__formu">
-        <h1 class="g--font-size-5l">
-                    BANDAS
-                  </h1>
+        <h1 style="margin-left:10.5rem;" class="g--font-size-5l">
+            BANDAS
+        </h1>
         <!-- <form action="" method="POST">
             <h5 class="g--font-size-3l">Nueva banda</h5>
             <div class="c-forMantenimiento__input">
                 <!-- El id no lo pedimos porque se autogenera -->
-               <!-- <div>
+        <!-- <div>
                     <input type="text" name="nombre">
                     <label for="nombre">Nombre</label>
                 </div>
@@ -78,32 +78,42 @@ if (isset($_POST['submit'])) {
                 </thead>
                 <tbody id="tbody">
                     <!-- La primera fila servirá para que los administradores creen nuevos concursos -->
-                    <tr id="crear">
+                    <!-- <tr id="crear">
                         <td><input type="number" name="id" placeholder="Id"></td>
                         <td><input type="text" name="nombre" placeholder="Nombre"></td>
                         <td><input type="number" name="dist" placeholder="Distancia"></td>
                         <td><input type="number" name="min" placeholder="Mínimo"></td>
                         <td><input type="number" name="max" placeholder="Máximo"></td>
                         <td> <input type="submit" id="btnGuardar" value="Guardar"></td>
-                    </tr>
-                    
+                    </tr> -->
+                    <?php
+                    $fila = <<<EOD
+                    <form action="" method="POST">
+                        <input class="c-card__btn c-btn--primary" id="annadir" type="submit" name="annadir" value="+">
+                    </form>
+                    <!-- El modal que añade las bandas -->
+                    <script src="./js/api/bandas.js"></script>
+                    EOD;
+                    echo $fila;
+                    ?>
+
                     <!-- EL RESTO DEL LISTADO -->
                     <?php
                     $rep = new repBanda(gbd::getConexion());
                     $bandas = $rep->getAll();
                     $tamanio = count($bandas);
-                        for ($i=0; $i < $tamanio; $i++) { 
-                            # Cogemos la banda que toque
-                            $banda = $bandas[$i];
-                            # Filas + columnas
-                            echo "<tr>";
-                            echo "<td>".$banda->getId()."</td>";
-                            echo "<td>".$banda->getNombre()."</td>";
-                            echo "<td>".$banda->getDistancia()."</td>";
-                            echo "<td>".$banda->getMin_rango()."</td>";
-                            echo "<td>".$banda->getMax_rango()."</td>";
-                            echo "</tr>";
-                        }
+                    for ($i = 0; $i < $tamanio; $i++) {
+                        # Cogemos la banda que toque
+                        $banda = $bandas[$i];
+                        # Filas + columnas
+                        echo "<tr>";
+                        echo "<td>" . $banda->getId() . "</td>";
+                        echo "<td>" . $banda->getNombre() . "</td>";
+                        echo "<td>" . $banda->getDistancia() . "</td>";
+                        echo "<td>" . $banda->getMin_rango() . "</td>";
+                        echo "<td>" . $banda->getMax_rango() . "</td>";
+                        echo "</tr>";
+                    }
                     ?>
                 </tbody>
                 <tfoot>

@@ -93,21 +93,21 @@ class repConcurso
         $sql = "SELECT * FROM concurso";
         $consulta = $this->conexion->query($sql);
         $concursos = $consulta->fetchAll(PDO::FETCH_ASSOC);
-        $tamanio = count($concursos);
-        for ($i = 0; $i < $tamanio; $i++) {
-            # creamos el concurso y lo añadimos
-            $concurso = new Concurso();
-            $concursos[] = $concurso->rellenaConcurso(
-                $concursos[$i]['id'],
-                $concursos[$i]['nombre'],
-                $concursos[$i]['descripcion'],
-                new DateTimeImmutable($concursos[$i]['fechaInicioInscripcion']),
-                new DateTimeImmutable($concursos[$i]['fechaFinInscripcion']),
-                new DateTimeImmutable($concursos[$i]['fechaInicioConcurso']),
-                new DateTimeImmutable($concursos[$i]['fechaFinConcurso']),
-                $concursos[$i]['cartel']
-            );
-        }
+        // $tamanio = count($concursoss);
+        // for ($i = 0; $i < $tamanio; $i++) {
+        //     # creamos el concurso y lo añadimos
+        //     $concurso = new Concurso();
+        //     $concursos[] = $concurso->rellenaConcurso(
+        //         $concursos[$i]['id'],
+        //         $concursos[$i]['nombre'],
+        //         $concursos[$i]['descripcion'],
+        //         new DateTimeImmutable($concursos[$i]['fechaInicioInscripcion']),
+        //         new DateTimeImmutable($concursos[$i]['fechaFinInscripcion']),
+        //         new DateTimeImmutable($concursos[$i]['fechaInicioConcurso']),
+        //         new DateTimeImmutable($concursos[$i]['fechaFinConcurso']),
+        //         $concursos[$i]['cartel']
+        //     );
+        // }
 
         return $concursos;
     }
