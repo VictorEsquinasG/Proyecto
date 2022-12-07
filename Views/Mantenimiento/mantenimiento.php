@@ -1,6 +1,4 @@
 <?php
-// Entramos en la sesión
-Sesion::iniciar();
 // Si es un administrador le dejamos entrar
 if ((Sesion::existe('user')) && (Sesion::leer('user')->getRol() === 'admin')) {
     echo ("<h1 class='g--font-size-5l'> Mantenimiento</h1>");
@@ -42,7 +40,7 @@ if ((Sesion::existe('user')) && (Sesion::leer('user')->getRol() === 'admin')) {
         </div>
     </div>
     <div class="c-card" style="width: 18rem;">
-        <img src="./images/perfil.png" width="100px" class="c-card__img" alt="...">
+        <img src="./images/trophey.png" width="100px" class="c-card__img" alt="...">
         <div class="c-card__body">
             <h5 class="c-card__title">Concursos</h5>
             <p class="c-card__desc">

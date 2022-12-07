@@ -23,17 +23,20 @@
                     <tr>
                         <th>ID</th>
                         <th>Nombre</th>
-                        <th></th>
                     </tr>
                 </thead>
                 <tbody id="tbody">
                     <!-- La primera fila servirá para que los administradores creen nuevos concursos -->
-
-                    <tr id="crear">
-                        <td><input type="text" name="id" id="id" placeholder="Id"></td>
+                    <form action="" method="POST">
+                        <input class="c-card__btn c-btn--primary" id="annadir" type="submit" name="annadir" value="+">
+                    </form>
+                    <!-- El modal que añade las bandas -->
+                    <script src="./js/api/modos.js"></script>
+                    <!-- <tr id="crear">
+                        <td></td>
                         <td><input type="text" name="nombre" id="nombre" placeholder="Nombre"></td>
                         <td> <input type="submit" id="btnGuardar" value="Guardar"></td>
-                    </tr>
+                    </tr> -->
 
                     <!-- EL RESTO DEL LISTADO -->
                     <?php

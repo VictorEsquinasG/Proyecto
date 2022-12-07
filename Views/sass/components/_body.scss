@@ -17,7 +17,7 @@ body {
 }
 
 #footer {
-    position: absolute;
+    // position: absolute;
     display: flex;
     width: 100%;
     bottom: 0px;
@@ -99,4 +99,9 @@ body {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
+}
+#crear {
+    & td input {
+        width: 100%;
+    }
 }

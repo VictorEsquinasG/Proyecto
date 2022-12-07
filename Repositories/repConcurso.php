@@ -112,22 +112,60 @@ class repConcurso
         return $concursos;
     }
 
-    public function set(Concurso $concurso): int|false
+    public function set(Concurso $concurso)
     {
-        $id = $concurso->getId();
         $nombre = $concurso->getNombre();
         $desc = $concurso->getDesc();
-        $fechaInInsc = $concurso->getFechInicioInsc();
-        $fechaFInsc = $concurso->getFechFinInsc();
-        $fechaInicio = $concurso->getFechInicio();
-        $fechaFin = $concurso->getFechFin();
+        $fechaInInsc = $concurso->getFechInicioInsc()->format('Y-m-d H:i:s');
+        $fechaFInsc = $concurso->getFechFinInsc()->format('Y-m-d H:i:s');
+        $fechaInicio = $concurso->getFechInicio()->format('Y-m-d H:i:s');
+        $fechaFin = $concurso->getFechFin()->format('Y-m-d H:i:s');
         $poster = $concurso->getCartel();
 
-        $sql = "INSERT INTO concurso VALUES " .
-            "($id,$nombre,$desc,$fechaInInsc,$fechaFInsc," .
-            "$fechaInicio,$fechaFin,$poster)";
-
-        return $this->conexion->exec($sql);
+        $sql = "INSERT INTO concurso VALUES (null,'$nombre','$desc','$fechaInInsc','$fechaFInsc','$fechaInicio','$fechaFin','$poster')";
+        // $sql = "INSERT INTO concurso VALUES (null,'$nombre','$desc','DATE_FORMAT($fechaInInsc,\"yyyy-mm-dd\")',`DATE_FORMAT($fechaFInsc,'yyyy-mm-dd')`,`DATE_FORMAT($fechaInicio,'yyyy-mm-dd')`,`DATE_FORMAT($fechaFin,'yyyy-mm-dd')`,$poster)";
+        try {
+            $this->conexion->beginTransaction();
+            $res = $this->conexion->exec($sql);
+            # Cogemos el id del concurso que acabamos de insertar
+            $sql = "SELECT id FROM concurso WHERE nombre LIKE '$nombre'";
+            $sele = $this->conexion->query($sql);
+            $cons = $sele->fetchAll(PDO::FETCH_ASSOC);
+            $id = $cons[0]['id'];
+            # Las bandas del concurso
+            $banda = $concurso->getBandas();
+            # Los modos
+            $modo = $concurso->getModos();
+            $cuantas = count($banda);
+            $cuantos = count($modo);
+            if ($cuantas > 0) {
+                # si tiene al menos una banda la insertamos
+                for ($i = 0; $i < $cuantas; $i++) {
+                    $sql = "INSERT INTO banda_concurso VALUES(null," . $banda[$i] . "," . $id . ")";
+                    $this->conexion->exec($sql);
+                }
+            }
+            if ($cuantos > 0) {
+                # si tiene al menos un modo la insertamos
+                for ($i = 0; $i < $cuantos; $i++) {
+                    $sql = "INSERT INTO premio VALUES(null," . $id . "," . $modo[$i] . ",null,null,null)";
+                    $this->conexion->exec($sql);
+                }
+            }
+            $this->conexion->commit();
+            return $res;
+        } catch (PDOException $e) {
+            echo "Error en la inserción de concurso  ".$e->getMessage();
+        }
+    }
+    public function delete($id)
+    {
+        # borramos según el id
+        $sql = "DELETE FROM concurso WHERE id LIKE $id";
+        $this->conexion->beginTransaction();
+        $devolveer = $this->conexion->exec($sql);
+        $this->conexion->commit();
+        return $devolveer;
     }
 
     public function getConcursosDisponibles(): array
@@ -151,7 +189,7 @@ class repConcurso
                 $fechaInicioConcurso = new DateTimeImmutable($datos[$i]['fechaInicioConcurso']);
                 $fechaFinConcurso = new DateTimeImmutable($datos[$i]['fechaFinConcurso']);
                 # Si el cartel es null lo seteamos como tal
-                $datos[$i]['cartel']!=null?$cartel = $datos[$i]['cartel']:$cartel=null;
+                $datos[$i]['cartel'] != null ? $cartel = $datos[$i]['cartel'] : $cartel = null;
 
                 $bandas = null;
                 $modos = null;

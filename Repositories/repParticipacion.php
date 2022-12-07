@@ -40,6 +40,16 @@ class repParticipacion {
         return $participantes;
     }
 
+    public function delete($id)
+    {
+        # borramos según el id
+        $sql = "DELETE FROM participacion WHERE id LIKE $id";
+        $this->conexion->beginTransaction();
+        $devolveer = $this->conexion->exec($sql);
+        $this->conexion->commit();
+        return $devolveer;
+    }
+
     public function set(Participacion $part):int | false
     {
         $rol = $part->getRol();

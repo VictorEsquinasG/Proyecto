@@ -84,7 +84,7 @@ class Banda
      */ 
     public function setNombre($nombre)
     {
-        $this->nombre = $nombre;
+        $this->nombre = (string)$nombre;
 
         return $this;
     }

@@ -73,7 +73,6 @@ $valida = new Validacion();
                         <th>Distancia</th>
                         <th>Mínimo</th>
                         <th>Máximo</th>
-                        <th></th>
                     </tr>
                 </thead>
                 <tbody id="tbody">

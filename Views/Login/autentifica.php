@@ -30,7 +30,7 @@ if (isset($_POST['submit'])) {
     <h2>ENTRAR</h2>
     <form action="" method="POST">
         <div class="c-login__user">
-            <input type="text" name="usuario">
+            <input required type="text" name="usuario">
             <label for="usuario">Identificativo / Correo electrónico</label>
             <?= $valida->ImprimirError('usuario') ?>
         </div>

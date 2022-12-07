@@ -5,17 +5,16 @@ window.addEventListener("load", function () {
     nuevo.onclick = function (ev) {
         // Evitamos que nos redireccione
         ev.preventDefault();
-        ////Crear el objeto formulario, titulo, input y boton
+        ////Crear el objeto formulario, titulo, inputs y boton
         let formulario = document.createElement("form");
         let nombre = document.createElement("input");
-        let dist = document.createElement("input");
-        let min = document.createElement("input");
-        let max = document.createElement("input");
         let boton = document.createElement("input");
 
         ////Asignamos atributos al objeto formulario
-        formulario.setAttribute('method', "POST");
+        formulario.setAttribute('method', "post");
         formulario.setAttribute('action', "");
+        // formulario.setAttribute('class', "styled-table");
+
         ////Asignamos atributos al input del nombre
         nombre.setAttribute('type', "text");
         nombre.setAttribute('id', "nombre");
@@ -23,57 +22,40 @@ window.addEventListener("load", function () {
         nombre.setAttribute('placeholder', "Nombre");
         nombre.setAttribute('style', "width:100%;margin: 10px 0px;padding: 5px");
 
-        ////Asignamos atributos al input de la distancia
-        dist.setAttribute('type', "text");
-        dist.setAttribute('id', "distancia");
-        dist.setAttribute('name', "distancia");
-        dist.setAttribute('placeholder', "Distancia");
-        dist.setAttribute('style', "width:100%;margin: 10px 0px;padding: 5px");
-        ////Asignamos atributos al input del mínimo
-        min.setAttribute('type', "text");
-        min.setAttribute('name', "minimo");
-        min.setAttribute('id', "minimo");
-        min.setAttribute('placeholder', "Mínimo");
-        min.setAttribute('style', "width:100%;margin: 10px 0px;padding: 5px");
-        ////Asignamos atributos al input del máximo
-        max.setAttribute('type', "text");
-        max.setAttribute('id', "maximo");
-        max.setAttribute('name', "maximo");
-        max.setAttribute('placeholder', "Máximo");
-        max.setAttribute('style', "width:100%;margin: 10px 0px;padding: 5px");
-
-        // Asignar atributos al boton
+        ////Asignar atributos al boton
         boton.setAttribute('type', "submit");
         boton.setAttribute('value', "Crear");
         boton.setAttribute('class', "c-card__btn c-btn--primary");
         boton.setAttribute('onclick', "location.reload()"); // Recargamos la página
         boton.setAttribute('style', "margin: 15px 10px;");
-        // Todo al formulario
+
         formulario.appendChild(nombre);
-        formulario.appendChild(dist);
-        formulario.appendChild(min);
-        formulario.appendChild(max);
         formulario.appendChild(boton);
-        //Agregamos el formulario a la etiqueta con el ID		
-        document.getElementById('cuerpo').appendChild(formulario);
+        document.getElementById('cuerpo').appendChild(formulario);//Agregar el formulario a la etiqueta con el ID		
+
+
+        //debugger;
         formulario.onsubmit = function (e) {
-            // Impedimos que nos redireccione
             e.preventDefault();
-            // guardamos
+            //alert("hola");
             guardar();
         }
         async function guardar() {
             try {
                 const data = new FormData(formulario);
-                //
-                await fetch("./API/bandasApi.php", {
+                // Lo mandamos a la bd mediante la API
+                var respuesta = await fetch("./API/ModosApi.php", {
                     method: 'POST',
                     mode: 'cors',
                     cache: 'no-cache',
                     body: data,
                     headers: new Headers()
+
                 })
-                    .then(respuesta => console.log(respuesta));
+                .then(respuesta => console.log(respuesta))
+                //    .then(datos=>{
+                .catch(err => console.log("Fallo al leer los concursos", err));
+
             } catch (err) {
                 console.log("Ocurrio un error: " + err);
             }
@@ -103,8 +85,8 @@ function modal(div) {
     caja.style.background = "white";
     caja.style.top = top;
     caja.style.left = left;
-    caja.style.width = "600px";
-    caja.style.height = "345px";
+    caja.style.width = "500px";
+    caja.style.height = "180px";
     caja.style.borderRadius = "10px";
     caja.style.zIndex = 101;
     document.body.appendChild(caja);
@@ -117,7 +99,7 @@ function modal(div) {
     titulo.style.height = "40px";
     titulo.style.width = "100%";
     titulo.style.padding = "10px";
-    titulo.innerHTML = "Nueva Banda";
+    titulo.innerHTML = "Nuevo modo";
     caja.appendChild(titulo);
 
     var cerrar = document.createElement("span");
@@ -141,7 +123,7 @@ function modal(div) {
         location.reload();
     }
     titulo.appendChild(cerrar);
-    // La ventana flotante
+
     var contenido = document.createElement("div");
     contenido.style.top = "40px";
     contenido.style.position = "absolute";

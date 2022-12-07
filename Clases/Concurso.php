@@ -1,6 +1,7 @@
 <?php
 
-class Concurso {
+class Concurso
+{
 
     /* PROPIEDADES */
     private int | null $id;
@@ -30,54 +31,55 @@ class Concurso {
         if (isset($concurso['descripcion'])) {
             # 
             $this->setDesc($concurso['descripcion']);
-        }else {
+        } else {
             $this->setDesc($concurso['desc']);
         }
         if (isset($concurso['fechaInicioInsc'])) {
             # 
             $this->setFechInicioInsc($concurso['fechaInicioInsc']);
-        }else {
+        } else {
             $this->setFechInicioInsc($concurso['fechaInicioInscripcion']);
         }
         if (isset($concurso['fechaFinInsc'])) {
             # 
             $this->setFechFinInsc($concurso['fechaFinInsc']);
-        }else{
+        } else {
             $this->setFechFinInsc($concurso['fechaFinInscripcion']);
         }
         if (isset($concurso['fechInicio'])) {
             # code...
             $this->setFechInicio($concurso['fechInicio']);
-        }else{
+        } else {
             $this->setFechInicio($concurso['fechaInicioConcurso']);
         }
         if (isset($concurso['fechFin'])) {
             # code...
             $this->setFechFin($concurso['fechFin']);
-        }else {
+        } else {
             $this->setFechInicio($concurso['fechaFinConcurso']);
         }
-        if (isset($concurso['cartel']) && is_null($concurso['cartel'])) {
+        if (isset($concurso['cartel']) && !is_null($concurso['cartel'])) {
             $this->setCartel($concurso['cartel']);
         }
         if (isset($concurso['bandas'])) {
             # Si es un array lo metemos en la propiedad, si no lo añadimos al array
             if (is_array($concurso['bandas'])) {
                 $this->setBandas($concurso['bandas']);
-            }else {
-                $tamanio = count($concurso['bandas']);
-                for ($i=0; $i < $tamanio; $i++) { 
-                    $banda = $concurso['bandas'][$i];
-                    $this->addBandas($banda);
-                }
+            } else {
+                $banda = $concurso['bandas'];
+                $this->addBandas($banda);
             }
         }
         if (isset($concurso['modos'])) {
-            $this->setModos($concurso['modos']);
+            if (is_array($concurso['modos'])) {
+                $this->setModos($concurso['modos']);
+            }else {
+                $this->addModos($concurso['modos']);
+            }
         }
     }
 
-    public function rellenaConcurso($id,$nombre,$desc,$fechaInicioInsc,$fechaFinInsc,$fechInicio,$fechFin,$cartel = null)
+    public function rellenaConcurso($id, $nombre, $desc, $fechaInicioInsc, $fechaFinInsc, $fechInicio, $fechFin, $cartel = null)
     {
         $this->setId($id);
         $this->setNombre($nombre);
@@ -87,8 +89,8 @@ class Concurso {
         $this->setFechInicio($fechInicio);
         $this->setFechFin($fechFin);
         // if (isset($cartel) && !(is_null($cartel))) {
-            // PERMITIMOS QUE SEA NULL
-            $this->setCartel($cartel);
+        // PERMITIMOS QUE SEA NULL
+        $this->setCartel($cartel);
         // }
         // $this->setBandas($bandas);
         // $this->setModos($modos);
@@ -107,13 +109,13 @@ class Concurso {
         }
         return $cartel;
     }
-    
+
 
 
     /* GETTERS & SETTERS */
     /**
      * Get el valor de id
-     */ 
+     */
     public function getId()
     {
         $iD = $this->id;
@@ -124,7 +126,7 @@ class Concurso {
      * Set el valor de id
      *
      * @return  self
-     */ 
+     */
     public function setId($id)
     {
         $this->id = $id;
@@ -134,7 +136,7 @@ class Concurso {
 
     /**
      * Get el valor de nombre
-     */ 
+     */
     public function getNombre()
     {
         $name = $this->nombre;
@@ -145,7 +147,7 @@ class Concurso {
      * Set el valor de nombre
      *
      * @return  self
-     */ 
+     */
     public function setNombre($nombre)
     {
         $this->nombre = $nombre;
@@ -155,7 +157,7 @@ class Concurso {
 
     /**
      * Get el valor de desc
-     */ 
+     */
     public function getDesc()
     {
         $descr = $this->desc;
@@ -166,7 +168,7 @@ class Concurso {
      * Set el valor de desc
      *
      * @return  self
-     */ 
+     */
     public function setDesc($desc)
     {
         $this->desc = $desc;
@@ -176,10 +178,10 @@ class Concurso {
 
     /**
      * Get el valor de fechInicioInsc
-     */ 
-    public function getFechInicioInsc()
+     */
+    public function getFechInicioInsc():DateTimeImmutable
     {
-        $fecha = $this->fechInicioInsc; 
+        $fecha = $this->fechInicioInsc;
         return $fecha;
     }
 
@@ -187,13 +189,17 @@ class Concurso {
      * Set el valor de fechInicioInsc
      *
      * @return  self
-     */ 
+     */
     public function setFechInicioInsc($fechInicioInsc)
     {
-        // $valida = new Validacion();
+        // $valida = new Validacion(); 
         // $fin = $this->fechFinInsc;
         // if (!isset($fin) || ($valida->EnteroRango($fechInicioInsc,$fin))) {
-            $this->fechInicioInsc = $fechInicioInsc;
+            if (gettype($fechInicioInsc) === 'object') {
+                $this->fechInicioInsc = $fechInicioInsc;
+            }else{
+                $this->fechInicioInsc = new DateTimeImmutable($fechInicioInsc);
+            }
         // }else {
         //     throw new Exception("Error FECHA DE FIN DE INSCRIPCIÓN NO ESTABLECIDA");
         // }
@@ -203,10 +209,10 @@ class Concurso {
 
     /**
      * Get el valor de fechInicio
-     */ 
-    public function getFechInicio()
+     */
+    public function getFechInicio():DateTimeImmutable
     {
-        $fecha = $this->fechInicio; 
+        $fecha = $this->fechInicio;
         return $fecha;
     }
 
@@ -214,17 +220,21 @@ class Concurso {
      * Set el valor de fechInicio
      *
      * @return  self
-     */ 
+     */
     public function setFechInicio($fechInicio)
     {
-        $this->fechInicio = $fechInicio;
+        if (gettype($fechInicio) === 'object') {
+            $this->fechInicio = $fechInicio;
+        }else {
+            $this->fechInicio = new DateTimeImmutable($fechInicio);
+        }
 
         return $this;
     }
 
     /**
      * Get el valor de fechFinInsc
-     */ 
+     */
     public function getFechFinInsc()
     {
         $fecha = $this->fechFinInsc;
@@ -235,12 +245,17 @@ class Concurso {
      * Set el valor de fechFinInsc
      *
      * @return  self
-     */ 
+     */
     public function setFechFinInsc($fechFinInsc)
     {
         $valida = new Validacion();
-        if (!isset($this->fechFinInsc) || ($valida->EnteroRango($fechFinInsc,new DateTime('now')))) {
-            $this->fechFinInsc = $fechFinInsc;
+        if (!isset($this->fechFinInsc) || ($valida->EnteroRango($fechFinInsc, new DateTime('now')))) {
+            
+            if (gettype($fechFinInsc) === 'object') {
+                $this->fechFinInsc = $fechFinInsc;
+            }else {
+                $this->fechFinInsc = new DateTimeImmutable($fechFinInsc);
+            }
         }
 
         return $this;
@@ -248,10 +263,10 @@ class Concurso {
 
     /**
      * Get el valor de fechFin
-     */ 
+     */
     public function getFechFin()
     {
-        $fecha =$this->fechFin; 
+        $fecha = $this->fechFin;
         return $fecha;
     }
 
@@ -259,20 +274,27 @@ class Concurso {
      * Set el valor de fechFin
      *
      * @return  self
-     */ 
+     */
     public function setFechFin($fechFin)
     {
-        $this->fechFin = $fechFin;
-
+        if (gettype($fechFin) === 'object') {
+            $this->fechFin = $fechFin;
+        }else{
+            $this->fechFin = new DateTimeImmutable($fechFin);
+        }
         return $this;
     }
 
     /**
      * Get el valor de cartel
-     */ 
+     */
     public function getCartel()
     {
-        $poster = $this->cartel; 
+        if (isset($this->cartel)) {
+            $poster = $this->cartel;
+        }else {
+            $poster = null;     
+        }
         return $poster;
     }
 
@@ -280,7 +302,7 @@ class Concurso {
      * Set el valor de cartel
      *
      * @return  self
-     */ 
+     */
     public function setCartel($cartel)
     {
         $this->cartel = $cartel;
@@ -290,10 +312,10 @@ class Concurso {
 
     /**
      * Get el valor de bandas
-     */ 
+     */
     public function getBandas()
     {
-        $gang = $this->bandas; 
+        $gang = $this->bandas;
         return $gang;
     }
 
@@ -306,17 +328,23 @@ class Concurso {
      * Set el valor de bandas
      *
      * @return  self
-     */ 
-    public function addBandas(Banda $bandas)
+     */
+    public function addBandas($bandas)
     {
-        $this->bandas[$bandas->getId()] = $bandas;
+        $this->bandas[] = $bandas;
+
+        return $this;
+    }
+    public function addModos($modos)
+    {
+        $this->modos[] = $modos;
 
         return $this;
     }
 
     /**
      * Get el valor de modos
-     */ 
+     */
     public function getModos()
     {
         $aux = $this->modos;
@@ -327,10 +355,10 @@ class Concurso {
      * Set el valor de modos
      *
      * @return  self
-     */ 
+     */
     public function setModos($modos)
     {
-        if ($modos!=null) {
+        if ($modos != null) {
             # Asignamos el/los modos
             $this->modos = $modos;
         }

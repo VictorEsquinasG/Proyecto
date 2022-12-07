@@ -55,6 +55,15 @@ class repDiploma
             throw new PDOException("Error leyendo por clave primaria: " . $e->getMessage());
         }
     }
+    public function delete($id)
+    {
+        # borramos según el id
+        $sql = "DELETE FROM diploma WHERE id LIKE $id";
+        $this->conexion->beginTransaction();
+        $devolveer = $this->conexion->exec($sql);
+        $this->conexion->commit();
+        return $devolveer;
+    }
 
     /**
      * Devuelve el registro con clave primaria

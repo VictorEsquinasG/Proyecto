@@ -174,4 +174,13 @@ class repUsuarios
             throw new PDOException("Error al insertar: " . $e->getMessage());
         }
     }
+    public function delete($id)
+    {
+        # borramos según el id
+        $sql = "DELETE FROM participante WHERE id LIKE $id";
+        $this->conexion->beginTransaction();
+        $devolveer = $this->conexion->exec($sql);
+        $this->conexion->commit();
+        return $devolveer;
+    }
 }

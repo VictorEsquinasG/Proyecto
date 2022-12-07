@@ -55,4 +55,18 @@ class repQSO
         }
     }
 
+    public function delete($id)
+    {
+        # borramos
+        $sql = "DELETE FROM qso WHERE id LIKE $id";
+        try {
+            $this->conexion->beginTransaction();
+            $return = $this->conexion->exec($sql);
+            $this->conexion->commit();
+            return $return;
+        } catch (PDOException $e) {
+            echo "Error al borrar mensaje ".$e->getMessage();
+        }
+    }
+
 }

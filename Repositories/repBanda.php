@@ -56,6 +56,16 @@ class repBanda
         return $bandas;
     }
 
+    public function delete($id)
+    {
+        # borramos según el id
+        $sql = "DELETE FROM banda WHERE id LIKE $id";
+        $this->conexion->beginTransaction();
+        $devolveer = $this->conexion->exec($sql);
+        $this->conexion->commit();
+        return $devolveer;
+    }
+
     // getFromConcurso
     // $sql = "SELECT * FROM BANDA_CONCURSO BC
         // INNER JOIN BANDA B ON B.ID = BC.BANDA_ID";
@@ -100,7 +110,7 @@ class repBanda
         $max = $a->getMax_rango();
         $min = $a->getMin_rango();
         // Preparamos y realizamos el insert
-        $sql = "INSERT INTO banda VALUES (null,$nombre,$dist,$min,$max)";
+        $sql = "INSERT INTO banda VALUES (null,'$nombre',$dist,$min,$max)";
         try {
             // Ejecutamos la instrucción
             return $this->conexion->exec($sql);
