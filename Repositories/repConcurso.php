@@ -364,6 +364,45 @@ class repConcurso
         }
     }
 
+    public function update($id, Concurso $concurso)
+    {
+        # Cogemos los campos del nuevo concurso
+        $nombre = $concurso->getNombre();
+        $des = $concurso->getDesc();
+        $feIn = $concurso->getFechInicioInsc()->format('Y-m-d H:i:s');
+        $feIn2 = $concurso->getFechFinInsc()->format('Y-m-d H:i:s');
+        $fe = $concurso->getFechInicio()->format('Y-m-d H:i:s');
+        $fe2 = $concurso->getFechFin()->format('Y-m-d H:i:s');
+        $poster = $concurso->getCartel();
+        $bandas = $concurso->getBandas();
+        $modos = $concurso->getModos();
+        # editamos 
+        $sql = "UPDATE concurso SET `nombre` = '$nombre',`descripcion` = '$des', `fechaInicioInscripcion` = '$feIn',
+        `fechaFinInscripcion` = '$feIn2', `fechaInicioConcurso` = '$fe', `fechaFinConcurso` = '$fe2', `cartel` = '$poster'  
+         WHERE id LIKE $id";
+         try {
+            $this->conexion->beginTransaction();
+            # Primero actualizamos la tabla CONCURSO
+            $this->conexion->exec($sql);
+            # Ahora actualizaremos las tablas de MODO y BANDA
+            for ($i=0; $i < count($modos); $i++) { 
+                # Primero cada uno de los modos
+                $modo_id = $modos[$i];
+                // $modo_id = $mode->getId();
+                $this->conexion->exec("UPDATE premio SET modo_id = $modo_id WHERE concurso_id LIKE $id");
+            }
+            for ($i=0; $i < count($bandas); $i++) { 
+                # Ahora cada una de las bandas
+                $banda_id = $bandas[$i];
+                // $banda_id = $band->getId();
+                $this->conexion->exec("UPDATE banda_concurso SET banda_id = $banda_id WHERE concurso_id LIKE $id");
+            }
+            $this->conexion->commit();
+         } catch (PDOException $e) {
+            echo "Error actualizando concurso ".$e->getMessage();
+         }
+    }
+
     /**
      * 
      * @param $campovalor un array con el nombre de la columna y el dato que se buscan

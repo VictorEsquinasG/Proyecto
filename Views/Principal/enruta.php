@@ -30,6 +30,8 @@ if (isset($_GET['menu'])) {
         require_once './Views/Mantenimiento/borrado.php'; //?id='.$_GET['id'].'&q=mensaje';
     }else if ($_GET['menu'] == "mensaje") {
         require_once './Views/Mantenimiento/mensaje.php';
+    }else if ($_GET['menu'] == "editar") {
+        require_once './Views/Mantenimiento/editaConcurso.php';
     }
     
     

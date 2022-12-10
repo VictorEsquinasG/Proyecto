@@ -73,7 +73,7 @@ class Concurso
         if (isset($concurso['modos'])) {
             if (is_array($concurso['modos'])) {
                 $this->setModos($concurso['modos']);
-            }else {
+            } else {
                 $this->addModos($concurso['modos']);
             }
         }
@@ -179,7 +179,7 @@ class Concurso
     /**
      * Get el valor de fechInicioInsc
      */
-    public function getFechInicioInsc():DateTimeImmutable
+    public function getFechInicioInsc(): DateTimeImmutable
     {
         $fecha = $this->fechInicioInsc;
         return $fecha;
@@ -194,13 +194,15 @@ class Concurso
     {
         // $valida = new Validacion(); 
         // $fin = $this->fechFinInsc;
-        // if (!isset($fin) || ($valida->EnteroRango($fechInicioInsc,$fin))) {
-            if (gettype($fechInicioInsc) === 'object') {
-                $this->fechInicioInsc = $fechInicioInsc;
-            }else{
-                $this->fechInicioInsc = new DateTimeImmutable($fechInicioInsc);
-            }
-        // }else {
+        // cogemos la fecha, si no es DateTime la convertimos
+        if (gettype($fechInicioInsc) === 'object') {
+            $fecha = $fechInicioInsc;
+        } else {
+            $fecha = new DateTimeImmutable($fechInicioInsc);
+        }
+
+        $this->fechInicioInsc = $fecha;
+        // } else {
         //     throw new Exception("Error FECHA DE FIN DE INSCRIPCIÓN NO ESTABLECIDA");
         // }
 
@@ -210,7 +212,7 @@ class Concurso
     /**
      * Get el valor de fechInicio
      */
-    public function getFechInicio():DateTimeImmutable
+    public function getFechInicio(): DateTimeImmutable
     {
         $fecha = $this->fechInicio;
         return $fecha;
@@ -225,7 +227,7 @@ class Concurso
     {
         if (gettype($fechInicio) === 'object') {
             $this->fechInicio = $fechInicio;
-        }else {
+        } else {
             $this->fechInicio = new DateTimeImmutable($fechInicio);
         }
 
@@ -250,10 +252,10 @@ class Concurso
     {
         $valida = new Validacion();
         if (!isset($this->fechFinInsc) || ($valida->EnteroRango($fechFinInsc, new DateTime('now')))) {
-            
+
             if (gettype($fechFinInsc) === 'object') {
                 $this->fechFinInsc = $fechFinInsc;
-            }else {
+            } else {
                 $this->fechFinInsc = new DateTimeImmutable($fechFinInsc);
             }
         }
@@ -279,7 +281,7 @@ class Concurso
     {
         if (gettype($fechFin) === 'object') {
             $this->fechFin = $fechFin;
-        }else{
+        } else {
             $this->fechFin = new DateTimeImmutable($fechFin);
         }
         return $this;
@@ -292,8 +294,8 @@ class Concurso
     {
         if (isset($this->cartel)) {
             $poster = $this->cartel;
-        }else {
-            $poster = null;     
+        } else {
+            $poster = null;
         }
         return $poster;
     }

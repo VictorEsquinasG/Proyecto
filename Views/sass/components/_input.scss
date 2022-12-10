@@ -3,6 +3,12 @@ input {
         border-color: $colorError;
     }
 }
+.error{
+    color: white;
+    background-color: $colorError;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
 
 .c-add__img {
     & input[type="file"] {

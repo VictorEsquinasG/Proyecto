@@ -237,6 +237,12 @@ input--error {
   border-color: rgb(93, 34, 21);
 }
 
+.error {
+  color: white;
+  background-color: rgb(93, 34, 21);
+  padding: 5px 10px;
+}
+
 .c-add__img input[type=file] {
   display: none;
 }

@@ -1,5 +1,5 @@
 <?php
-$admin = false; // Suponemos que no es admin
+$admin = Sesion::existe('user') && Sesion::leer('user')->getRol() === 'admin'; // es admin
 echo ("<h1 class='g--font-size-5l'>CONCURSOS</h1>");
 
 $valida = new Validacion();
@@ -10,11 +10,13 @@ if ((Sesion::existe('user') && Sesion::leer('user')->getRol() === 'admin')) {
     // Si ha creado (y es admin)
     if (isset($_POST['submit'])) {
         $valida->Requerido('nombre');
-        $valida->Requerido('desc');
+        $valida->Requerido('descripcion');
         $valida->Requerido('inicioInsc');
-        $valida->Requerido('inicio');
         $valida->Requerido('finInsc');
+        $valida->fechaPosterior($_POST['inicioInsc'],$_POST['finInsc'],'inicioInsc');
+        $valida->Requerido('inicio');
         $valida->Requerido('fin');
+        $valida->fechaPosterior($_POST['inicio'],$_POST['fin'],'inicio');
 
         if ($valida->ValidacionPasada()) {
             # El concurso creado
@@ -22,7 +24,7 @@ if ((Sesion::existe('user') && Sesion::leer('user')->getRol() === 'admin')) {
             # Cogemos los valores y validamos
             $con['id'] = null;
             $con['nombre'] = $_POST['nombre'];
-            $con['desc'] = $_POST['desc'];
+            $con['desc'] = $_POST['descripcion'];
             $con['fechaInicioInsc'] = $_POST['inicioInsc'];
             $con['fechaFinInsc'] = $_POST['finInsc'];
             $con['fechInicio'] = $_POST['inicio'];
@@ -71,8 +73,9 @@ if ((Sesion::existe('user') && Sesion::leer('user')->getRol() === 'admin')) {
             <tbody id="tbody">
                 <!-- La primera fila servirá para que los administradores creen nuevos concursos -->
                 <?php
-                if (Sesion::existe('user') && Sesion::leer('user')->getRol() === 'admin') {
-                    $admin = true; # es admin
+                if ($admin) {
+                    # es admin
+
                     # Las bandas
                     $rpB = new repBanda(gbd::getConexion());
                     $bandas = $rpB->getAll();
@@ -89,27 +92,36 @@ if ((Sesion::existe('user') && Sesion::leer('user')->getRol() === 'admin')) {
                         # Rellenamos el SELECT
                         $optModos .= '<option value="' . $modos[$i]->getId() . '">' . $modos[$i]->getNombre() . '</option>';
                     }
+                    # Errores
+                    $erNombre = $valida->ImprimirError('nombre');
+                    $erDesc = $valida->ImprimirError('descripcion');
+                    $erFinins = $valida->ImprimirError('inicioInsc');
+                    $erFfinsc = $valida->ImprimirError('finInsc');
+                    $erFinC = $valida->ImprimirError('inicio');
+                    $erFfinC = $valida->ImprimirError('fin');
+                    $erBandas = $valida->ImprimirError('bandas');
+                    $erModos = $valida->ImprimirError('modos');
                     # Escribimos la fila de adición
                     $fila = <<<EOD
                     <tr id="crear">
                         <td></td> <!-- Borrar tampoco tiene sentido definirlo -->
                         <td>
                             <input type="text" name="nombre" id="nombre" placeholder="Nombre"></td>
-                            
+                            $erNombre
                         <td>
-                            <input type="text" name="desc" id="desc" placeholder="Descripción"></td>
-                            
+                            <input type="text" name="descripcion" id="desc" placeholder="Descripción"></td>
+                            $erDesc
                         <td> <!-- Title creará un tooltip -->
                             <input type="date" name="inicioInsc" title="Fecha Inicio">
-                            
                             <input type="date" name="finInsc" title="Fecha Fin">
-                            
+                            $erFinins
+                            $erFfinsc
                         </td>
                         <td>
                             <input type="date" name="inicio" title="Fecha Inicio">
-                           
                             <input type="date" name="fin" title="Fecha Fin">
-                            
+                            $erFinC
+                            $erFfinC
                         </td>
                         <td>
                             <select name="bandas[]" multiple>
@@ -117,7 +129,7 @@ if ((Sesion::existe('user') && Sesion::leer('user')->getRol() === 'admin')) {
                                 $optBandas
                                 
                             </select>
-                            
+                            $erBandas
                         </td>   
                         <td>
                             <select name="modos[]" selected="-1" multiple>
@@ -125,7 +137,7 @@ if ((Sesion::existe('user') && Sesion::leer('user')->getRol() === 'admin')) {
                                 $optModos
                                 
                             </select>
-                            
+                            $erModos
                         </td>   
                         <td><div class="c-add__img"id="btnImg" onclick="getFile()">
                                 <label for="img" class="img">Subir foto</label>
@@ -157,7 +169,7 @@ if ((Sesion::existe('user') && Sesion::leer('user')->getRol() === 'admin')) {
                             # Si es admin le sale la columna de borrado y edición
                             if ($clave === 'id') {
                                 # La primera columna 
-                                echo '<td class="del" idConcurso="' . $concurso[$clave] . '"><div><a href="?menu=bconcurso&id=' . $concurso[$clave] . '&q=concurso"><img src="./images/trash.png" height="20px" class="btnBorrar" alt="borrar"></a><a href="?menu=editar"><img height="20px" src="./images/paint-brush.png"></a></div></td> <!-- Borrar -->';
+                                echo '<td class="del" idConcurso="' . $concurso[$clave] . '"><div><a href="?menu=bconcurso&id=' . $concurso[$clave] . '&q=concurso"><img src="./images/trash.png" height="20px" class="btnBorrar" alt="borrar"></a><a href="?menu=editar&id=' . $concurso[$clave] . '"><img height="20px" src="./images/paint-brush.png"></a></div></td> <!-- Borrar -->';
                             }
                         }
                         // Agruparemos los 2 conjuntos de fechas
