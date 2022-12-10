@@ -56,13 +56,16 @@ class repUsuarios
      * Devuelve el registro con clave primaria
      *
      * @param array $id valores de la id
-     * @return void
+     * @return Usuario
      */
     public function getById($id)
     {
-        $sql = "select id,indicativo,email,password,". 
-        "rol,ST_X(gps) as lat,ST_Y(gps) as lon,imagen,nombre,ap1,ap2" .
+        $sql = "SELECT id,indicativo,email,`password`, ". 
+        "rol,ST_X(gps) as lat,ST_Y(gps) as lon,imagen,nombre,ap1,ap2 " .
         "FROM participante WHERE id = $id";
+        // $sql = "SELECT * ,". 
+        // "rol,ST_X(gps) as lat,ST_Y(gps) as lon" .
+        // "FROM participante WHERE id = $id";
 
         try {
             $consulta = $this->conexion->query($sql);

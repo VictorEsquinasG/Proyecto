@@ -1,6 +1,6 @@
 <?php
 
-class Banda
+class Banda implements JsonSerializable
 {
     /* PROPIEDADES */
     private int | null $id;
@@ -172,5 +172,18 @@ class Banda
         $this->idConcurso = $idConcurso;
 
         return $this;
+    }
+
+    public function jsonSerialize()
+    {
+        # 
+        $json = new stdClass();
+        $json->id = $this->getId();
+        $json->idConcurso = $this->getIdConcurso();
+        $json->nombre = $this->getNombre();
+        $json->distancia = $this->getDistancia();
+        $json->max_rango = $this->getMax_rango();
+        $json->min_rango = $this->getMin_rango();
+        return $json;
     }
 }

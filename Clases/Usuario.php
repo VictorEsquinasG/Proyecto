@@ -4,16 +4,16 @@ class Usuario
 {
     // use Rol;
     /* PROPIEDADES */
-    private $id;
-    private $identificativo;
-    private $nombre;
-    private $ap1;
-    private $ap2;
-    private $email;
-    private $pssword;
-    private $rol;
-    private Gps $gps;
-    private $img;
+    public $id;
+    public $identificativo;
+    public $nombre;
+    public $ap1;
+    public $ap2;
+    public $email;
+    public $pssword;
+    public $rol;
+    public Gps $gps;
+    public $img;
 
     /**
      * Constructor a partir de un array asociativo

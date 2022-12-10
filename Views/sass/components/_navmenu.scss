@@ -1,9 +1,9 @@
 header {
-    width: 100vw;
+    width: 100%;
     height: fit-content;
     background-color: rgb(255, 255, 255);
     position: sticky;
-    overflow: hidden;
+    // overflow: hidden;
     z-index: 3;
     /* Nos aseguramos que queda por encima */
 }
@@ -12,7 +12,6 @@ nav {
     text-align: center;
     margin-bottom: 3em;
     display: block;
-    width: 100vw;
     height: inherit;
     // position: fixed;
     background-color: $bg-nav;
@@ -24,7 +23,7 @@ nav {
             display: flex;
             flex-direction: row;
             flex-wrap: nowrap;
-            width: 100%;
+            width: 95%;
             height: inherit;
             text-align: center;
             margin: auto;

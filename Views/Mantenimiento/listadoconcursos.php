@@ -15,7 +15,7 @@ if ((Sesion::existe('user') && Sesion::leer('user')->getRol() === 'admin')) {
         $valida->Requerido('inicio');
         $valida->Requerido('finInsc');
         $valida->Requerido('fin');
-    
+
         if ($valida->ValidacionPasada()) {
             # El concurso creado
             $concurso = new Concurso();
@@ -33,10 +33,10 @@ if ((Sesion::existe('user') && Sesion::leer('user')->getRol() === 'admin')) {
             } else {
                 $con['cartel'] = null;
             }
-            
+
             $con['bandas'] = $_POST['bandas'];
             $con['modos'] = $_POST['modos'];
-    
+
             # Rellenamos el concurso
             $concurso->rellenaConcursoArray($con);
             # Lo insertamos
@@ -56,8 +56,8 @@ if ((Sesion::existe('user') && Sesion::leer('user')->getRol() === 'admin')) {
             <thead>
                 <tr>
                     <!-- Cuando es admin le añadimos la columna de borrado -->
-                    <?= $admin?"<th></th>":null ?> 
-                    <th>ID</th>
+                    <?= $admin ? "<th></th>" : null ?>
+                    <!-- <th>ID</th> -->
                     <th>NOMBRE</th>
                     <th>Descripción</th>
                     <th>Periodo de inscripción</th>
@@ -92,8 +92,7 @@ if ((Sesion::existe('user') && Sesion::leer('user')->getRol() === 'admin')) {
                     # Escribimos la fila de adición
                     $fila = <<<EOD
                     <tr id="crear">
-                        <td></td> <!-- Borrar tampoco tiene sentido -->
-                        <td></td> <!-- El campo del id no se define -->
+                        <td></td> <!-- Borrar tampoco tiene sentido definirlo -->
                         <td>
                             <input type="text" name="nombre" id="nombre" placeholder="Nombre"></td>
                             
@@ -152,11 +151,14 @@ if ((Sesion::existe('user') && Sesion::leer('user')->getRol() === 'admin')) {
                 for ($i = 0; $i < $tamanno; $i++) {
                     echo "<tr>";
                     $concurso = $data[$i];
-                    
+
                     foreach ($concurso as $clave => $valor) {
-                        if ($clave === 'id' ) {
-                            # La primera columna 
-                            echo '<td class="del" idConcurso="'.$concurso[$clave].'"><div><a href="?menu=bconcurso&id='.$concurso[$clave].'&q=concurso"><img src="./images/trash.png" height="20px" class="btnBorrar" alt="borrar"></a><a href="?menu=editar"><img height="20px" src="./images/paint-brush.png"></a></div></td> <!-- Borrar -->';
+                        if ($admin) {
+                            # Si es admin le sale la columna de borrado y edición
+                            if ($clave === 'id') {
+                                # La primera columna 
+                                echo '<td class="del" idConcurso="' . $concurso[$clave] . '"><div><a href="?menu=bconcurso&id=' . $concurso[$clave] . '&q=concurso"><img src="./images/trash.png" height="20px" class="btnBorrar" alt="borrar"></a><a href="?menu=editar"><img height="20px" src="./images/paint-brush.png"></a></div></td> <!-- Borrar -->';
+                            }
                         }
                         // Agruparemos los 2 conjuntos de fechas
                         if (($clave === "fechaInicioInscripcion") || ($clave === "fechaFinInscripcion") ||
@@ -212,9 +214,8 @@ if ((Sesion::existe('user') && Sesion::leer('user')->getRol() === 'admin')) {
                                 }
                                 echo "</td>";
                             } else {
-                                # Cuando no es cartel
-                                echo "<td>";
-                                echo $txt;
+                                # Cuando no es cartel ni ID
+                                echo $clave !='id' ? "<td>" . $txt:"";
                             }
                         }
                         echo "</td>";
@@ -222,11 +223,9 @@ if ((Sesion::existe('user') && Sesion::leer('user')->getRol() === 'admin')) {
                     $hoy = date("Y-m-d H:i:s");
                     $date = date("Y-m-d H:i:s", (int)$concurso['fechaFinInscripcion']);
 
-                    // if ($date > $hoy) # Si la fecha es mayor a hoy no ha pasado aún
-                    {
-                        # Si todavía se puede inscribir
-                        echo "<td id='entraConcurso'>" . "<a href='?concurso=" . $concurso['id'] . "' class='c-login__btn--submit'>Unirme</a>" . "</td>";
-                    }
+                    # Mostramos la página del concurso
+                    echo "<td id='entraConcurso'>" . "<a href='?concurso=" . $concurso['id'] . "' class='c-login__btn--submit'>Ver</a>" . "</td>";
+
                     echo "</tr>";
                 }
                 // Rellenamos los modos y las bandas
@@ -252,7 +251,6 @@ if ((Sesion::existe('user') && Sesion::leer('user')->getRol() === 'admin')) {
 <!-- El input para la imagen -->
 <script src="./js/profpic.js"></script>
 <script>
-
     window.addEventListener("load", () => {
         // var unir = document.getElementById('entraConcurso');
 

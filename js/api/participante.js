@@ -7,86 +7,90 @@ window.addEventListener("load", function () {
         ev.preventDefault();
         ////Crear el objeto formulario, titulo, input y boton
         let formulario=document.createElement("form");
-        let titulo=document.createElement("label");
         let nombre=document.createElement("input");
         let contrasena=document.createElement("input");
         let mail=document.createElement("input");
         let indicativo=document.createElement("input");
         let ubi =document.createElement("input");
         let imagen =document.createElement("input");
-        let cajaTextRol=document.createElement("input");
+        let Rol=document.createElement("select");
         let boton=document.createElement("input");
  
-        ////Asignamos atributos al objeto formulario
+        // El objeto formulario
             formulario.setAttribute('method', "post");
             formulario.setAttribute('action', "");
-            formulario.setAttribute('class', "styled-table");
  
-            ////Asignamos atributos al input del nombres
+            // El input del nombres
             nombre.setAttribute('type', "text");
             nombre.setAttribute('id', "nombre");
             nombre.setAttribute('name', "nombre");
             nombre.setAttribute('placeholder', "Nombre");
-            nombre.setAttribute('style', "width:100%;margin: 10px 0px;padding: 5px");
+            nombre.setAttribute('style', "width:90%;margin: 10px 0px;padding: 5px");
  
-            ////Asignamos atributos al input de la contraseña
-            contrasena.setAttribute('type', "text");
+            // El input de la contraseña
+            contrasena.setAttribute('type', "password");
             contrasena.setAttribute('id', "contrasena");
             contrasena.setAttribute('name', "contrasena");
             contrasena.setAttribute('placeholder', "Contraseña");
-            contrasena.setAttribute('style', "width:100%;margin: 10px 0px;padding: 5px");
+            contrasena.setAttribute('style', "width:90%;margin: 10px 0px;padding: 5px");
  
-            ////Asignamos atributos al input del correo
-            mail.setAttribute('type', "text");
+            // El input del correo
+            mail.setAttribute('type', "email");
             mail.setAttribute('name', "email");
             mail.setAttribute('id', "email");
             mail.setAttribute('placeholder', "Email");
-            mail.setAttribute('style', "width:100%;margin: 10px 0px;padding: 5px");
+            mail.setAttribute('style', "width:90%;margin: 10px 0px;padding: 5px");
  
-            ////Asignamos atributos al input del INDICATIVO
+            // El input del INDICATIVO
             indicativo.setAttribute('type', "text");
             indicativo.setAttribute('id', "indicativo");
             indicativo.setAttribute('name', "indicativo");
             indicativo.setAttribute('placeholder', "Indicativo");
-            indicativo.setAttribute('style', "width:100%;margin: 10px 0px;padding: 5px");
+            indicativo.setAttribute('style', "width:90%;margin: 10px 0px;padding: 5px");
 
-            ////Asignar atributos al input de la ubicación
+            // El input de la ubicación
             ubi .setAttribute('type', "text");
-            ubi .setAttribute('id', "localizacion");
-            ubi .setAttribute('name', "localizacion");
-            ubi .setAttribute('placeholder', "Localiacion");
-            ubi .setAttribute('style', "width:100%;margin: 10px 0px;padding: 5px");
+            ubi .setAttribute('name', "ubi");
+            ubi .setAttribute('placeholder', "Localización");
+            ubi .setAttribute('style', "width:90%;margin: 10px 0px;padding: 5px");
 
-            ////Asignar atributos al objeto caja de texto de IMAGEN
-            imagen .setAttribute('type', "text");
+            // La IMAGEN
+            imagen .setAttribute('type', "file");
             imagen .setAttribute('id', "imagen");
             imagen .setAttribute('name', "imagen");
             imagen .setAttribute('placeholder', "Imagen");
-            imagen .setAttribute('style', "width:100%;margin: 10px 0px;padding: 5px");
+            imagen .setAttribute('style', "width:90%;margin: 10px 0px;padding: 5px");
  
-            ////Asignar atributos al objeto caja de texto de ROL
-            cajaTextRol.setAttribute('type', "text");
-            cajaTextRol.setAttribute('id', "rol");
-            cajaTextRol.setAttribute('name', "rol");
-            cajaTextRol.setAttribute('placeholder', "Rol");
-            cajaTextRol.setAttribute('style', "width:100%;margin: 10px 0px;padding: 5px");
+            // Asignamos atributos al select de ROL
+            var mindundi = document.createElement('option');
+            var admin = document.createElement('option');
+            mindundi.innerHTML = "Participante";
+            mindundi.value = "user";
+            admin.innerHTML = "Administrador";
+            admin.value = "admin";
+            
+            Rol.setAttribute('id', "rol");
+            Rol.setAttribute('name', "rol");
+            Rol.setAttribute('placeholder', "Rol");
+            Rol.setAttribute('style', "width:90%;margin: 10px 0px;padding: 5px");
+            Rol.appendChild(mindundi);
+            Rol.appendChild(admin);
         
-            ////Asignar atributos al objeto boton
+            // Asignamos atributos al objeto boton
             boton.setAttribute('type', "submit");	
-            boton.setAttribute('value', "Enviar");
+            boton.setAttribute('value', "Crear");
+            boton.setAttribute('class', "c-card__btn c-btn--primary");
             boton.setAttribute('onlcick', "location.reload()");
-            boton.setAttribute('style', "width:100px;margin: 10px 0px;padding: 10px;background:#F05133;color:#fff;border:solid 1px #000;");
-            //boton.setAttribute('onclick', "alert('Se ha añadido un nuevo bandas')");
+            boton.setAttribute('style', "width:100px;margin: 10px 0px;padding: 10px;");
+            //boton.setAttribute('onclick', "alert('Se ha añadido un nuevo participante')");
  
-            titulo.innerHTML='<h1>Bandas</h1>';
-            formulario.appendChild(titulo);
             formulario.appendChild(nombre);
             formulario.appendChild(contrasena);
             formulario.appendChild(mail);
             formulario.appendChild(indicativo);
             formulario.appendChild(ubi );
             formulario.appendChild(imagen );
-            formulario.appendChild(cajaTextRol);
+            formulario.appendChild(Rol);
             formulario.appendChild(boton);
             document.getElementById('cuerpo').appendChild(formulario);//Agregar el formulario a la etiqueta con el ID		
             
@@ -114,7 +118,7 @@ window.addEventListener("load", function () {
                    try{
                        const data = new FormData(formulario);
                        //
-                       var respuesta = await fetch("http://localhost/Proyecto/API/bandasApi.php",{
+                       var respuesta = await fetch("./API/participantesApi.php",{
                            method: 'POST',
                            mode: 'cors',
                            cache: 'no-cache',
@@ -128,10 +132,10 @@ window.addEventListener("load", function () {
 
                        })*/
                        console.log(respuesta);
-                       alert ("Nuevo bandas creado");
+                       alert ("Nuevo participante creado");
 
                    } catch(err){
-                       console.log("Ocurrio un error: "+err);
+                       console.log("Ocurrió un error: "+err);
                    }
                 }
         modal(formulario);
@@ -141,7 +145,7 @@ window.addEventListener("load", function () {
 function modal(div) {
     var modal = this.document.createElement("div");
     modal.style.position = "fixed";
-    modal.style.background = "#020202";
+    modal.style.background = "grey";
     modal.style.opacity = 0.5;
     modal.style.top = 0;
     modal.style.left = 0;
@@ -155,21 +159,24 @@ function modal(div) {
     var top = parseInt((window.innerHeight - 300) / 2) + "px";
 
     caja.style.position = "fixed";
-    caja.style.background = "#FFFFFF";
+    caja.style.background = "white";
     caja.style.top = top;
     caja.style.left = left;
-    caja.style.width = "600px";
-    caja.style.height = "400px";
+    caja.style.width = "400px";
+    caja.style.height = "490px";
+    caja.style.borderRadius = "10px";
     caja.style.zIndex = 101;
     document.body.appendChild(caja);
 
     var titulo = document.createElement("div");
     titulo.style.position = "absolute";
-    titulo.style.background = "#BBBBBB";
-    titulo.style.height = "40px";
+    titulo.style.background = "#FF8F35";
+    titulo.style.fontFamily = '-apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif';
+    titulo.style.color = "white";
+    titulo.style.height = "20px";
     titulo.style.width = "100%";
     titulo.style.padding= "10px";
-    titulo.innerHTML="Nueva Banda";
+    titulo.innerHTML="Nuevo Participante";
     caja.appendChild(titulo);
 
     var cerrar = document.createElement("span");

@@ -1,6 +1,6 @@
 <?php
 
-class Modo
+class Modo implements JsonSerializable
 {
     /* PROPIEDADES */
     private int | null $id;
@@ -67,4 +67,14 @@ class Modo
         return $this;
     }
 
+    public function jsonSerialize()
+    {
+        # Para que se pueda parsear a JSON
+        $json = new stdClass();
+        
+        $json->id = $this->getId();
+        $json->nombre = $this->getNombre();
+        
+        return $json;
+    }
 }

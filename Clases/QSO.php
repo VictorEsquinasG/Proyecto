@@ -1,12 +1,13 @@
 <?php
 
 // MENSAJES QSO
-class QSO
+class QSO implements JsonSerializable
 {
 
     /* PROPIEDADES */
-    private int $id;
-    private int $id_participante;
+    private int | null $id;
+    private int | null $id_participacion;
+    private int $id_concurso;
     private int $id_banda;
     private int $id_modo;
     private string $indicativo_juez;
@@ -16,10 +17,11 @@ class QSO
     /**
      * Constructor
      */
-    public function rellenaQSO($id, $id_participante,$id_modo,$id_banda,$indicativo_juez,$hora)
+    public function rellenaQSO($id,$id_participacion,$id_concurso,$id_modo,$id_banda,$indicativo_juez,$hora)
     {
         $this->setId($id);
-        $this->setId_participante($id_participante);
+        $this->setId_participante($id_participacion);
+        $this->setId_concurso($id_concurso);
         $this->setId_modo($id_modo);
         $this->setId_banda($id_banda);
         $this->setIndicativo_juez($indicativo_juez);
@@ -30,7 +32,8 @@ class QSO
      * Constructor
      * Requiere un Array Asociativo con las siguientes claves: 
      * @param id El id del mensaje
-     * @param id_participante El id del participante que realiza el mensaje
+     * @param id_participante El id de la participacion del participante que realiza el mensaje
+     * @param id_concurso El id del concurso en el que se realiza el mensaje
      * @param id_modo El id del modo
      * @param id_banda El id de la banda
      * @param indicativo_juez El indicativo del juez contactado
@@ -40,6 +43,7 @@ class QSO
     {
         $this->setId($mensaje['id']);
         $this->setId_participante($mensaje['id_participante']);
+        $this->setId_concurso($mensaje['id_concurso']);
         $this->setId_modo($mensaje['id_modo']);
         $this->setId_banda($mensaje['id_banda']);
         $this->setIndicativo_juez($mensaje['indicativo_juez']);
@@ -68,21 +72,21 @@ class QSO
     }
 
     /**
-     * Get el valor de id_participante
+     * Get el valor de id_participacion
      */
     public function getId_participante()
     {
-        return $this->id_participante;
+        return $this->id_participacion;
     }
 
     /**
-     * Set el valor de id_participante
+     * Set el valor de id_participacion
      *
      * @return  self
      */
-    public function setId_participante($id_participante)
+    public function setId_participante($id_participacion)
     {
-        $this->id_participante = $id_participante;
+        $this->id_participacion = $id_participacion;
 
         return $this;
     }
@@ -122,7 +126,12 @@ class QSO
      */
     public function setHora($hora)
     {
-        $this->hora = $hora;
+        if (gettype($hora)==="DateTimeImmutable") {
+            # ya es una fecha
+            $this->hora = $hora;
+        }else {
+            $this->hora = new DateTimeImmutable($hora);
+        }
 
         return $this;
     }
@@ -165,5 +174,40 @@ class QSO
         $this->id_modo = $id_modo;
 
         return $this;
+    }
+
+    /**
+     * Get the value of id_concurso
+     */ 
+    public function getId_concurso()
+    {
+        return $this->id_concurso;
+    }
+
+    /**
+     * Set the value of id_concurso
+     *
+     * @return  self
+     */ 
+    public function setId_concurso($id_concurso)
+    {
+        $this->id_concurso = $id_concurso;
+
+        return $this;
+    }
+
+    public function jsonSerialize(): mixed
+    {
+       $json = new stdClass();
+       
+        $json->id = $this->getId();
+        $json->participacion = $this->getId_participante();
+        $json->idConcurso = $this->getId_concurso();
+        $json->id_banda = $this->getId_banda();
+        $json->id_modo = $this->getId_modo();
+        $json->juez = $this->getIndicativo_juez();
+        $json->hora = $this->getHora();
+
+       return $json; 
     }
 }

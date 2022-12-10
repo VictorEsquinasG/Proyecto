@@ -60,10 +60,36 @@ class repBanda
     {
         # borramos según el id
         $sql = "DELETE FROM banda WHERE id LIKE $id";
-        $this->conexion->beginTransaction();
-        $devolveer = $this->conexion->exec($sql);
-        $this->conexion->commit();
-        return $devolveer;
+        try {
+            // 
+            $this->conexion->beginTransaction();
+            $devolveer = $this->conexion->exec($sql);
+            $this->conexion->commit();
+            return $devolveer;
+        } catch (PDOException $e) {
+            echo "Error al borrar banda: ".$e->getMessage();
+        }
+    }
+
+    public function update(int $id,Banda $banda)
+    {
+        # Cogemos la banda a editar
+        // $aEditar = $this->getById($id);
+        # Los valores 
+        $nom = $banda->getNombre();
+        $dis = $banda->getDistancia();
+        $min = $banda->getMin_rango();
+        $max = $banda->getMax_rango();
+        # La instrucción SQL
+        $sql = "UPDATE banda SET `nombre`='$nom',`distancia`=$dis,`min-rango`=$min,`max-rango`=$max ".
+        "WHERE id LIKE $id";
+        try {
+            $this->conexion->beginTransaction();
+            $this->conexion->exec($sql);
+            $this->conexion->commit();
+        } catch (PDOException $e) {
+            echo "Error al editar la tabla: ".$e->getMessage();
+        }
     }
 
     // getFromConcurso
@@ -74,7 +100,7 @@ class repBanda
      * Devuelve el registro con clave primaria
      *
      * @param array $id valores de la id
-     * @return void
+     * @return 
      */
     public function getById($id)
     {

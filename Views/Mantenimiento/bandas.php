@@ -1,6 +1,8 @@
 <?php
 /* VALIDADOR */
 $valida = new Validacion();
+/* SI ES ADMIN */
+$admin = Sesion::existe('user') && Sesion::leer('user')->getRol() === 'admin';
 # SI SE MANDÓ EL FORMULARIO
 // if (isset($_POST['submit'])) {
 //     $valida->Requerido('nombre');
@@ -68,11 +70,12 @@ $valida = new Validacion();
             <table class="editable">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <!-- <th>ID</th> -->
                         <th>Nombre</th>
                         <th>Distancia</th>
                         <th>Mínimo</th>
                         <th>Máximo</th>
+                        <?= $admin ? '<th></th>':'' ?>
                     </tr>
                 </thead>
                 <tbody id="tbody">
@@ -86,14 +89,16 @@ $valida = new Validacion();
                         <td> <input type="submit" id="btnGuardar" value="Guardar"></td>
                     </tr> -->
                     <?php
-                    $fila = <<<EOD
-                    <form action="" method="POST">
-                        <input class="c-card__btn c-btn--primary" id="annadir" type="submit" name="annadir" value="+">
-                    </form>
-                    <!-- El modal que añade las bandas -->
-                    <script src="./js/api/bandas.js"></script>
-                    EOD;
-                    echo $fila;
+                    if ($admin) {
+                        # CREAR
+                        $fila = <<<EOD
+                        <form action="" method="POST">
+                            <input class="c-card__btn c-btn--primary" id="annadir" type="submit" name="annadir" value="+">
+                        </form>
+                        <!-- El modal que añade las bandas -->
+                        EOD;
+                        echo $fila;
+                    }
                     ?>
 
                     <!-- EL RESTO DEL LISTADO -->
@@ -106,11 +111,13 @@ $valida = new Validacion();
                         $banda = $bandas[$i];
                         # Filas + columnas
                         echo "<tr>";
-                        echo "<td>" . $banda->getId() . "</td>";
+                        // echo "<td>" . $banda->getId() . "</td>";
                         echo "<td>" . $banda->getNombre() . "</td>";
                         echo "<td>" . $banda->getDistancia() . "</td>";
-                        echo "<td>" . $banda->getMin_rango() . "</td>";
-                        echo "<td>" . $banda->getMax_rango() . "</td>";
+                        echo "<td>" . $banda->getMin_rango() . "KHz</td>";
+                        echo "<td>" . $banda->getMax_rango() . "KHz</td>";
+                        # La última columna será de borrado y edición si es admin
+                        echo $admin ? "<td>".'<div><img src="./images/trash.png" height="20px" idBanda="' . $banda->getId() . '" class="btnBorrar" alt="borrar"><img height="20px" idBanda="' . $banda->getId() . '" src="./images/paint-brush.png" class="btnEd" alt="editar"></div>'."</td>" : "";
                         echo "</tr>";
                     }
                     ?>
@@ -120,7 +127,33 @@ $valida = new Validacion();
                 </tfoot>
             </table>
         </div>
-        <script src="./js/api/listados.js"></script>
-        <script src="./js/api/tabla.js"></script>
+        
+        <script src="./js/api/bandas.js"></script>
+        <script>
+            window.addEventListener("load",()=>{
+                // Captaremos los botones
+                var btns = document.querySelectorAll('.btnBorrar');
+                // var btnsEd = document.querySelectorAll('.btnEd');
+
+                //PARA BORRAR LAS BANDAS
+                btns.forEach(boton => {
+                    boton.onclick = function () {
+                        var id = boton.getAttribute('idBanda');
+                        fetch("./API/borraBanda.php?id="+id)
+                        .then(response => location.reload())
+                        .catch(err => console.log("Error al borrar banda de id "+id, err));
+                    }
+                });
+                // PARA EDITAR
+                // btns.forEach(boton => {
+                //     boton.onclick = function () {
+                //         var id = boton.getAttribute('idBanda');
+                //         fetch("./API/editaBanda.php?id="+id)
+                //         .then(response => location.reload())
+                //         .catch(err => console.log("Error al editar banda de id "+id, err));
+                //     }
+                // });     
+            });
+        </script>
     </article>
 </section>

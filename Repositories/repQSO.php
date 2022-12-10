@@ -32,8 +32,8 @@ class repQSO
      */
     public function getById($id)
     {
-        $sql = "select * FROM QSO 
-        WHERE id = $id ";
+        $sql = "SELECT * FROM QSO 
+        WHERE id LIKEw $id ";
 
         try {
             $consulta = $this->conexion->query($sql);
@@ -41,17 +41,48 @@ class repQSO
 
             $id = $datos[0]['id'];
             $participante = $datos[0]['participacion_id'];
+            $concurso = $datos[0]['concurso_id'];
             $banda = $datos[0]['banda_id'];
             $modo = $datos[0]['modo_id'];
             $hora = new DateTimeImmutable($datos[0]['hora']);
             $juez = $datos[0]['indicativo_juez'];          
             
             $QSO = new QSO();
-            $QSO->rellenaQSO($id,$participante,$modo,$banda,$juez,$hora);
+            $QSO->rellenaQSO($id,$participante,$concurso,$modo,$banda,$juez,$hora);
 
             return $QSO;
         } catch (PDOException $e) {
             throw new PDOException("Error leyendo por clave primaria: " . $e->getMessage());
+        }
+    }
+
+    public function getMsg($idConcurso,$idParticipacion)
+    {
+        $mensajes = [];
+        # buscamos los mensajes realizados por el concursante en dicho concurso
+        $sql = "SELECT * FROM qso WHERE participacion_id LIKE $idParticipacion AND concurso_id LIKE $idConcurso";
+        try {
+            $this->conexion->beginTransaction();
+            $consul = $this->conexion->query($sql);
+            $data = $consul->fetchAll(PDO::FETCH_ASSOC);
+            for ($i=0; $i < count($data); $i++) { 
+                # formamos el mensaje
+                $msg['id'] = $data[$i]['id'];
+                $msg['id_participante'] = $data[$i]['participacion_id'];
+                $msg['id_concurso'] = $data[$i]['concurso_id'];
+                $msg['id_modo'] = $data[$i]['modo_id'];
+                $msg['id_banda'] = $data[$i]['banda_id'];
+                $msg['indicativo_juez'] = $data[$i]['indicativo_juez'];
+                $msg['fecha'] = $data[$i]['hora'];
+                $qso = new QSO();
+                $qso->rellenaQSOArray($msg);
+                # añadimos el mensaje al array
+                $mensajes[] = $qso;
+            }
+            $this->conexion->commit();
+            return $mensajes;
+        } catch (PDOException $e) {
+            echo "Error al buscar sus mensajes: ".$e->getMessage();
         }
     }
 
@@ -66,6 +97,25 @@ class repQSO
             return $return;
         } catch (PDOException $e) {
             echo "Error al borrar mensaje ".$e->getMessage();
+        }
+    }
+    public function set(QSO $QSO)
+    {
+        $us = $QSO->getId_participante(); #ID participacion -> no participante 
+        $mod = $QSO->getId_modo();
+        $band = $QSO->getId_banda();
+        $juez = $QSO->getIndicativo_juez();
+        $concurso = $QSO->getId_Concurso();
+        $t = $QSO->getHora()->format('Y-m-d H:i:s');;
+        # borramos
+        $sql = "INSERT INTO qso VALUES (null,$band,$us,'$juez',$concurso,'$t',$mod)";
+        try {
+            $this->conexion->beginTransaction();
+            $return = $this->conexion->exec($sql);
+            $this->conexion->commit();
+            return $return;
+        } catch (PDOException $e) {
+            echo "Error al añadir mensaje ".$e->getMessage();
         }
     }
 

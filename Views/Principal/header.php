@@ -3,7 +3,7 @@
     <nav>
         <div class="c-nav__contenedor">
             <div id="c-btn-home">
-                <a class="menu" href="?menu=inicio"><img src="./images/elpatronlogo.png" alt="El Patrón"></a>
+                <a class="menu" href="?menu=inicio"><img src="./images/elpatronlogo1.png" alt="El Patrón"></a>
                 <!-- <a class="menu" href="?menu=inicio"><img width="90" height="auto" src="./images/radio-imagen-animada-0070.gif" alt="El Patrón"></a> -->
             </div>
 

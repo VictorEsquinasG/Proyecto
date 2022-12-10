@@ -112,6 +112,30 @@ class repConcurso
         return $concursos;
     }
 
+    public function getJueces($id):array
+    {
+        $jueces = [];
+        $r = new repUsuarios(gbd::getConexion());
+        #Jueces del concurso
+        $sql = "SELECT P.participante_id FROM concurso C ".
+        "JOIN participacion P WHERE c.id LIKE $id";
+        try {
+            #Conseguimos el id del participante que es juez
+            $consulta = $this->conexion->query($sql);
+            $participante = $consulta->fetchAll(PDO::FETCH_ASSOC);
+
+            for ($i=0; $i < count($participante); $i++) { 
+                # devolveremos a los usuarios que son jueces
+                $id_usuario = $participante[$i]['participante_id'];
+                $juez_dred = $r->getById($id_usuario);
+                $jueces[]= $juez_dred;
+            }
+            return $jueces;
+        } catch (PDOException $e) {
+            echo "Error al leer los jueces del concurso ".$e->getMessage();
+        }
+    }
+
     public function set(Concurso $concurso)
     {
         $nombre = $concurso->getNombre();
@@ -173,7 +197,7 @@ class repConcurso
         # El array
         $concursos = [];
         # Preguntamos por concursos que nos podamos inscribir
-        $sql = "SELECT * FROM concurso WHERE fechaFinInscripcion>curdate()";
+        $sql = "SELECT * FROM concurso WHERE fechaFinInscripcion>=curdate()";
         try {
             $consulta = $this->conexion->query($sql);
             $datos = $consulta->fetchAll(PDO::FETCH_ASSOC);

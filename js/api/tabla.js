@@ -210,25 +210,29 @@ window.onload = function () {
     }
 
     var btnGuardar = document.getElementById('btnGuardar');
-    btnGuardar.addEventListener('click', () => {
-        const datosFila = [];
-        var tBody = document.getElementsByTagName("tbody")[0];
-        var filas = tBody.rows;
-
-        for (let i = 0; i < filas.length; i++) {
-
-            const datos = [];
-            for (let j = 0; j < filas[i].cells.length; j++) {
-                // LOS TDS
-                if (filas[i].cells[j].className !== "AutomaticoByTablaEditable") {
-                    datos.push(filas[i].cells[j].innerHTML);
+    if(typeof(btnGuardar) != 'undefined' && btnGuardar != null)
+    {
+        // Si el btnGuardar existe en la tabla
+        btnGuardar.addEventListener('click', () => {
+            const datosFila = [];
+            var tBody = document.getElementsByTagName("tbody")[0];
+            var filas = tBody.rows;
+    
+            for (let i = 0; i < filas.length; i++) {
+    
+                const datos = [];
+                for (let j = 0; j < filas[i].cells.length; j++) {
+                    // LOS TDS
+                    if (filas[i].cells[j].className !== "AutomaticoByTablaEditable") {
+                        datos.push(filas[i].cells[j].innerHTML);
+                    }
                 }
+                datosFila.push(datos);
+    
             }
-            datosFila.push(datos);
-
-        }
-        localStorage.setItem("Datos", JSON.stringify(datosFila));
-    });
+            localStorage.setItem("Datos", JSON.stringify(datosFila));
+        });
+    }
 
     //     function () {
     //         const datosFila = [];

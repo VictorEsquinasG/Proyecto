@@ -3,6 +3,7 @@
     font-family: Arial, Helvetica, sans-serif;
     font-size: $font-size;
     text-align: center;
+    vertical-align:middle;
     display: inline-block;
     cursor: pointer;
     /* Para que parezca un botón */
@@ -51,6 +52,6 @@
         
     }
 }
-.btnBorrar{
+.btnBorrar, .btnEd{
     cursor: pointer;
 }

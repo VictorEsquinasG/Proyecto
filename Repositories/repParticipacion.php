@@ -40,6 +40,51 @@ class repParticipacion {
         return $participantes;
     }
 
+    public function get($idConcurso,$idParticipante)
+    {
+        # Encontramos la participación
+        $sql = "SELECT * FROM participacion WHERE concurso_id LIKE $idConcurso AND participante_id LIKE $idParticipante";
+        try {
+            $consulta = $this->conexion->query($sql);
+            $data = $consulta->fetchAll(PDO::FETCH_ASSOC);
+            # cogemos todas las columnas
+            $id = $data[0]['id'];
+            $rol = $data[0]['rol'];
+            $con = $data[0]['concurso_id'];
+            $part = $data[0]['participante_id'];
+            $par = new Participacion();
+            $par->rellenaParticipacion($id,$rol,$con,$part);
+            return $par;
+        } catch (PDOException $e) {
+            echo "Error al buscar participación ".$e->getMessage();
+        }
+    }
+
+    public function getNumJueces($id)
+    {
+        # Cogemos los jueces del concurso con ID dada
+        $sql = "SELECT COUNT(id) FROM PARTICIPACION WHERE concurso_id LIKE $id AND rol LIKE 'juez'";
+        try {
+            $consulta = $this->conexion->query($sql);
+            $result = $consulta->fetchAll(PDO::FETCH_ASSOC);
+            return $result[0];
+        } catch (PDOException $e) {
+            echo "Error al contar el nº de jueces de base de datos: ".$e->getMessage();
+        }
+    } 
+
+    public function cuantos($id)
+    {
+        $sql = "SELECT COUNT(id) FROM PARTICIPACION WHERE concurso_id LIKE $id";
+        try {
+            $consulta = $this->conexion->query($sql);
+            $result = $consulta->fetchAll(PDO::FETCH_ASSOC);
+            return $result[0];
+        } catch (PDOException $e) {
+            echo "Error al contar el nº de participantes de base de datos: ".$e->getMessage();
+        }
+    }
+
     public function delete($id)
     {
         # borramos según el id
