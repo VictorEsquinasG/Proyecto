@@ -8,8 +8,6 @@ if (isset($_COOKIE['recuerdame'])) {
     # Si ya se logueó
     header("Location:?menu=inicio");
 }
-var_dump($_FILES);
-var_dump($_POST);
 $valida = new Validacion();
 // Si el formulario se ha enviado
 if (isset($_POST['submit'])) {
@@ -36,9 +34,11 @@ if (isset($_POST['submit'])) {
             $user['email'] = $_POST['mail'];
             $user['pssword'] = $_POST['contrasena'];
             $user['rol'] = 'user'; // Por defecto
-            if (isset($_POST['imagen']) && $_POST['imagen'] != '') {
+           
+            #TODO
+            if (isset($_FILES['imagen']) && !empty($_FILES['imagen'])) {
                 # le añadimos la imagen
-                $imagen=file_get_contents($_POST['imagen']);
+                $imagen=file_get_contents($_FILES['imagen']['tmp_name']);
                 $imagen=base64_encode($imagen);
                 $user['img'] = $imagen;
             } else {
@@ -53,12 +53,13 @@ if (isset($_POST['submit'])) {
             $us = new Usuario();
             $us->rellenaUsuarioArray($user);
             //Realizamos el insert
-            if ($rep->addUser($us)) {
-                // creamos la sesion
-                Sesion::escribir("user", $us);
+            $rep->addUser($us) ;
+            // iniciamos la sesion
+            if (Login::Identifica($_POST['usuario'],$_POST['contrasena'],false)){
                 // lo redireccionamos a la página principal
-                header("Location:?menu=inicio") ;
+                header("Location:?menu=inicio") ;                
             }
+            
         } catch (Exception $e) {
             echo "Error durante la creación del usuario: " . $e->getMessage();
         }
@@ -71,7 +72,7 @@ if (isset($_POST['submit'])) {
 <section id="registro">
     <div class="c-registro">
         <h2>Registrarse</h2>
-        <form action="" method="POST">
+        <form action="" method="POST" enctype="multipart/form-data">
             <div class="c-registro__contenedor">
                 <div class="c-registro__txt">
                     <div class="c-registro__txt__user">

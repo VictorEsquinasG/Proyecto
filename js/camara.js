@@ -49,7 +49,7 @@ window.addEventListener("load", function () {
     localStorage.setItem('picture', image_data_url);
     input.files[0] = localStorage.getItem('picture'); */
     canvas.toBlob((blob)=>{
-      const file= new File([blob],"imagen.png");
+      const file= new File([blob],"tmp_name"); // lo llamamos igual que el que espera del input
       const dT=new DataTransfer();
       dT.items.add(file);
       input.files=dT.files;

@@ -171,10 +171,13 @@ class repUsuarios
         $sql = "INSERT INTO participante VALUES (null,'$indicativo','$mail','$passwd','$rol',$gps,'$img','$nombre','$ap1','$ap2')";
         try {
             // Ejecutamos la instrucción
-            $prep = $this->conexion->prepare($sql);
-            return $prep->execute();
+            $this->conexion->beginTransaction();
+            $this->conexion->exec($sql);
+            $this->conexion->commit();
+            return true;
         } catch (PDOException $e) {
             throw new PDOException("Error al insertar: " . $e->getMessage());
+            return false;
         }
     }
     public function delete($id)
@@ -185,5 +188,18 @@ class repUsuarios
         $devolveer = $this->conexion->exec($sql);
         $this->conexion->commit();
         return $devolveer;
+    }
+    public function updateImg(int $id,string $img)
+    {
+        # La instrucción
+        $sql = "UPDATE participante SET imagen = '$img' WHERE id LIKE $id";
+        try {
+            // Ejecutamos
+            $this->conexion->beginTransaction();
+            $this->conexion->exec($sql);
+            $this->conexion->commit();
+        } catch (PDOException $e) {
+            echo "Error al actualizar imagen de perfil en base de datos ".$e->getMessage();
+        }
     }
 }

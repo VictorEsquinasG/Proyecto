@@ -18,41 +18,40 @@ if (isset($_COOKIE['id'])) {
         # Si tiene imagen se la imprimimos
         echo "<img src='data:image/png;base64," . $concurso->getCartel() . "'>";
     }
-    
+
     $participantes = $repP->getParticipantes($idConcurso);
     $concursosD = $rp->getConcursosDisponibles();
     # Concurso = disponible
     for ($j = 0; $j < count($concursosD); $j++) {
         if ($concursosD[$j]->getId() === $concurso->getId()) {
             # Si el concurso existiera y el usuario no está en él
-            for ($i = 0; $i < count($participantes); $i++) {
-                # comprobamos si no es uno de los participantes ya inscritos
-                if (!in_array(Sesion::leer('user')->getId(), $participantes)) {
-                    # pintamos el botón de unirse
-                    echo "<form action='' method='POST'>";
-                    echo "<input type='submit' class='c-card__btn c-btn--primary c-btn--primary__form' name='submit' value='Unirse'>";
-                    echo "</form>";
-                } else {
-                    $participacion = new Participacion();
-                    $parti = $repP->get($idConcurso,Sesion::leer('user')->getId());
-                    $participacion->rellenaParticipacion(null,'user',$idConcurso,$parti->getId());
+            # comprobamos si no es uno de los participantes ya inscritos
+            if (!in_array(Sesion::leer('user')->getId(), $participantes)) {
+                # pintamos el botón de unirse
+                echo "<form action='' method='POST'>";
+                echo "<input type='submit' class='c-card__btn c-btn--primary c-btn--primary__form' name='submit' value='Unirse'>";
+                echo "</form>";
+            } else {
+                $participacion = new Participacion();
+                $parti = $repP->get($idConcurso, Sesion::leer('user')->getId());
+                $participacion->rellenaParticipacion(null, 'user', $idConcurso, $parti->getId());
 
-                    $participa = true;
-                }
+                $participa = true;
             }
             // echo "<button onclick='unirse($idConcurso)'>Unirse</button>";
         }
     }
-    
+
     print "</div>";
-    
+
     print "<div class='c-contConcurso__desc'>";
     print "<p> Descripción: " . $concurso->getDesc() . "</p>";
     # numero de participantes del concurso
     $num = $repP->cuantos($idConcurso);
     $jueces = $repP->getNumJueces($idConcurso);
-    echo "<p>Participantes:" . $num['COUNT(id)']."\n";
-    echo "Jueces:" . $jueces['COUNT(id)'] . "</p>";
+    echo "<br>";
+    echo "<img src='./images/hombre.png' width='20px' title='participantes' alt='Participantes'>" . $num['COUNT(id)'] . "\n";
+    echo "<img src='./images/judge.png' width='20px' title='jueces' alt='Jueces'>" . $jueces['COUNT(id)'] . "</p>";
     print "</div>";
 
     print "<div class='c-concursos__tabla'>";
@@ -84,7 +83,7 @@ if (isset($_COOKIE['id'])) {
     }
     echo "</tbody>";
     echo "</table>";
-    
+
     # Mensajes
     if ($participa && Sesion::leer('user')->getRol() !== 'juez') {
         # Si es concursante podrá enviar mensajes
@@ -92,19 +91,19 @@ if (isset($_COOKIE['id'])) {
         $repModo = new repModo(gbd::getConexion());
         #RELLENAMOS LA TABLA DE MENSAJES
         $rM = new repQSO(gbd::getConexion());
-        $mensajes = $rM->getMsg($idConcurso,$parti->getId());
+        $mensajes = $rM->getMsg($idConcurso, $parti->getId());
         $filas = "";
-        for ($i=0; $i < count($mensajes); $i++) { 
+        for ($i = 0; $i < count($mensajes); $i++) {
             $filas .= "<tr>";
             # Cogemos el mensaje que toca
             $m = $mensajes[$i];
             # Listamos los mensajes
-            $filas .= "<td>".$m->getHora()->format('d/m/Y H:i:s')."</td>";
+            $filas .= "<td>" . $m->getHora()->format('d/m/Y H:i:s') . "</td>";
             $banda = $repbanda->getById($m->getId_Banda());
-            $filas .= "<td>".$banda->getNombre()."</td>";
+            $filas .= "<td>" . $banda->getNombre() . "</td>";
             $modo = $repModo->getById($m->getId_modo());
-            $filas .= "<td>".$modo->getNombre()."</td>";
-            $filas .= "<td>". $m->getIndicativo_juez()."</td>";
+            $filas .= "<td>" . $modo->getNombre() . "</td>";
+            $filas .= "<td>" . $m->getIndicativo_juez() . "</td>";
             $filas .= "</tr>";
         }
         $msg = <<<EOD

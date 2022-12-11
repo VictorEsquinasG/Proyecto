@@ -16,7 +16,7 @@ $tamanio = count($concursos);
     for ($i=0; $i < $tamanio; $i++){ 
         # cada concurso se añade
         $concursos[$i]->tieneCartel()?$img = '<img src="data:image/png;base64,'.$concursos[$i]->getCartel().'" width="100px" class="c-card__img">':$img = '';
-        $btn = '<a href="?concurso='.$concursos[$i]->getId().'" class="c-card__btn c-card__btn--primary">Unirse</a>';
+        $btn = '<a href="?concurso='.$concursos[$i]->getId().'" class="c-card__btn c-card__btn--primary">Ir</a>';
         $name = $concursos[$i]->getNombre();
         # Si hay concursos activos saldrán en la primera plana
         $div = <<<EOD
