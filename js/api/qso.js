@@ -84,7 +84,7 @@ window.addEventListener("load", function () {
         //debugger;
         formulario.onsubmit = function (e) {
             e.preventDefault();
-            //TODO
+            // Validado
             if (mensajeValidado(formulario,idConcurso)) {
                 // Si pasa la validación se guarda
                 guardar();

@@ -5,9 +5,10 @@ class GBD
     private static $con;
 
     /**
-     * Devuelve la conexión
+     * Devuelve la conexión 
+     * si no existe, la crea primero
      *
-     * @return void
+     * @return PDO conexión
      */
     public static function getConexion(): PDO
     {

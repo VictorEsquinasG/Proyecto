@@ -7,13 +7,17 @@
     //     $body = file_get_contents("php://input");   
     // }
 
-    $id = $_POST['id'];
+    Sesion::iniciar();
+    if (Sesion::existe('user') && Sesion::leer('user')->getRol('admin')) {
+        # Sólo si tiene credenciales le permitimos utilizar la API
+        $id = $_POST['id'];
 
-    $rp = new repBanda(gbd::getConexion());
-    $banda = new Banda();
+        $rp = new repBanda(gbd::getConexion());
+        $banda = new Banda();
 
-    $banda->rellenaBanda(null,$_POST['nombre'],$_POST['distancia'],$_POST['minimo'],$_POST['maximo']);
-    $rep = new repBanda(gbd::getConexion());
-    echo json_encode($rep->update($id,$banda));
+        $banda->rellenaBanda(null,$_POST['nombre'],$_POST['distancia'],$_POST['minimo'],$_POST['maximo']);
+        $rep = new repBanda(gbd::getConexion());
+        echo json_encode($rep->update($id,$banda));
+    }
     
 ?>

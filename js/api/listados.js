@@ -45,7 +45,7 @@ async function getParticipantes() {
 
             if (response.status == 200) {
                 console.log("Operación realizada con éxito");
-                response => response.json(); // a JSON
+                return response.json(); // a JSON
             }else {
                 console.log("Hubo un error en la operación (Listar usuarios)");
             }

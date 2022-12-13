@@ -1,6 +1,6 @@
 <?php
 
-class Usuario
+class Usuario implements JsonSerializable
 {
     // use Rol;
     /* PROPIEDADES */
@@ -71,11 +71,17 @@ class Usuario
         return $this;
     }
 
-    public function getNombreCompleto():string
+    /**
+     * Devuelve el nombre completo del usuario en formato
+     * NOMBRE APELLIDO1 APELLIDO2 
+     * con las primeras letras mayúsculas
+     */
+    public function getNombreCompleto(): string
     {
-        # Componemos el nombre completo
-        $nombre = $this->getNombre() . " " . $this->getAp1() . " " . $this->getAp2();
-        return $nombre;
+        # Componemos el nombre completo pasamos a minusculas todos los segmentos
+        $nombre = strtolower($this->getNombre()) . " " . strtolower($this->getAp1()) . " " . strtolower($this->getAp2());
+        # Ahora ponemos la primera letra de cada palabra a mayúsculas
+        return ucwords($nombre);
     }
 
     /**
@@ -165,7 +171,7 @@ class Usuario
     /**
      * Get el valor de  pssword
      */
-    public function getPssword():string
+    public function getPssword(): string
     {
         $pass = $this->pssword;
         return $pass;
@@ -223,7 +229,7 @@ class Usuario
         if (($rol === 'user') || ($rol === 'admin')) {
             $this->rol = $rol;
             return $this;
-        }else {
+        } else {
             throw new Exception("Error. Rol de usuario no válido");
         }
     }
@@ -231,7 +237,7 @@ class Usuario
     /**
      * Get el valor de  gps
      */
-    public function getGps():gps
+    public function getGps(): gps
     {
         $direccion = $this->gps;
         return $direccion;
@@ -251,7 +257,7 @@ class Usuario
 
     /**
      * Get el valor de  id
-     */ 
+     */
     public function getId()
     {
         $idnum = $this->id;
@@ -262,11 +268,31 @@ class Usuario
      * Set el valor de  id
      *
      * @return  self
-     */ 
+     */
     private function setId($id)
     {
         $this->id = $id;
 
         return $this;
+    }
+
+    public function jsonSerialize(): mixed
+    {
+        # Método para poder hacer un JSON de Usuario
+        # Aunque sus propiedades sean privadas
+        $json = new stdClass();
+
+        $json->id = $this->getId();
+        $json->indicativo = $this->getIdentificativo();
+        $json->email = $this->getEmail();
+        $json->password = $this->getPssword();
+        $json->nombre = $this->getNombre();
+        $json->apellido1 = $this->getAp1();
+        $json->apellido2 = $this->getAp2();
+        $json->rol = $this->getRol();
+        $json->Gps = $this->getGps();
+        $json->imagen = $this->getImg();
+
+        return $json;
     }
 }

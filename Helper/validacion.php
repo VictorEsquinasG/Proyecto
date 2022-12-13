@@ -47,6 +47,9 @@ class Validacion
         return true;
     }
         
+    /**
+     * Comprueba que está en el rango dado y que es REAL (float)
+     */
     public function RealRango($campo, $min = PHP_FLOAT_MIN, $max = PHP_FLOAT_MAX)
     {
         if (!filter_var(

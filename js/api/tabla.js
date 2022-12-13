@@ -65,7 +65,7 @@ HTMLTableElement.prototype.editar = function () {
     // var th = document.createElement('th');
 
     // th.setAttribute("rowspan", thead.rows.length); // MIDA LO QUE MIDA LA TABLA
-    // th.className = "AutomaticoByTablaEditable"; // TODOS LOS TH QUE SE CREAN SE LES PONE UNA CLASE IDENTIFICADORA
+    // th.className = "AutomaticoByTablaEditable"; // TOS LOS TH QUE SE CREAN SE LES PONE UNA CLASE IDENTIFICADORA
     // th.innerHTML = "⚙";
     // thead.querySelector('tr').appendChild(th);
     for (let i = 1; i < tbody.rows.length; i++) {

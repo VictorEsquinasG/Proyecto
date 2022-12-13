@@ -39,7 +39,7 @@ for ($i=0; $i < count($concursos); $i++) {
 
 $selecConcurso = <<<EOD
 <th>
-    <select id="" name="conc">
+    <select id="conc" name="conc">
         $opt
     </select>
 </th>
@@ -57,7 +57,13 @@ EOD;
         </thead>
         <tbody>
             <?php
-                $mensajes = $rm->getFrom($idConcurso);
+                /*
+                 Cogemos el concurso según el SELECT y ponemos el SELECT fijo con el concurso de la ID por si entra siendo juez
+                 a través de su concurso
+                */ //TODO
+                $concurso = $rC->getById();
+                // Los mensajes
+                $mensajes = $rm->getFrom($concurso->getId());
                 $name = $concurso->getNombre();
                 foreach ($mensajes as $msg) {
                     # Cada mensaje se añade a la tabla

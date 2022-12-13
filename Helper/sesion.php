@@ -34,6 +34,12 @@ class Sesion
         return $existe;
     }
 
+    /**
+     * Escribe una propiedad en Sesion
+     * La reescribe si ya existia
+     * @param mixed clave: el indice (nombre de la propiedad)
+     * @param mixed valor: el valor que queremos asignarle  
+     */
     public static function escribir($clave,$valor):void
     {
         $_SESSION[$clave] = $valor;

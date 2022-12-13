@@ -1,6 +1,10 @@
 <?php
 class Login
 {
+    /**
+     * Comprueba si existe un usuario e inicia su sesión
+     * @return bool Devuelve true si existe y false si no existe
+     */
     public static function Identifica(string $usuario,string $contrasena,bool $recuerdame):bool
     {
         $user = Login::ExisteUsuario($usuario, $contrasena);

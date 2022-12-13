@@ -176,7 +176,8 @@ class Banda implements JsonSerializable
 
     public function jsonSerialize()
     {
-        # 
+        # Función que sirve para crear un objeto
+        # que es el que devuelve el JSON_ENCODE() 
         $json = new stdClass();
         $json->id = $this->getId();
         $json->idConcurso = $this->getIdConcurso();

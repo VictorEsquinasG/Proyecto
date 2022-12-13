@@ -7,15 +7,19 @@
     //     $body = file_get_contents("php://input");   
     // }
 
-    $id = $_POST['id'];
-
-    $rp = new repModo(gbd::getConexion());
-    $modo = new Modo();
-
-    $modo->rellenaModo(null,$_POST['nombre']);
-    $rep = new repModo(gbd::getConexion());
-    $devolver = json_encode($rep->update($id,$modo));
-
-    return $devolver;
+    Sesion::iniciar();
+    if (Sesion::existe('user') && Sesion::leer('user')->getRol('admin')) {
+        # Sólo si tiene credenciales le permitimos utilizar la API
+        $id = $_POST['id'];
+    
+        $rp = new repModo(gbd::getConexion());
+        $modo = new Modo();
+    
+        $modo->rellenaModo(null,$_POST['nombre']);
+        $rep = new repModo(gbd::getConexion());
+        $devolver = json_encode($rep->update($id,$modo));
+    
+        return $devolver;
+    }
     
 ?>
