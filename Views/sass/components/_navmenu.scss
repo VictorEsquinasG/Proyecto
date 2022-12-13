@@ -23,7 +23,7 @@ nav {
             display: flex;
             flex-direction: row;
             flex-wrap: nowrap;
-            width: 95%;
+            // width: 95%;
             height: inherit;
             text-align: center;
             margin: auto;
@@ -32,9 +32,12 @@ nav {
             padding: $padding-vert--2 $padding-hor;
 
             & .c-nav__menu {
-
-                &>* {
-                    display: inline-block;
+                display: flex;
+                flex-direction: column;
+                &>img {
+                    // Centramos
+                    margin: auto;
+                    width: 35px;
                 }
             }
 

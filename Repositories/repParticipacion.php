@@ -39,6 +39,28 @@ class repParticipacion {
         }
         return $participantes;
     }
+    public function getJueces($id):array
+    {
+        # El array de participantes
+        $participantes = [];
+        $sql = "SELECT p.participante_id FROM concurso c 
+        JOIN participacion p ON p.concurso_id = c.id
+        WHERE p.rol LIKE 'juez' AND c.id LIKE $id";
+        try {
+            $consulta = $this->conexion->query($sql);
+            $dato = $consulta->fetchAll(PDO::FETCH_ASSOC);
+
+            for ($i=0; $i < count($dato); $i++) { 
+                # Añadimos
+                $idParticipacion = $dato[$i]['participante_id'];
+                $participantes[] = $idParticipacion;
+            }
+            
+        } catch (PDOException $th) {
+            echo "Error al obtener los participantes del concurso $id". $th;
+        }
+        return $participantes;
+    }
 
     public function get($idConcurso,$idParticipante)
     {

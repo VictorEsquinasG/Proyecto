@@ -114,7 +114,7 @@ window.addEventListener("load", function () {
         caja.style.top = top;
         caja.style.left = left;
         caja.style.width = "600px";
-        caja.style.height = "345px";
+        caja.style.height = "340px";
         caja.style.borderRadius = "10px";
         caja.style.zIndex = 101;
         document.body.appendChild(caja);
@@ -153,12 +153,12 @@ window.addEventListener("load", function () {
         cerrar.style.margin = "5px";
         cerrar.style.padding = "5px";
         caja.style.overflow = "hidden";
-        cerrar.onclick = function () {
+        cerrar.addEventListener("click", () => {
             var caja = this.parentElement.parentElement;
             caja.parentElement.removeChild(caja);
             modal.parentElement.removeChild(modal);
             location.reload();
-        }
+        })
         titulo.appendChild(cerrar);
         // La ventana flotante
         var contenido = document.createElement("div");

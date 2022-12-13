@@ -1,3 +1,11 @@
+<?php
+    if (Sesion::existe('user'))
+    {
+        $usuario = Sesion::leer('user');
+    }else {
+        header('Location:?menu=registrate');
+    }
+?>
 <!DOCTYPE html>
 <html lang="es-ES">
 
@@ -8,10 +16,10 @@
     <title>DIPLOMA</title>
 </head>
 
-<body>
-
-    <h2>Ingredientes para aprobar DWES</h2>
-    <p>Ingredientes:</p>
+<body> 
+    <h2><?= $usuario->getNombreCompleto() ?></h2>
+    <p>Desde <?= $usuario->getGps() ?></p>
+    <p>Premios: </p><br>
     <ul>
         <li>Perseverancia</li>
         <li>Constancia</li>

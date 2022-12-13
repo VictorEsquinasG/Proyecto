@@ -1,0 +1,56 @@
+.l-bloque-m {
+    width: 100%;
+    height: fit-content;
+    display: grid;
+    grid-template-columns: [a]50% [b]50%;
+    grid-template-rows: auto;
+    grid-gap: 10px;
+
+    &>div {
+        //Los elementos(div) de dentro
+        width: 100%;
+    }
+}
+
+// El bloque que da de alta
+.c-alta {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+
+    & button {
+        cursor: pointer;
+        margin-top: 25vh;
+        margin-left: 5vh;
+        padding: 0px 15px 0px 16px;
+        float: left;
+        border-radius: 15px;
+        border-style: hidden;
+        background-color: bisque;
+    }
+
+    & select {
+        width: 190px;
+        float: left;
+        margin-left: 5%;
+        margin-top: 15vh;
+        text-align: center;
+    }
+
+    & h2 {
+        float: left;
+        font-size: 15;
+        font-family: Arial, Helvetica, sans-serif;
+        text-align: center;
+        padding-left: 25px;
+        padding-right: 13em;
+    }
+
+    & h6 {
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        font-size: 13;
+        margin-top: 5em;
+        margin-left: 15em;
+        float: left;
+    }
+}

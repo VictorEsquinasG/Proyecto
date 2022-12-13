@@ -1,41 +1,15 @@
 <?php
-/* VALIDADOR */
-$valida = new Validacion();
-# SI SE MANDÓ EL FORMULARIO
-// if (isset($_POST['submit'])) {
-//     $valida->Requerido('nombre');
-//     $valida->Requerido('desc');
-//     $valida->Requerido('inicioInsc');
-//     $valida->Requerido('finInsc');
-//     $valida->Requerido('inicio');
-//     $valida->Requerido('fin');
-//     $valida->Requerido('cartel');
-//     //Comprobamos validacion
-//     if ($valida->ValidacionPasada()) {
-//         # Cogemos los valores de los campos 
-//         $name = $_POST['nombre'];
-//         $desc = $_POST['desc'];
-//         $inicioIsnc = $_POST['inicioInsc'];
-//         $finIsnc = $_POST['finInsc'];
-//         $inicio = $_POST['inicio'];
-//         $fin = $_POST['fin'];
-//         if (!is_null($_POST['cartel'][0])) {
-//             # si no es null
-//             $cartel = $_POST['cartel'];
-//         } else {
-//             $cartel = null;
-//         }
-//         # Creamos el Concurso
-//         $concurso = new Concurso();
-//         $concurso->rellenaConcurso(null, $name, $desc, $inicioInsc, $finIsnc, $inicio, $fin, $cartel);
-//         # La insertamos
-//         $rp = new repConcurso(gbd::getConexion());
-//         if (!$rp->set($concurso)) {
-//             #si no pudo insertar
-//             throw new Exception("Error al insertar nuevo concurso");
-//         }
-//     }
-// }
+
+$admin = Sesion::existe('user') && Sesion::leer('user')->getRol() === 'admin';
+if (!$admin) {
+    # No está autorizado
+    header("Location:?menu=registrate");
+}
+
+if (isset($_POST['submit'])) {
+    # lo mandamos a crear un concurso al listado
+    header('Location:?menu=listadoconcursos');
+}
 ?>
 <section>
     <article class="c-centrado">
@@ -43,49 +17,34 @@ $valida = new Validacion();
             <table class="editable">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Descripción</th>
-                        <th>Inicio Inscripción</th>
-                        <th>Fin Inscripción</th>
-                        <th>Inicio Concurso</th>
-                        <th>Fin Concurso</th>
-                        <th>Letrero</th>
+                        <th>ID<span id="btnDec">▼</span> <span id="btnAsc">▲</span> </th>
+                        <th>Nombre<span id="btnDec">▼</span> <span id="btnAsc">▲</span> </th>
+                        <th>Descripción<span id="btnDec">▼</span> <span id="btnAsc">▲</span> </th>
+                        <th>Inicio Inscripción<span id="btnDec">▼</span> <span id="btnAsc">▲</span> </th>
+                        <th>Fin Inscripción<span id="btnDec">▼</span> <span id="btnAsc">▲</span> </th>
+                        <th>Inicio Concurso<span id="btnDec">▼</span> <span id="btnAsc">▲</span> </th>
+                        <th>Fin Concurso<span id="btnDec">▼</span> <span id="btnAsc">▲</span> </th>
+                        <th>Letrero<span id="btnDec">▼</span> <span id="btnAsc">▲</span> </th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody id="tbody">
                     <!-- La primera fila servirá para que los administradores creen nuevos concursos -->
-                    <!-- <tr id="crear">
-                        <!-- <td><input type="number" name="id"></td> -->
-                        <!-- <form action="" method="POST">
-                            <td></td>
-                            <td><input type="text" name="nombre"></td>
-                            <td><input type="text" name="desc"></td>
-                            <td><input type="date" name="inicioInsc"></td>
-                            <td><input type="date" name="finInsc"></td>
-                            <td><input type="date" name="inicio"></td>
-                            <td><input type="date" name="fin"></td>
-                            <td><input type="file" name="cartel"></td>
-                            <td> <input type="submit" name="submit" id="btnGuardar" value="Guardar"></td>
-                        </form>
-                    </tr> -->
                     <?php
-                    if ((Sesion::leer('user')!==null) && Sesion::leer('user')->getRol() === 'admin') {
-                        # es admin -> crea
-                        $crear = <<<EOD
-                        <form action="" action="POST">
-                            <input id="annadir" type="submit" name="submit" class="c-card__btn c-btn--primary" value="+">
+                    $crear = <<<EOD
+                        <form action="" method="POST">
+                            <input type="submit" name="submit" class="c-card__btn c-btn--primary" value="+">
                         </form>
                         EOD;
+                    if ($admin) {
+                        # es admin -> crea
                         echo $crear;
                     }
-                    ?>
 
-                    <!-- EwL RESTO DEL LISTADO -->
-                    <?php
+                    # EL RESTO DEL LISTADO 
+
                     $rep = new repConcurso(gbd::getConexion());
-                    $concurso = $rep->getAllConcursos();
+                    $concurso = $rep->getAll();
                     $tamanio = count($concurso);
                     for ($i = 0; $i < $tamanio; $i++) {
                         $competicion = $concurso[$i];
@@ -101,9 +60,10 @@ $valida = new Validacion();
                         echo "<td>" . $competicion['fechaInicioConcurso'] . "</td>";
                         echo "<td>" . $competicion['fechaFinConcurso'] . "</td>";
                         echo "<td>";
-                        echo isset($competicion['cartel']) && $competicion['cartel']!=null?
-                        "<img width='50' src='data:image/png;base64,".$competicion['cartel']."'>":"";
+                        echo isset($competicion['cartel']) && $competicion['cartel'] != null ?
+                            "<img width='50' src='data:image/png;base64," . $competicion['cartel'] . "'>" : "";
                         echo "</td>";
+                        echo "<td class='btnEd' idConcurso='" . $competicion['id'] . "'> <img width='20px' src='./images/paint-brush.png'>&nbsp;<img width='20px' src='./images/trash.png'></td>";
                         echo "</tr>";
                     }
                     ?>
@@ -116,6 +76,19 @@ $valida = new Validacion();
 
         <script src="./js/api/listados.js"></script>
         <script src="./js/api/tabla.js"></script>
-        <script src="./js/bandas.js"></script>
+        <script>
+            window.addEventListener("load", () => {
+                // Haremos que el doble click a cualquiera de las filas lleve a EDITAR
+                var btnes = document.querySelectorAll('.btnEd');
+                btnes.forEach(boton => {
+                    boton.addEventListener("click", () => {
+                        // Obtenemos el id
+                        var id = boton.getAttribute("idConcurso");
+                        // Abrimos la página de edición
+                        location.href = "?menu=editar&id=" + id;
+                    });
+                });
+            });
+        </script>
     </article>
 </section>

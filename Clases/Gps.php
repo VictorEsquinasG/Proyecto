@@ -1,19 +1,19 @@
 <?php
 class Gps {
-    private int $x;
-    private int $y;
+    private float $x;
+    private float $y;
 
     public function __construct($x,$y)
     {
         $this->setX($x);
         $this->setY($y);
     }
-    public function setX (int $x = null)
+    public function setX (float $x = null)
     {
         $latitud = $x;
         $this->x = $latitud;
     }
-    public function setY (int $y = null)
+    public function setY (float $y = null)
     {
         $longitud = $y;
         $this->y = $longitud;

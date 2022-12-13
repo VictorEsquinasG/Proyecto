@@ -15,9 +15,9 @@ async function pintaUsuarios() {
                 if (clave === "nombre") {
                     txt = "" + usuario[clave];
                 } else if (clave === "ap1") {
-                    txt += "" + usuario[clave];
+                    txt += " " + usuario[clave];
                 } else if (clave === "ap2") {
-                    txt += "" + usuario[clave];
+                    txt += " " + usuario[clave];
                 } else {
                     txt = usuario[clave];
                 }
@@ -25,6 +25,12 @@ async function pintaUsuarios() {
                 if ((clave != "nombre") && (clave != "ap1")) {
                     td.innerHTML = txt;
                     tr.appendChild(td);
+                    // if (admin && clave == "gps") {
+                    //     // Si es admin y es la última fila añadimos la de edición
+                    //     td2 = document.createElement("td");
+                    //     td2.innerHTML = usuario['rol'];
+                    //     tr.appendChild(td2);
+                    // }
                 }
             }
         }
@@ -35,7 +41,16 @@ async function pintaUsuarios() {
 async function getParticipantes() {
     let response = await fetch('./API/ListUsuario.php')
         // Éxito
-        .then(response => response.json())  // a JSON
+        .then(function (response) {
+
+            if (response.status == 200) {
+                console.log("Operación realizada con éxito");
+                response => response.json(); // a JSON
+            }else {
+                console.log("Hubo un error en la operación (Listar usuarios)");
+            }
+        }
+        )  
         // ERROR
         .catch(err => console.log("Fallo al leer los participantes", err));
 

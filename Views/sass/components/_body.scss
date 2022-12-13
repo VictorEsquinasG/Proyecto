@@ -7,7 +7,7 @@ body {
 }
 #cuerpo {
     width: 100%;
-    height: fit-content;
+    min-height: 75vh; // Tenemos en cuenta el nav, mínimo estará bien puesto en una página vacía
     margin-top: 2.5vh;
 
     &>h1 {

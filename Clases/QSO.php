@@ -12,12 +12,13 @@ class QSO implements JsonSerializable
     private int $id_modo;
     private string $indicativo_juez;
     private DateTimeImmutable $hora;
+    private bool | null $validado;
 
 
     /**
      * Constructor
      */
-    public function rellenaQSO($id,$id_participacion,$id_concurso,$id_modo,$id_banda,$indicativo_juez,$hora)
+    public function rellenaQSO($id,$id_participacion,$id_concurso,$id_modo,$id_banda,$indicativo_juez,$hora,$validado = null)
     {
         $this->setId($id);
         $this->setId_participante($id_participacion);
@@ -26,6 +27,7 @@ class QSO implements JsonSerializable
         $this->setId_banda($id_banda);
         $this->setIndicativo_juez($indicativo_juez);
         $this->setHora($hora);
+        $this->setValidado($validado);
     }
 
     /**
@@ -38,6 +40,7 @@ class QSO implements JsonSerializable
      * @param id_banda El id de la banda
      * @param indicativo_juez El indicativo del juez contactado
      * @param fecha La fecha y hora en la que el mensaje se efectuó
+     * @param validado (OPCIONAL) Si está validado o no 
      */
     public function rellenaQSOArray($mensaje)
     {
@@ -48,6 +51,8 @@ class QSO implements JsonSerializable
         $this->setId_banda($mensaje['id_banda']);
         $this->setIndicativo_juez($mensaje['indicativo_juez']);
         $this->setHora($mensaje['fecha']);
+        // Si tiene VALIDADO lo seteamos
+        isset($mensaje['validado']) ? $this->setValidado($mensaje['validado']) : null;
     }
 
     /**
@@ -196,6 +201,26 @@ class QSO implements JsonSerializable
         return $this;
     }
 
+    /**
+     * Get the value of validado
+     */ 
+    public function getValidado()
+    {
+        return $this->validado;
+    }
+
+    /**
+     * Set the value of validado
+     *
+     * @return  self
+     */ 
+    public function setValidado($validado)
+    {
+        $this->validado = $validado;
+
+        return $this;
+    }
+
     public function jsonSerialize(): mixed
     {
        $json = new stdClass();
@@ -207,7 +232,9 @@ class QSO implements JsonSerializable
         $json->id_modo = $this->getId_modo();
         $json->juez = $this->getIndicativo_juez();
         $json->hora = $this->getHora();
+        $json->validado = $this->getValidado();
 
        return $json; 
     }
+
 }

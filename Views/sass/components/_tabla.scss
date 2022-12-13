@@ -29,7 +29,7 @@ tr:nth-child(even) {
         width: 25%;
         height: auto;
         &:hover  {
-            display: block;
+            display: "";
         }
     }
 }
@@ -42,13 +42,12 @@ tr:nth-child(even) {
 }
 .tablas {
     padding: $padding-vert--2;
-    margin: 0px 15%;
-    margin-top: 5vh;
+    margin: 5vh 15%;
     display: flex;
     justify-content: center;
     background-color: $bg-color--principal-2;
     border-radius: 5px;
-    box-shadow: 0px 5px 50px darkgoldenrod;   
+    box-shadow: 0px 5px 25px darkgoldenrod;   
     &:hover {
         border-radius: 10px;
         transition: .5s;

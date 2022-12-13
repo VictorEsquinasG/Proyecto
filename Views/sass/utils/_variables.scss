@@ -3,6 +3,9 @@ $ml-s:16px;
 $mt-s:14px;
 $mt-xl:14rem;
 $bg-color-alt1:linear-gradient(80deg,#FDB750,orangered);
+$grado-gradient: 80deg;
+$gradient-1: #FDB750;
+$gradient-2: orangered;
 $bg-color-alt2: #974D17;//rgba(36, 86, 35);
 $bg-color__footer:black;
 $txt-color__footer:white;
@@ -15,7 +18,7 @@ $color--principal: #974D17;
 /* PARA EL LOGIN */
 $color-shadow--principal: rgba(86, 62, 35, 0.7);
 /* COLORES SECUNDARIOS */
-$bg-color--secundario: #a56334;
+$bg-color--secundario-1: #a56334;
 $color--secundario: aliceblue;
 /* NAV */
 $bg-nav: #D9D9D9;

@@ -1,6 +1,12 @@
 <?php
 //  PHP genérico que según qué queramos borrar
 
+$admin = Sesion::existe('user') && Sesion::leer('user')->getRol() === 'admin';
+if (!$admin) {
+    # No está autorizado
+    header("Location:?menu=registrate");
+}
+
 $que = $_GET['q'];
 $id = $_GET['id'];
 // $sql = "DELETE FROM ? WHERE id LIKE ?";

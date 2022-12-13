@@ -61,6 +61,32 @@ class repConcurso
         }
     }
 
+    public function getMisConcursos($id)
+    {
+        # A devolver
+        $concursos = [];
+        # Buscamos los concursos activos en los que participa
+        # Y que siguen activos
+        $sql = "SELECT * FROM concurso c JOIN participacion p ON c.id = p.concurso_id
+        WHERE fechaFinConcurso>=curdate() AND p.participante_id LIKE $id";
+
+        try {
+            $consulta = $this->conexion->query($sql);
+            $datos = $consulta->fetchAll(PDO::FETCH_ASSOC);
+
+            foreach ($datos as $concurso) {
+                # Metemos cada concurso al array
+                $con = $this->getById($concurso['id']);
+                $concursos[] = $con;
+            }
+            for ($i = 0; $i < count($datos); $i++) {
+            }
+            return $concursos;
+        } catch (PDOException $e) {
+            echo "Error al leer sus concursos para usted en BD " . $e->getMessage();
+        }
+    }
+
 
     public function getPage($cuantas, $tamanio)
     {
@@ -92,47 +118,48 @@ class repConcurso
         $concursos = [];
         $sql = "SELECT * FROM concurso";
         $consulta = $this->conexion->query($sql);
-        $concursos = $consulta->fetchAll(PDO::FETCH_ASSOC);
-        // $tamanio = count($concursoss);
-        // for ($i = 0; $i < $tamanio; $i++) {
-        //     # creamos el concurso y lo añadimos
-        //     $concurso = new Concurso();
-        //     $concursos[] = $concurso->rellenaConcurso(
-        //         $concursos[$i]['id'],
-        //         $concursos[$i]['nombre'],
-        //         $concursos[$i]['descripcion'],
-        //         new DateTimeImmutable($concursos[$i]['fechaInicioInscripcion']),
-        //         new DateTimeImmutable($concursos[$i]['fechaFinInscripcion']),
-        //         new DateTimeImmutable($concursos[$i]['fechaInicioConcurso']),
-        //         new DateTimeImmutable($concursos[$i]['fechaFinConcurso']),
-        //         $concursos[$i]['cartel']
-        //     );
-        // }
+        $data = $consulta->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($data as $concurso) {
+            # Creamos cada concurso y lo añadimos
+            $conc = new Concurso();
+            $conc->rellenaConcurso(
+                $concurso['id'],
+                $concurso['nombre'],
+                $concurso['descripcion'],
+                new DateTimeImmutable($concurso['fechaInicioInscripcion']),
+                new DateTimeImmutable($concurso['fechaFinInscripcion']),
+                new DateTimeImmutable($concurso['fechaInicioConcurso']),
+                new DateTimeImmutable($concurso['fechaFinConcurso']),
+                $concurso['cartel']
+            );
+            $concursos[] = $conc;
+        }
 
         return $concursos;
     }
 
-    public function getJueces($id):array
+    public function getJueces($id): array
     {
         $jueces = [];
         $r = new repUsuarios(gbd::getConexion());
         #Jueces del concurso
-        $sql = "SELECT P.participante_id FROM concurso C ".
-        "JOIN participacion P WHERE c.id LIKE $id";
+        $sql = "SELECT P.participante_id FROM concurso C " .
+            "JOIN participacion P WHERE c.id LIKE $id";
         try {
             #Conseguimos el id del participante que es juez
             $consulta = $this->conexion->query($sql);
             $participante = $consulta->fetchAll(PDO::FETCH_ASSOC);
 
-            for ($i=0; $i < count($participante); $i++) { 
+            for ($i = 0; $i < count($participante); $i++) {
                 # devolveremos a los usuarios que son jueces
                 $id_usuario = $participante[$i]['participante_id'];
                 $juez_dred = $r->getById($id_usuario);
-                $jueces[]= $juez_dred;
+                $jueces[] = $juez_dred;
             }
             return $jueces;
         } catch (PDOException $e) {
-            echo "Error al leer los jueces del concurso ".$e->getMessage();
+            echo "Error al leer los jueces del concurso " . $e->getMessage();
         }
     }
 
@@ -179,7 +206,7 @@ class repConcurso
             $this->conexion->commit();
             return $res;
         } catch (PDOException $e) {
-            echo "Error en la inserción de concurso  ".$e->getMessage();
+            echo "Error en la inserción de concurso  " . $e->getMessage();
         }
     }
     public function delete($id)
@@ -273,33 +300,49 @@ class repConcurso
     {
         $sql = "select * FROM concurso 
         WHERE id = $id ";
+        $concurso = new Concurso();
 
         try {
             $consulta = $this->conexion->query($sql);
-            $datos = $consulta->fetchAll(PDO::FETCH_ASSOC);
+            $result = $consulta->fetchAll(PDO::FETCH_ASSOC);
 
-            $id = $datos[0]['id'];
-            $nombre = $datos[0]['nombre'];
-            $desc = $datos[0]['descripcion'];
-            $fechaInicioInscripcion = new DateTimeImmutable($datos[0]['fechaInicioInscripcion']);
-            $fechaFinInscripcion = new DateTimeImmutable($datos[0]['fechaFinInscripcion']);
-            $fechaInicioConcurso = new DateTimeImmutable($datos[0]['fechaInicioConcurso']);
-            $fechaFinConcurso = new DateTimeImmutable($datos[0]['fechaFinConcurso']);
-            $cartel = $datos[0]['cartel'];
+            // $id = $datos[0]['id'];
+            foreach ($result as $datos) {
+                # Accederemos sin poner $datos[0]
+                $nombre = $datos['nombre'];
+                $desc = $datos['descripcion'];
+                $fechaInicioInscripcion = new DateTimeImmutable($datos['fechaInicioInscripcion']);
+                $fechaFinInscripcion = new DateTimeImmutable($datos['fechaFinInscripcion']);
+                $fechaInicioConcurso = new DateTimeImmutable($datos['fechaInicioConcurso']);
+                $fechaFinConcurso = new DateTimeImmutable($datos['fechaFinConcurso']);
+                $cartel = $datos['cartel'];
 
-            $bandas = null;
-            $modos = null;
-            try {  # TODO qué hacemos si no tiene bandas .. ?
-                $bandas = $this->get_bandas($id);
-                $modos = $this->get_modos($id);
-            } catch (PDOException $e) {
-                throw new PDOException("Error de lectura de datos(Bandas/Modos): " . $e->getMessage());
+                $bandas = null;
+                $modos = null;
+
+                try {  # TODO qué hacemos si no tiene bandas .. ?
+                    $bandas = $this->get_bandas($id);
+                    $modos = $this->get_modos($id);
+                } catch (PDOException $e) {
+                    throw new PDOException("Error de lectura de datos(Bandas/Modos): " . $e->getMessage());
+                }
+
+                $concurso->rellenaConcurso($id, $nombre, $desc, $fechaInicioInscripcion, $fechaFinInscripcion, $fechaInicioConcurso, $fechaFinConcurso, $cartel);
+                if (isset($modos)) {
+                    if (is_array($modos)) {
+                        $concurso->setModos($modos);
+                    } else {
+                        $concurso->addModos($modos);
+                    }
+                }
+                if (isset($bandas)) {
+                    if (is_array($bandas)) {
+                        $concurso->setBandas($bandas);
+                    } else {
+                        $concurso->addBandas($bandas);
+                    }
+                }
             }
-
-            $concurso = new Concurso();
-            $concurso->rellenaConcurso($id, $nombre, $desc, $fechaInicioInscripcion, $fechaFinInscripcion, $fechaInicioConcurso, $fechaFinConcurso, $cartel);
-            $concurso->setBandas($bandas);
-            $concurso->setModos($modos);
 
             return $concurso;
         } catch (PDOException $e) {
@@ -380,27 +423,27 @@ class repConcurso
         $sql = "UPDATE concurso SET `nombre` = '$nombre',`descripcion` = '$des', `fechaInicioInscripcion` = '$feIn',
         `fechaFinInscripcion` = '$feIn2', `fechaInicioConcurso` = '$fe', `fechaFinConcurso` = '$fe2', `cartel` = '$poster'  
          WHERE id LIKE $id";
-         try {
+        try {
             $this->conexion->beginTransaction();
             # Primero actualizamos la tabla CONCURSO
             $this->conexion->exec($sql);
             # Ahora actualizaremos las tablas de MODO y BANDA
-            for ($i=0; $i < count($modos); $i++) { 
+            for ($i = 0; $i < count($modos); $i++) {
                 # Primero cada uno de los modos
                 $modo_id = $modos[$i];
                 // $modo_id = $mode->getId();
                 $this->conexion->exec("UPDATE premio SET modo_id = $modo_id WHERE concurso_id LIKE $id");
             }
-            for ($i=0; $i < count($bandas); $i++) { 
+            for ($i = 0; $i < count($bandas); $i++) {
                 # Ahora cada una de las bandas
                 $banda_id = $bandas[$i];
                 // $banda_id = $band->getId();
                 $this->conexion->exec("UPDATE banda_concurso SET banda_id = $banda_id WHERE concurso_id LIKE $id");
             }
             $this->conexion->commit();
-         } catch (PDOException $e) {
-            echo "Error actualizando concurso ".$e->getMessage();
-         }
+        } catch (PDOException $e) {
+            echo "Error actualizando concurso " . $e->getMessage();
+        }
     }
 
     /**

@@ -29,10 +29,14 @@ if ((Sesion::existe('user') && Sesion::leer('user')->getRol() === 'admin')) {
             $con['fechaFinInsc'] = $_POST['finInsc'];
             $con['fechInicio'] = $_POST['inicio'];
             $con['fechFin'] = $_POST['fin'];
-            if ($_POST['img'] != null) {
-                # Asignamos el cartel
-                $con['cartel'] = base64_encode($_POST['img']);
+
+            if (isset($_FILES['img']) && !empty($_FILES['img'])) {
+                # la imagen es Null
+                $imagen=file_get_contents($_FILES['img']['tmp_name']);
+                $imagen=base64_encode($imagen);
+                $con['cartel'] = $imagen;
             } else {
+                # la imagen es Null
                 $con['cartel'] = null;
             }
 
@@ -53,20 +57,20 @@ if ((Sesion::existe('user') && Sesion::leer('user')->getRol() === 'admin')) {
 <script src="./js/mantenimientoConcursos.js"></script>
 <section class="tablas">
     <!-- INSERTAMOS LA TABLA -->
-    <form action="" method="POST">
+    <form action="" method="POST" enctype="multipart/form-data">
         <table class="editable">
             <thead>
                 <tr>
                     <!-- Cuando es admin le añadimos la columna de borrado -->
                     <?= $admin ? "<th></th>" : null ?>
                     <!-- <th>ID</th> -->
-                    <th>NOMBRE</th>
-                    <th>Descripción</th>
-                    <th>Periodo de inscripción</th>
-                    <th>Periodo de participación</th>
-                    <th>Bandas</th>
-                    <th>Modos</th>
-                    <th>Cartel</th>
+                    <th>NOMBRE<span id="btnDec">▼</span> <span id="btnAsc">▲</span> </th>
+                    <th>Descripción<span id="btnDec">▼</span> <span id="btnAsc">▲</span> </th>
+                    <th>Periodo de inscripción<span id="btnDec">▼</span> <span id="btnAsc">▲</span> </th>
+                    <th>Periodo de participación<span id="btnDec">▼</span> <span id="btnAsc">▲</span> </th>
+                    <th>Bandas<span id="btnDec">▼</span> <span id="btnAsc">▲</span> </th>
+                    <th>Modos<span id="btnDec">▼</span> <span id="btnAsc">▲</span> </th>
+                    <th>Cartel<span id="btnDec">▼</span> <span id="btnAsc">▲</span> </th>
                     <th></th>
                 </tr>
             </thead>
@@ -139,7 +143,7 @@ if ((Sesion::existe('user') && Sesion::leer('user')->getRol() === 'admin')) {
                             </select>
                             $erModos
                         </td>   
-                        <td><div class="c-add__img"id="btnImg" onclick="getFile()">
+                        <td><div class="c-add__img" id="btnImg" onclick="getFile()">
                                 <label for="img" class="img">Subir foto</label>
                                 <input type="file" name="img" id="inpFile">
                             </div>
@@ -220,7 +224,7 @@ if ((Sesion::existe('user') && Sesion::leer('user')->getRol() === 'admin')) {
                                 echo "<td class='cambiaImg' onclick='cambiaImg()'>";
                                 if ($concurso['cartel'] != null) {
                                     # la imagen la sacamos de base de datos
-                                    echo "<img src='data:image/png;base64," . $concurso['cartel'] . "'>";
+                                    echo "<img width='25px' src='data:image/png;base64," . $concurso['cartel'] . "'>";
                                 } else {
                                     echo "<img class='cambiaImg__img' src='./images/editar.png'>";
                                 }
@@ -261,7 +265,7 @@ if ((Sesion::existe('user') && Sesion::leer('user')->getRol() === 'admin')) {
 </section>
 
 <!-- El input para la imagen -->
-<script src="./js/profpic.js"></script>
+<script src="./js/helper/profpic.js"></script>
 <script>
     window.addEventListener("load", () => {
         // var unir = document.getElementById('entraConcurso');

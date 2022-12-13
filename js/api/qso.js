@@ -2,6 +2,7 @@ window.addEventListener("load", function () {
 
     var nuevo = document.getElementById("annadir");
     var idConcurso = nuevo.getAttribute("idConcurso");
+    var idUsuario = nuevo.getAttribute("idUsuario");
 
     nuevo.onclick = function (ev) {
         // Evitamos que nos redireccione
@@ -17,12 +18,18 @@ window.addEventListener("load", function () {
         let banda = document.createElement("select");
         let ltime = document.createElement("p");
         let time = document.createElement("input");
+        
         let boton = document.createElement("input");
         // El concurso 
         let conc = document.createElement("input");
         conc.setAttribute("name","concurso");
         conc.setAttribute("value",idConcurso);
         conc.setAttribute("style","display:none;");
+        // El usuario 
+        let usu = document.createElement("input");
+        usu.setAttribute("name","usuario");
+        usu.setAttribute("value",idUsuario);
+        usu.setAttribute("style","display:none;");
 
         // El propio formulario
         formulario.setAttribute('method', "POST");
@@ -71,12 +78,14 @@ window.addEventListener("load", function () {
         formulario.appendChild(ltime);
         formulario.appendChild(time);
         formulario.appendChild(conc);
+        formulario.appendChild(usu);
         formulario.appendChild(boton);
         document.getElementById('cuerpo').appendChild(formulario);//Agregar el formulario a la etiqueta con el ID		
         //debugger;
         formulario.onsubmit = function (e) {
             e.preventDefault();
-            if (mensajeValidado(formulario)) {
+            //TODO
+            if (mensajeValidado(formulario,idConcurso)) {
                 // Si pasa la validación se guarda
                 guardar();
             }
@@ -107,13 +116,8 @@ window.addEventListener("load", function () {
 
 })
 
-/**
- * Validamos que el mensaje sea en un modo o banda nueva 
- * o que el juez sea distinto
- * @param {*} form 
- * @returns 
- */
-function mensajeValidado (form) {
+async function mensajeValidado (form, idConcurso) {
+    var errores = [];
     // Consultamos si el mensaje existe exactamente igual
     var tabla = document.getElementById("mensajes");
     var filas = tabla.rows
@@ -122,13 +126,40 @@ function mensajeValidado (form) {
     var juez =  form.juez.value;
     var modo = form.modo.value;
     var banda = form.banda.value;
+    // comprobamos que han escrito
+    if (fecha == "") {
+        errores['fecha'] = "La fecha no puede estar vacía";
+    }
+    if (juez == "") {
+        errores['juez'] = "Selecciona un juez válido";
+    }
+    if (modo == "") {
+        errores['modo'] = "Selecciona un modo válido";
+    }
+    if (banda == "") {
+        errores['banda'] = "Selecciona a una banda válida";
+    }
 
+    const respuesta = await fetch("./API/getQso.php?concurso="+idConcurso)
+    .then(console.log(respuesta));
     for (let i = 0; i < filas.length; i++) {
+        //TODO Comprobamos que no sea igual que otra banda idéntica
         var fila = filas.item(i);
         fila.innerHTML;
         
     }
-    fetch("./API/getQso.php?concurso="+idConcurso);
+
+    if (errores.length == 0) {
+        return true;
+    } else {
+        return false;
+    }
+
+}function validado(formu) {
+    if (formu.nombre.value === '') {
+        errores['nombre'] = 'El nombre no puede estar vacío';
+    }
+
 
 }
 
@@ -253,12 +284,12 @@ function modal(div) {
     cerrar.style.margin = "5px";
     cerrar.style.padding = "5px";
     caja.style.overflow = "hidden";
-    cerrar.onclick = function () {
+    cerrar.addEventListener("click", () => {
         var caja = this.parentElement.parentElement;
         caja.parentElement.removeChild(caja);
         modal.parentElement.removeChild(modal);
         location.reload();
-    }
+    })
     titulo.appendChild(cerrar);
 
     var contenido = document.createElement("div");

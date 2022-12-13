@@ -144,7 +144,6 @@ nav > .c-nav__contenedor {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  width: 95%;
   height: inherit;
   text-align: center;
   margin: auto;
@@ -152,8 +151,13 @@ nav > .c-nav__contenedor {
   margin-left: 1.5%;
   padding: 1.5% 10px;
 }
-nav > .c-nav__contenedor .c-nav__menu > * {
-  display: inline-block;
+nav > .c-nav__contenedor .c-nav__menu {
+  display: flex;
+  flex-direction: column;
+}
+nav > .c-nav__contenedor .c-nav__menu > img {
+  margin: auto;
+  width: 35px;
 }
 nav > .c-nav__contenedor a {
   color: #000000;
@@ -241,6 +245,7 @@ input--error {
   color: white;
   background-color: rgb(93, 34, 21);
   padding: 5px 10px;
+  border-radius: 5px;
 }
 
 .c-add__img input[type=file] {
@@ -278,9 +283,10 @@ input--error {
   float: right;
 }
 .c-btn--secundary {
-  color: white;
+  color: #a56334;
   background: #888;
-  border-color: white;
+  border: 1px solid linear-gradient(80deg, #FDB750, orangered);
+  border-radius: 5px;
 }
 .c-btn--secundary__form {
   float: left;
@@ -308,6 +314,17 @@ input--error {
   cursor: pointer;
 }
 
+#btnCaptura {
+  cursor: pointer;
+  color: rgba(255, 81, 0, 0.703);
+  text-align: center;
+  margin: 15px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  background-color: white;
+  border: 1px solid rgba(255, 81, 0, 0.703);
+  border-radius: 5px;
+}
+
 /* BODY */
 /* ATRIBUTOS GENERALES */
 body {
@@ -319,7 +336,7 @@ body p {
 
 #cuerpo {
   width: 100%;
-  height: fit-content;
+  min-height: 75vh;
   margin-top: 2.5vh;
 }
 #cuerpo > h1 {
@@ -451,7 +468,7 @@ tr:nth-child(even) {
   height: auto;
 }
 .cambiaImg__img:hover {
-  display: block;
+  display: "";
 }
 
 .editar {
@@ -463,13 +480,12 @@ tr:nth-child(even) {
 
 .tablas {
   padding: 1.5%;
-  margin: 0px 15%;
-  margin-top: 5vh;
+  margin: 5vh 15%;
   display: flex;
   justify-content: center;
   background-color: rgba(223, 223, 223, 0.703);
   border-radius: 5px;
-  box-shadow: 0px 5px 50px darkgoldenrod;
+  box-shadow: 0px 5px 25px darkgoldenrod;
 }
 .tablas:hover {
   border-radius: 10px;
@@ -996,6 +1012,7 @@ tr:nth-child(even) {
   justify-content: center;
 }
 .c-card__body > p {
+  text-align: center;
   margin-bottom: 10px;
 }
 .c-card__title {
@@ -1039,13 +1056,84 @@ tr:nth-child(even) {
   background: #fff;
   border-color: rgba(147, 117, 45, 0.721);
 }
+.c-card--mant {
+  cursor: pointer;
+}
+.c-card--mant__img {
+  margin: auto;
+  padding: 0;
+  width: 40%;
+  height: auto;
+}
+.c-card--mant__title {
+  font-size: 3rem;
+}
+.c-card--mant:hover {
+  background-image: -o-linear-gradient(80deg, #FDB750, orangered);
+  background-image: -moz-linear-gradient(80deg, #FDB750, orangered);
+  background-image: -webkit-gradient(linear, left 80deg, left top, color-stop(0.6, #FDB750), color-stop(0.4, orangered));
+  background-image: -webkit-linear-gradient(80deg, #FDB750, orangered);
+  background-image: -ms-linear-gradient(80deg, #FDB750, orangered);
+  /* Para navegadores modernos */
+  background-image: linear-gradient(80deg, #FDB750, orangered);
+}
+
+.l-bloque-m {
+  width: 100%;
+  height: fit-content;
+  display: grid;
+  grid-template-columns: [a] 50% [b] 50%;
+  grid-template-rows: auto;
+  grid-gap: 10px;
+}
+.l-bloque-m > div {
+  width: 100%;
+}
+
+.c-alta {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+.c-alta button {
+  cursor: pointer;
+  margin-top: 25vh;
+  margin-left: 5vh;
+  padding: 0px 15px 0px 16px;
+  float: left;
+  border-radius: 15px;
+  border-style: hidden;
+  background-color: bisque;
+}
+.c-alta select {
+  width: 190px;
+  float: left;
+  margin-left: 5%;
+  margin-top: 15vh;
+  text-align: center;
+}
+.c-alta h2 {
+  float: left;
+  font-size: 15;
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+  padding-left: 25px;
+  padding-right: 13em;
+}
+.c-alta h6 {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 13;
+  margin-top: 5em;
+  margin-left: 15em;
+  float: left;
+}
 
 /* PÁGINA PROPIA DEL CONCURSO */
 .c-contConcurso {
   height: fit-content;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 1fr);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   grid-gap: 10px;
   margin: 14px;

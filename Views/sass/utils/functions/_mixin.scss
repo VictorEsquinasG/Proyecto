@@ -5,3 +5,12 @@
     display: flex;
     align-items: center;
 }
+@mixin linearGradient ($grado,$color1,$color2) {
+background-image: -o-linear-gradient($grado, $color1, $color2);
+background-image: -moz-linear-gradient($grado, $color1, $color2);
+background-image: -webkit-gradient(linear, left $grado, left top, color-stop(0.60, $color1), color-stop(0.40, $color2));
+background-image: -webkit-linear-gradient($grado, $color1, $color2);
+background-image: -ms-linear-gradient($grado, $color1, $color2);
+/* Para navegadores modernos */
+background-image: linear-gradient($grado, $color1, $color2);
+}

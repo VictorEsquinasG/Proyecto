@@ -1,8 +1,8 @@
 <?php
 /* Cargamos los scripts */
-echo "<script src='./js/profpic.js'></script>";
-echo "<script src='./js/camara.js'></script>";
-echo "<script src='./js/capturaGPS.js'></script>";
+echo "<script src='./js/helper/profpic.js'></script>";
+echo "<script src='./js/helper/camara.js'></script>";
+echo "<script src='./js/helper/capturaGPS.js'></script>";
 
 if (isset($_COOKIE['recuerdame'])) {
     # Si ya se logueó
@@ -17,8 +17,8 @@ if (isset($_POST['submit'])) {
     $valida->Email('mail');
     $valida->Requerido('contrasena');
     $valida->Requerido('lat');
-    $valida->EnteroRango('lat','-90','90');
-    $valida->EnteroRango('lon','-180','180');
+    $valida->RealRango('lat',-90,90);
+    $valida->RealRango('lon',-180,180);
     $valida->Requerido('lon');
     $valida->Requerido('nombre');
     $valida->Requerido('ap1');
@@ -35,7 +35,6 @@ if (isset($_POST['submit'])) {
             $user['pssword'] = $_POST['contrasena'];
             $user['rol'] = 'user'; // Por defecto
            
-            #TODO
             if (isset($_FILES['imagen']) && !empty($_FILES['imagen'])) {
                 # le añadimos la imagen
                 $imagen=file_get_contents($_FILES['imagen']['tmp_name']);
@@ -120,11 +119,13 @@ if (isset($_POST['submit'])) {
                 </div>
                 <div class="c-registro__Contubi">
                     <div class="c-registro__ContUbi__ubi">
+                        <!-- TODO si es detectable -->
+                        <div id="btnCaptura">Usar mi ubicación</div>
                         <label for="lat">Latitud</label>
-                        <input type="number" placeholder="0" id="newLatitud" name="lat">
+                        <input type="number" step=0.000000001 placeholder="0" id="lat" name="lat">
                         <?= $valida->ImprimirError('lat') ?>
                         <label for="lon">Longitud</label>
-                        <input type="number" placeholder="0" id="newLongitud" name="lon">
+                        <input type="number" step=0.000000001 placeholder="0" id="lon" name="lon">
                         <?= $valida->ImprimirError('lon') ?>
                     </div>  
                     

@@ -26,6 +26,7 @@
         flex-direction: column;
         justify-content: center;
         &>p{
+            text-align: center;
             margin-bottom: 10px;
         }
     }
@@ -63,6 +64,26 @@
         }
         &:hover {
             @include colores__btn--hover;
+        }
+    }
+    &--mant {
+        // Modificamos las tarjetas de bloque
+        cursor: pointer;
+        &__img {
+            margin: auto;
+            padding: 0;
+            width: 40%;   
+            height: auto;
+        }
+        &__title {
+            font-size: 3rem;
+        }
+        
+        &:hover {
+            
+            // background: $bg-color-alt1;
+            @include linearGradient($grado-gradient,$gradient-1,$gradient-2);
+
         }
     }
 }

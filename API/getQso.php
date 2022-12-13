@@ -10,3 +10,4 @@ require_once('../Chargers/autoloader.php');
     $parti = $rpP->get($_GET['concurso'],$id)->getId();
     $msg = $rp->getMsg($_GET['concurso'],$parti);
 
+return json_encode($msg);

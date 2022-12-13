@@ -3,6 +3,10 @@
 $valida = new Validacion();
 /* SI ES ADMIN */
 $admin = Sesion::existe('user') && Sesion::leer('user')->getRol() === 'admin';
+if (!$admin) {
+    # No está autorizado
+    header("Location:?menu=registrate");
+}
 # SI SE MANDÓ EL FORMULARIO
 // if (isset($_POST['submit'])) {
 //     $valida->Requerido('nombre');
@@ -71,10 +75,10 @@ $admin = Sesion::existe('user') && Sesion::leer('user')->getRol() === 'admin';
                 <thead>
                     <tr>
                         <!-- <th>ID</th> -->
-                        <th>Nombre</th>
-                        <th>Distancia</th>
-                        <th>Mínimo</th>
-                        <th>Máximo</th>
+                        <th>Nombre<span id="btnDec">▼</span> <span id="btnAsc">▲</span> </th>
+                        <th>Distancia<span id="btnDec">▼</span> <span id="btnAsc">▲</span> </th>
+                        <th>Mínimo<span id="btnDec">▼</span> <span id="btnAsc">▲</span> </th>
+                        <th>Máximo<span id="btnDec">▼</span> <span id="btnAsc">▲</span> </th>
                         <?= $admin ? '<th></th>':'' ?>
                     </tr>
                 </thead>

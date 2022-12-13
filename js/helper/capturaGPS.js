@@ -4,12 +4,16 @@ window.addEventListener("load", () => {
     const captu = document.getElementById('btnCaptura');
     
     function captura(x) {
-        long.value = x.longitude;
-        lat.value = x.latitude;
+        const crd = x.coords;       
+        long.value = crd.longitude;
+        lat.value = crd.latitude;
     }
-    captu.addEventListener("click", () => {
+    captu.addEventListener("click", (ev) => {
+        // Impedimos que recargue
+        ev.preventDefault();
+        // Cogemos la localización
         var posicion = navigator.geolocation.getCurrentPosition(captura);
-        console.log(posicion);
+        // console.log(posicion);
     });
 
 });

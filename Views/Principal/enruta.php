@@ -32,13 +32,19 @@ if (isset($_GET['menu'])) {
         require_once './Views/Mantenimiento/mensaje.php';
     }else if ($_GET['menu'] == "editar") {
         require_once './Views/Mantenimiento/editaConcurso.php';
+    }else if ($_GET['menu'] == "registrate") {
+        require_once './Views/default/registra.php';
+    }else if ($_GET['menu'] == "alta") {
+        require_once './Views/Mantenimiento/alta.php';
     }
     
     
 }else if (isset($_GET['concurso'])) {
     # Cargamos el concurso que sea
     require_once './Views/Mantenimiento/concurso.php';#.'?id='.$_GET['concurso'];
-    setcookie('id',$_GET['concurso']);
+}else {
+    # Si no ha introducido ninguna ruta lo enviaremos a Index
+    require_once './Views/default/body.php';
 }
 
     

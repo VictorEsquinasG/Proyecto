@@ -1,15 +1,25 @@
 <?php
 
 $participa = false; // A priori no sabemos si participa
+$admin = Sesion::existe('user') && Sesion::leer('user')->getRol() === "admin";
+$rPar = new repParticipacion(gbd::getConexion());
 
-if (isset($_COOKIE['id'])) {
+if (!Sesion::existe('user')) {
+    # Si no está logeado
+    header("Location:?menu=registrate");
+}
+if (isset($_GET['concurso'])) {
     # Aquí no comprobaremos su rol, cualquiera puede unirse al concurso
     $repP = new repParticipacion(gbd::getConexion());
     $rp = new repConcurso(gbd::getConexion());
     # capturamos el id
-    $idConcurso = $_COOKIE['id'];
+    $idConcurso = $_GET['concurso'];
     # Cogemos el concurso dado
     $concurso = $rp->getById($idConcurso);
+    # Cogemos el usuario
+    $idUsuario = Sesion::leer('user')->getId();
+    $part = $rPar->get($idConcurso,$idUsuario);
+    $juez = $part->getRol() === "juez" ? true : false;
     # Preparamos su página propia
     print "<div class='c-contConcurso'>";
     print "<div class='c-contConcurso__h'>";
@@ -18,6 +28,10 @@ if (isset($_COOKIE['id'])) {
         # Si tiene imagen se la imprimimos
         echo "<img src='data:image/png;base64," . $concurso->getCartel() . "'>";
     }
+}else {
+    # si no tiene la cookie ni ha hecho submit -> Index.php
+    header("Location:?menu=inicio");
+}
 
     $participantes = $repP->getParticipantes($idConcurso);
     $concursosD = $rp->getConcursosDisponibles();
@@ -26,22 +40,27 @@ if (isset($_COOKIE['id'])) {
         if ($concursosD[$j]->getId() === $concurso->getId()) {
             # Si el concurso existiera y el usuario no está en él
             # comprobamos si no es uno de los participantes ya inscritos
-            if (!in_array(Sesion::leer('user')->getId(), $participantes)) {
+            if (!in_array($idConcurso, $participantes)) {
                 # pintamos el botón de unirse
                 echo "<form action='' method='POST'>";
                 echo "<input type='submit' class='c-card__btn c-btn--primary c-btn--primary__form' name='submit' value='Unirse'>";
                 echo "</form>";
             } else {
-                $participacion = new Participacion();
-                $parti = $repP->get($idConcurso, Sesion::leer('user')->getId());
-                $participacion->rellenaParticipacion(null, 'user', $idConcurso, $parti->getId());
-
+                if (!$juez) {
+                    # pintamos el botón de darse de baja
+                    echo "<form action='' method='POST'>";
+                    echo "<input type='submit' class='c-card__btn c-btn--primary c-btn--primary__form' name='submit' value='Darme de baja'>";
+                    echo "</form>";
+                    $participacion = new Participacion();
+                    $parti = $repP->get($idConcurso, $idUsuario);
+                    $participacion->rellenaParticipacion(null, 'user', $idConcurso, $parti->getId());
+                }
                 $participa = true;
             }
-            // echo "<button onclick='unirse($idConcurso)'>Unirse</button>";
         }
     }
-
+    
+    print "<p id='contador' fechaFin='".$concurso->getFechFin()->format('Y-m-d H:i:s')."'></p>";
     print "</div>";
 
     print "<div class='c-contConcurso__desc'>";
@@ -49,15 +68,27 @@ if (isset($_COOKIE['id'])) {
     # numero de participantes del concurso
     $num = $repP->cuantos($idConcurso);
     $jueces = $repP->getNumJueces($idConcurso);
+    
     echo "<br>";
     echo "<img src='./images/hombre.png' width='20px' title='participantes' alt='Participantes'>" . $num['COUNT(id)'] . "\n";
     echo "<img src='./images/judge.png' width='20px' title='jueces' alt='Jueces'>" . $jueces['COUNT(id)'] . "</p>";
+    if ($admin) {
+        # El admin podrá dar de alta a los usuarios y asignar los jueces
+        echo "<br>";
+        echo "<a class='c-card__btn c-btn--primary' href='?menu=alta'>Gestionar</a>";
+    }
+    if ($juez) {
+        # El juez validará mensajes
+        echo "<br><br>";
+        echo "<a class='c-card__btn c-btn--primary' href='?menu=mensaje&conc=".$idConcurso."'>Validar mensajes</a>";
+    }
     print "</div>";
 
     print "<div class='c-concursos__tabla'>";
     # Tabla de MODOS Y BANDAS
     echo "<table class='c-contConcurso__tabla--1' style='margin-left: 24px;'>";
-    echo "<thead>" . "<th>MODOS</th>" . "<th>BANDAS</th>" . "</thead>";
+    echo "<thead>" . "<th> ".'<span id="btnDec">▼</span> <span id="btnAsc">▲</span> '."MODOS</th>" .
+     "<th>".'<span id="btnDec">▼</span> <span id="btnAsc">▲</span> '."BANDAS</th>" . "</thead>";
     # Tbody
     echo "<tbody>";
     # Consultamos los modos y las bandas
@@ -74,7 +105,7 @@ if (isset($_COOKIE['id'])) {
             # si o si entra aquí, si no hay banda o modo -> <td></td>
             $mode = $modos[$i]->getNombre() != null ? "<td>" . $modos[$i]->getNombre() . "</td>" : "<td></td>";
             $band = $bandas[$j]->getNombre() != null ? "<td>" . $bandas[$j]->getNombre() . "</td>" : "<td></td>";
-            $j++;
+            $j++;   
         }
 
         echo $mode;
@@ -85,7 +116,7 @@ if (isset($_COOKIE['id'])) {
     echo "</table>";
 
     # Mensajes
-    if ($participa && Sesion::leer('user')->getRol() !== 'juez') {
+    if ($participa && !$juez) {
         # Si es concursante podrá enviar mensajes
         $repbanda = new repBanda(gbd::getConexion());
         $repModo = new repModo(gbd::getConexion());
@@ -111,7 +142,7 @@ if (isset($_COOKIE['id'])) {
                 <table style="margin-top:0px">
                     <thead> <th>Hora</th><th>Banda</th><th>Modo</th><th>Juez</th> </thead>
                     <tbody>
-                        <div class="c-card__btn c-btn--primary" idConcurso="$idConcurso" id="annadir">+</div>
+                        <div class="c-card__btn c-btn--primary" idConcurso="$idConcurso" idUsuario="$idUsuario" id="annadir">+</div>
                         $filas
                     </tbody>        
                 </table>
@@ -125,22 +156,28 @@ if (isset($_COOKIE['id'])) {
     print "</div>";
 
 
-    # Matamos la cookie
-    setcookie('id', $_COOKIE['id'], time() - 300);
-} else {
-    # si no tiene la cookie ni ha hecho submit -> Index.php
-    header("Location:?menu=inicio");
-}
+   
+
 if (isset($_POST['submit'])) {
-    # Cogemos el concursante y creamos la participación
-    $part = new Participacion();
-    $usuario = Sesion::leer("user")->getId(); #TODO idConcurso no existe pero la cookie tampoco
-    $part->rellenaParticipacion(null, 'user', $idConcurso, $usuario); # Por defecto -> No es juez
-    # Lo unimos al concurso
-    if ($repP->set($part) != false) {
-        # Si se insertó hacemos alguna señal
-        echo "<h1>ENTRADO</h1>";
-        header("Location:?concurso=$idConcurso");
+    # Comprobamos si se da de baja o se une
+    if ($_POST['submit']==="Unirse") {     
+        # Cogemos el concursante y creamos la participación
+        $part = new Participacion();
+        $usuario = Sesion::leer("user")->getId(); 
+        $part->rellenaParticipacion(null, 'user', $idConcurso, $usuario); # Por defecto -> No es juez
+        # Lo unimos al concurso
+        if ($repP->set($part) != false) {
+            # Si se insertó hacemos alguna señal
+            echo "<h1>ENTRADO</h1>";
+            header("Location:?concurso=$idConcurso");
+        }
+    }else if ($_POST['submit']==="Darme de baja") {
+        # lo damos de baja
+        $usuario = Sesion::leer("user")->getId();
+        $part = $rPar->get($idConcurso,$usuario);
+        # Borramos
+        $rPar->delete($part->getId());
+
     }
 }
 // else if(isset($_POST['newMsg'])) # Mensaje
@@ -149,6 +186,7 @@ if (isset($_POST['submit'])) {
 //     // $msg 
 // }
 ?>
+<script src="./js/contador.js"></script>
 <script src="./js/api/qso.js">
     // function unirse(id) {
     //     let response = await fetch('./API/meteConcurso.php')

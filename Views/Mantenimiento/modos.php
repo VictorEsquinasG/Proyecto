@@ -1,6 +1,10 @@
 <?php
 /* SI ES ADMIN */
 $admin = Sesion::existe('user') && Sesion::leer('user')->getRol() === 'admin';
+if (!$admin) {
+    # No está autorizado
+    header("Location:?menu=registrate");
+}
 ?>
 <section class="c-forMantenimiento">
     <article class="c-forMantenimiento__formu">
@@ -23,7 +27,7 @@ $admin = Sesion::existe('user') && Sesion::leer('user')->getRol() === 'admin';
             <table class="editable">
                 <thead>
                     <tr>
-                        <th>Nombre</th>
+                        <th>Nombre<span id="btnDec">▼</span> <span id="btnAsc">▲</span> </th>
                         <th></th> <!-- Cabecera vacía para editar y borrar -->
                     </tr>
                 </thead>

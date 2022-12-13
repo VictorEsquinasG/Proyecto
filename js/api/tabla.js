@@ -4,6 +4,7 @@
 HTMLTableElement.prototype.editable = function () {
     // COGEMOS LOS ELEMENTOS DE LA TABLA
     var tabla = this;
+    this.creciente = {variable:0, creciente:true};
 
     // var tfoot = tabla.querySelector('tfoot');
 
@@ -233,6 +234,85 @@ window.onload = function () {
             localStorage.setItem("Datos", JSON.stringify(datosFila));
         });
     }
+
+    var cuerpo = document.getElementById('tbody');
+
+    var btnAsc = document.getElementById('btnAsc');
+    var btnDec = document.getElementById('btnDec');
+
+
+    btnAsc.onclick = function (ev) {
+        this.orden['variable']=ev.target.cellIndex;
+        cuerpo = this.tBody;
+        array = [];
+        filas = cuerpo.rows;
+        for (let i = 0; i < filas.length; i++) {
+            array.push(filas[i]);
+        }
+        clase.ordena(array);
+        array.forEach(element => {
+            this.tBody.appendChild(element);
+        });
+        this.orden = !this.orden;
+    }
+
+    btnDec.onclick = function (ev) {
+        this.orden['variable']=ev.target.cellIndex;
+        cuerpo = this.tBody;
+        array = [];
+        filas = cuerpo.rows;
+        for (let i = 0; i < filas.length; i++) {
+            array.push(filas[i]);
+        }
+        clase.ordena(array);
+        array.forEach(element => {
+            this.tBody.appendChild(element);
+        });
+        this.orden.creciente = !this.orden.creciente;
+
+
+    }
+
+   /*  btnAp1Asc.onclick = function () {
+       array = []
+       for (let i = 0; i < array.length; i++) {
+        const element = array[i];
+        
+       }
+       array.push(this.tBody.rows[i])
+        clase.orden.variable ="apellido1";
+        clase.orden.creciente = true;
+        clase.ordena();
+        array.forEach(element => {
+            this.tBody.appendChild(element);
+        });
+    } */
+    // btnAp1Dec.onclick = function () {
+        //     array = []
+        
+    // }
+
+    // btnAp2Asc.onclick = function () {
+        //     array = []
+    // }  
+    // btnAp2Dec.onclick = function () {
+        //     array = []
+    //     clase.orden.variable = "apellido2";
+    //     clase.orden.creciente = false;
+    //     clase.ordena();
+    
+    // }
+
+
+    ordena = function (array) {
+        var Nombrecol = this.orden.variable;
+        orden1 = (this.orden.creciente)?1:-1;
+        array.sort(function (a,b) {
+            return (a[Nombrecol].innerHTML.localeCompare(b[Nombrecol].innerHTML) * orden1);
+        })
+        this.orden[Nombrecol] = !this.orden[Nombrecol]; //Cambiamos el valor
+    }
+
 
     //     function () {
     //         const datosFila = [];

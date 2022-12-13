@@ -163,7 +163,7 @@ function modal(div) {
     caja.style.top = top;
     caja.style.left = left;
     caja.style.width = "400px";
-    caja.style.height = "490px";
+    caja.style.height = "500px";
     caja.style.borderRadius = "10px";
     caja.style.zIndex = 101;
     document.body.appendChild(caja);
@@ -204,7 +204,6 @@ function modal(div) {
     var contenido = document.createElement("div");
     contenido.style.top="40px";
     contenido.style.position="absolute";
-    contenido.style.height="370px";
     contenido.style.width="100%";
     contenido.style.padding ="15px";
     contenido.style.overflowY="scroll";

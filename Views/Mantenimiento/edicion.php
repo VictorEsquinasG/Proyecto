@@ -3,9 +3,9 @@ if (!is_null(Sesion::leer('user'))) {
     # cogemos el usuario
     $usuario = Sesion::leer('user');
 
-    print "<div class='c-contConcurso'>";
-    print "<div class='c-contConcurso__h'>";
+
     echo "<h1 class='g--font-size-4l'>Usuario: " . $usuario->getNombreCompleto() . "</h1>";
+    echo "<br>";
 } else {
     #Si no está logeado lo mandamos al index
     header("Location:?menu=inicio");
@@ -23,10 +23,15 @@ if (isset($_POST['submit'])) {
     # Por el USUARIO que nos devuelve la base de datos, que está actualizado
     $usuario = $r->getById($usuario->getId());
     Sesion::escribir('user', $usuario);
-}
+}   
 ?>
 <section id="registro">
     <div class="c-registro">
+        <div>
+            <p>
+                Ubicación registrada: <?= $usuario->getGps()  ?>
+            </p>
+        </div>
         <form action="" method="POST" enctype="multipart/form-data">
             <div class="c-registro__contenedor">
                 <div class="c-registro__img">
@@ -55,5 +60,5 @@ if (isset($_POST['submit'])) {
         </form>
     </div>
 </section>
-<script src="./js/camara.js"></script>
-<script src="./js/profpic.js"></script>
+<script src="./js/helper/camara.js"></script>
+<script src="./js/helper/profpic.js"></script>

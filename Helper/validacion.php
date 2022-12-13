@@ -46,6 +46,19 @@ class Validacion
         }
         return true;
     }
+        
+    public function RealRango($campo, $min = PHP_FLOAT_MIN, $max = PHP_FLOAT_MAX)
+    {
+        if (!filter_var(
+            $_POST[$campo],
+            FILTER_VALIDATE_FLOAT,
+            ["options" => ["min_range" => $min, "max_range" => $max]]
+        )) {
+            $this->errores[$campo] = "Debe ser real entre $min y $max";
+            return false;
+        }
+        return true;
+    }
 
     /**
      * Método que comprueba el número de caracteres de la cadena
