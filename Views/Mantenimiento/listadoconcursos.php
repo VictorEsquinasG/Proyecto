@@ -7,57 +7,12 @@ $rp = new repConcurso(gbd::getConexion());
 # Primero comprobamos si es admin
 if ((Sesion::existe('user') && Sesion::leer('user')->getRol() === 'admin')) {
     $admin = true;
-    // Si ha creado (y es admin)
-    if (isset($_POST['submit'])) {
-        $valida->Requerido('nombre');
-        $valida->Requerido('descripcion');
-        $valida->Requerido('inicioInsc');
-        $valida->Requerido('finInsc');
-        $valida->fechaPosterior($_POST['inicioInsc'],$_POST['finInsc'],'inicioInsc');
-        $valida->Requerido('inicio');
-        $valida->Requerido('fin');
-        $valida->fechaPosterior($_POST['inicio'],$_POST['fin'],'inicio');
-
-        if ($valida->ValidacionPasada()) {
-            # El concurso creado
-            $concurso = new Concurso();
-            # Cogemos los valores y validamos
-            $con['id'] = null;
-            $con['nombre'] = $_POST['nombre'];
-            $con['desc'] = $_POST['descripcion'];
-            $con['fechaInicioInsc'] = $_POST['inicioInsc'];
-            $con['fechaFinInsc'] = $_POST['finInsc'];
-            $con['fechInicio'] = $_POST['inicio'];
-            $con['fechFin'] = $_POST['fin'];
-
-            if (isset($_FILES['img']) && !empty($_FILES['img'])) {
-                # la imagen es Null
-                $imagen=file_get_contents($_FILES['img']['tmp_name']);
-                $imagen=base64_encode($imagen);
-                $con['cartel'] = $imagen;
-            } else {
-                # la imagen es Null
-                $con['cartel'] = null;
-            }
-
-            $con['bandas'] = $_POST['bandas'];
-            $con['modos'] = $_POST['modos'];
-
-            # Rellenamos el concurso
-            $concurso->rellenaConcursoArray($con);
-            # Lo insertamos
-            $rp->set($concurso);
-            # Recargamos 
-            header("Location:?menu=listadoconcursos");
-        }
-    }
 }
 
 ?>
 <script src="./js/mantenimientoConcursos.js"></script>
 <section class="tablas">
     <!-- INSERTAMOS LA TABLA -->
-    <form action="" method="POST" enctype="multipart/form-data">
         <table class="editable">
             <thead>
                 <tr>
@@ -70,90 +25,13 @@ if ((Sesion::existe('user') && Sesion::leer('user')->getRol() === 'admin')) {
                     <th>Periodo de participación <span id="btnAsc">▲▼</span></th>
                     <th>Bandas <span id="btnAsc">▲▼</span></th>
                     <th>Modos <span id="btnAsc">▲▼</span></th>
-                    <th>Cartel <span id="btnAsc">▲▼</span></th> 
+                    <!-- <th>Cartel <span id="btnAsc">▲▼</span></th> -->
                     <th></th>
                 </tr>
             </thead>
             <tbody id="tbody">
                 <!-- La primera fila servirá para que los administradores creen nuevos concursos -->
-                <?php
-                if ($admin) {
-                    # es admin
 
-                    # Las bandas
-                    $rpB = new repBanda(gbd::getConexion());
-                    $bandas = $rpB->getAll();
-                    # Los modos
-                    $modos = $rp->get_modos();
-                    $optBandas = '';
-                    $optModos = '';
-
-                    for ($i = 0; $i < count($bandas); $i++) {
-                        # Rellenamos el SELECT
-                        $optBandas .= '<option value="' . $bandas[$i]->getId() . '">' . $bandas[$i]->getNombre() . '</option>';
-                    }
-                    for ($i = 0; $i < count($modos); $i++) {
-                        # Rellenamos el SELECT
-                        $optModos .= '<option value="' . $modos[$i]->getId() . '">' . $modos[$i]->getNombre() . '</option>';
-                    }
-                    # Errores
-                    $erNombre = $valida->ImprimirError('nombre');
-                    $erDesc = $valida->ImprimirError('descripcion');
-                    $erFinins = $valida->ImprimirError('inicioInsc');
-                    $erFfinsc = $valida->ImprimirError('finInsc');
-                    $erFinC = $valida->ImprimirError('inicio');
-                    $erFfinC = $valida->ImprimirError('fin');
-                    $erBandas = $valida->ImprimirError('bandas');
-                    $erModos = $valida->ImprimirError('modos');
-                    # Escribimos la fila de adición
-                    $fila = <<<EOD
-                    <tr id="crear">
-                        <td></td> <!-- Borrar tampoco tiene sentido definirlo -->
-                        <td>
-                            <input type="text" name="nombre" id="nombre" placeholder="Nombre"></td>
-                            $erNombre
-                        <td>
-                            <input type="text" name="descripcion" id="desc" placeholder="Descripción"></td>
-                            $erDesc
-                        <td> <!-- Title creará un tooltip -->
-                            <input type="date" name="inicioInsc" title="Fecha Inicio">
-                            <input type="date" name="finInsc" title="Fecha Fin">
-                            $erFinins
-                            $erFfinsc
-                        </td>
-                        <td>
-                            <input type="date" name="inicio" title="Fecha Inicio">
-                            <input type="date" name="fin" title="Fecha Fin">
-                            $erFinC
-                            $erFfinC
-                        </td>
-                        <td>
-                            <select name="bandas[]" multiple>
-                                
-                                $optBandas
-                                
-                            </select>
-                            $erBandas
-                        </td>   
-                        <td>
-                            <select name="modos[]" selected="-1" multiple>
-                                
-                                $optModos
-                                
-                            </select>
-                            $erModos
-                        </td>   
-                        <td><div class="c-add__img" id="btnImg" onclick="getFile()">
-                                <label for="img" class="img">Subir foto</label>
-                                <input type="file" name="img" id="inpFile">
-                            </div>
-                        </td>
-                        <td> <input type="submit" name='submit' id="btnGuardar" value="Guardar"></td>
-                        </tr>
-            EOD;
-                    echo $fila;
-                }
-                ?>
                 <!-- EL RESTO DEL LISTADO -->
                 <?php
                 // Conseguimos los datos
@@ -221,17 +99,18 @@ if ((Sesion::existe('user') && Sesion::leer('user')->getRol() === 'admin')) {
                                 echo "</ul>";
                                 echo "</td>";
                                 # Ahora añadimos el cartel, con img y onclick cambiar imagen
-                                echo "<td class='cambiaImg' onclick='cambiaImg()'>";
-                                if ($concurso['cartel'] != null) {
+                                // echo "<td class='cambiaImg' onclick='cambiaImg()'>";
+                                // if ($concurso['cartel'] != null) {
                                     # la imagen la sacamos de base de datos
-                                    echo "<img width='25px' src='data:image/png;base64," . $concurso['cartel'] . "'>";
-                                } else {
-                                    echo "<img class='cambiaImg__img' src='./images/editar.png'>";
-                                }
-                                echo "</td>";
+                                    // echo "<img width='25px' src='data:image/png;base64," . $concurso['cartel'] . "'>";
+                                // } else {
+                                    // echo "<img class='cambiaImg__img' src='./images/editar.png'>";
+                                // }
+                                // echo "</td>";
+
                             } else {
                                 # Cuando no es cartel ni ID
-                                echo $clave !='id' ? "<td>" . $txt:"";
+                                echo $clave != 'id' ? "<td>" . $txt : "";
                             }
                         }
                         echo "</td>";
@@ -247,21 +126,30 @@ if ((Sesion::existe('user') && Sesion::leer('user')->getRol() === 'admin')) {
                 // Rellenamos los modos y las bandas
 
                 # Ponemos la columna de edición
-                if ($admin) {
-                    # Podrá ver la edición
-                    echo "<script>";
-                    echo "window.addEventListener('load', () => {" .
-                        "editarAdmin();" .
-                        "});";
-                    echo "</script>";
-                }
-                ?>
+                // if ($admin) {
+                //     # Podrá ver la edición
+                //     echo "<script>";
+                //     echo "window.addEventListener('load', () => {" .
+                //         "editarAdmin();" .
+                //         "});";
+                //     echo "</script>";
+                // }
+                // 
+            ?>
             </tbody>
             <tfoot>
 
             </tfoot>
         </table>
-    </form>
+        <?php
+        # Escribimos el boton de adición
+        if ($admin) {
+            $fila = <<<EOD
+                <a href="?menu=creaConcurso" class="c-card__btn c-btn--primary" style="margin-left:0%">+</a>
+            EOD;
+            echo $fila;
+        }
+        ?>
 </section>
 
 <!-- El input para la imagen -->

@@ -173,14 +173,31 @@ class Validacion
             isset($_POST[$campo]) ? $_POST[$campo] : '';
     }
 
-    public function fechaPosterior($fecha1, $fecha2,$campo): bool
+    /**
+     * Si no está validado añade un error al array de errores de la clase Validacion
+     * Además devuelve un booleano en función de si es correcto o no
+     * @param fecha1 La fecha que debe ser menor
+     * @param fecha2 La fecha que debe ser mayor
+     * @param cadena Un booleano que indica si las fechas vienen en formato texto o ya son una fecha
+     * @return bool
+     */
+    public function fechaPosterior($fecha1, $fecha2,$campo,bool $cadena): bool
     {
-        # Cogemos las fechas        
-        $fecha1 = new DateTimeImmutable($fecha1);
-        $fecha2 = new DateTimeImmutable($fecha2);
+        # Cogemos las fechas    
+        if ($cadena) {
+            # si viene en forma de string lo pasamos a DateTimeImmutable
+            $fecha1 = new DateTimeImmutable($fecha1);
+            $fecha2 = new DateTimeImmutable($fecha2);
+        }
+        // if (!gettype($fecha1) === 'object') {
+        //     # Si no es ya DateTimeImmutable
+        // }    
+        // if (!gettype($fecha2) === 'object') {
+        //     # Si no es ya DateTimeImmutable
+        // }    
 
         // calculamos la diferencia
-        $dif = $fecha1->diff($fecha2);
+                $dif = $fecha1->diff($fecha2);
         if ($dif->invert == 0) {
             # Vemos si su diferencia es 0s  
             return true;

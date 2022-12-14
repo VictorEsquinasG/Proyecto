@@ -36,14 +36,20 @@ if (isset($_GET['menu'])) {
         require_once './Views/default/registra.php';
     }else if ($_GET['menu'] == "alta") {
         require_once './Views/Mantenimiento/alta.php';
+    }else if ($_GET['menu'] == "creaConcurso") {
+        require_once './Views/Mantenimiento/creaConcurso.php';
     }
     
     
 }else if (isset($_GET['concurso'])) {
     # Cargamos el concurso que sea
-    setcookie('id',$_GET['concurso']);
+    // setcookie('id',$_GET['concurso']);
     require_once './Views/Mantenimiento/concurso.php';#.'?id='.$_GET['concurso'];
-}else {
+}else if (isset($_GET['mail'])) {
+    # Le mandamos el correo
+    require_once './mail/mail.php';
+}
+else {
     # Si no ha introducido ninguna ruta lo enviaremos a Index
     require_once './Views/default/body.php';
 }

@@ -144,7 +144,7 @@ async function getConcursos() {
 
 }
 async function getBandas(id) {
-    let response = await fetch('./API/ListBanda.php?id' + id)
+    let response = await fetch('./API/bandas.php?id' + id)
         // Éxito
         .then(response => response.json())  // a JSON
         // ERROR

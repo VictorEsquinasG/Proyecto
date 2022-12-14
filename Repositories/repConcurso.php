@@ -61,6 +61,9 @@ class repConcurso
         }
     }
 
+    /**
+     * Devuelve los concursos de un participante dado su ID
+     */
     public function getMisConcursos($id)
     {
         # A devolver
@@ -87,7 +90,11 @@ class repConcurso
         }
     }
 
-
+    /**
+     * Devuelve una página  de concursos
+     * @param cuantas 
+     * @param tamaño El nº de líneas por página
+     */
     public function getPage($cuantas, $tamanio)
     {
         $cuantas = (($cuantas - 1) * 5);
@@ -97,6 +104,11 @@ class repConcurso
         $concursos = $consulta->fetchAll(PDO::FETCH_ASSOC);
         return $concursos;
     }
+
+    /**
+     * Devuelve los concursos sacados de la base de datos no instanciados como la clase
+     * @return array El array asociativo resultado de la consulta
+     */
     public function getAll()
     {
         $concursos = [];
@@ -113,6 +125,10 @@ class repConcurso
         // }
         return $concursos;
     }
+
+    /**
+     * @return array Concursos (Clase concursos)
+     */
     public function getAllConcursos()
     {
         $concursos = [];
@@ -139,6 +155,10 @@ class repConcurso
         return $concursos;
     }
 
+    /**
+     * @param id ID del concurso
+     * @return array Jueces de un concurso 
+     */
     public function getJueces($id): array
     {
         $jueces = [];
@@ -163,6 +183,9 @@ class repConcurso
         }
     }
 
+    /**
+     * Inserta un concurso dado (CLASE CONCURSO) en la base de datos
+     */
     public function set(Concurso $concurso)
     {
         $nombre = $concurso->getNombre();
@@ -209,6 +232,10 @@ class repConcurso
             echo "Error en la inserción de concurso  " . $e->getMessage();
         }
     }
+
+    /**
+     * Borra un concurso de base de datos dado su ID
+     */
     public function delete($id)
     {
         # borramos según el id
@@ -219,6 +246,9 @@ class repConcurso
         return $devolveer;
     }
 
+    /**
+     * @return array Concursos cuya fecha de finalización es anterior a HOY
+     */
     public function getConcursosDisponibles(): array
     {
         # El array

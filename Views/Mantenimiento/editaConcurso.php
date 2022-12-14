@@ -12,19 +12,20 @@ if (isset($_POST['submit'])) {
     $valida->Requerido('desc');
     $valida->Requerido('inicio');
     $valida->Requerido('fin');
+    $valida->fechaPosterior($_POST['inicio'],$_POST['fin'],'inscripcion',true);
     $valida->Requerido('inicioC');
     $valida->Requerido('finC');
     // $valida->Requerido('imagen');
 
     if ($valida->ValidacionPasada()) {
-        # Ha mandado todos los datos
+        # Ha mandado todos los datos    
         $nombre = $_POST['nombre'];
         $descr = $_POST['desc'];
         $insc = $_POST['inicio'];
         $inscF = $_POST['fin'];
         $inicio = $_POST['inicioC'];
         $fin = $_POST['finC'];
-        if (isset($_FILES['imagen']) && !empty($_FILES['imagen'])) {
+        if (isset($_FILES['imagen']) && !empty($_FILES['imagen']) && ($_FILES['imagen']['tmp_name']!=='')) {
             # le añadimos la imagen
             $poster = base64_encode(file_get_contents($_FILES['imagen']['tmp_name']));
         } else {

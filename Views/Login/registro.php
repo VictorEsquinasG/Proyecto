@@ -55,12 +55,14 @@ if (isset($_POST['submit'])) {
             $rep->addUser($us) ;
             // iniciamos la sesion
             if (Login::Identifica($_POST['usuario'],$_POST['contrasena'],false)){
+                // CORREO DE VERIFICACION
+                header("Location:?mail&adrr=".$_POST['mail']);
                 // lo redireccionamos a la página principal
-                header("Location:?menu=inicio") ;                
+                // header("Location:?menu=inicio") ;                
             }
             
         } catch (Exception $e) {
-            echo "Error durante la creación del usuario: " . $e->getMessage();
+            echo "<p class='error'>Error durante la creación del usuario: " . $e->getMessage()."</p>";
         }
     }
     // echo "<script>console.log(".var_dump($user).")</script>";

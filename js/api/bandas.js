@@ -14,13 +14,14 @@ window.addEventListener("load", function () {
             let min = document.createElement("input");
             let max = document.createElement("input");
             let boton = document.createElement("input");
+            var idEditado = editado.getAttribute('idBanda');
 
             // Asignamos atributos al objeto formulario
             formulario.setAttribute('method', "POST");
             formulario.setAttribute('action', "");
 
             id.setAttribute('value', editado.getAttribute('idBanda'));
-            id.setAttribute("name","id");
+            id.setAttribute("name", "id");
             id.style.display = "none";
 
             // Asignamos atributos al input del nombre
@@ -49,11 +50,10 @@ window.addEventListener("load", function () {
             max.setAttribute('placeholder', "Máximo");
             max.setAttribute('style', "width:80%;margin: 10px 0px;padding: 5px");
 
-            // Asignar atributos al boton
+            // Asignamos atributos al boton
             boton.setAttribute('type', "submit");
             boton.setAttribute('value', "Guardar cambios");
             boton.setAttribute('class', "c-card__btn c-btn--primary");
-            boton.setAttribute('onclick', "location.reload()"); // Recargamos la página
             boton.setAttribute('style', "margin: 15px 10px;");
             // Todo al formulario
             formulario.appendChild(id);
@@ -64,17 +64,35 @@ window.addEventListener("load", function () {
             formulario.appendChild(boton);
             //Agregamos el formulario a la etiqueta con el ID		
             document.getElementById('cuerpo').appendChild(formulario);
+
             formulario.onsubmit = function (e) {
                 // Impedimos que nos redireccione
                 e.preventDefault();
                 // guardamos
-                editar();
+                editar(formulario);
+                location.reload();
             }
-            async function editar() {
+            async function editar(formulario) {
+                // debugger;
                 try {
-                    const data = new FormData(formulario);
+                    const data = {
+                        "id": formulario.id.value, 
+                        "nombre": formulario.nombre.value,
+                        "distancia": formulario.distancia.value, 
+                        "minimo": formulario.minimo.value, 
+                        "maximo": formulario.maximo.value
+                    };
+                    // const data = new FormData(formulario);
+                    const respuesta = await fetch("./API/bandas.php", {
+                        method: "PUT",
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    })
+                        .then(respuesta => console.log(respuesta));
+                   
+                        
                     //
-                    await fetch("./API/editaBanda.php", {
+                    /* await fetch("./API/editaBanda.php", {
                         // method: 'PUT',
                         method: 'POST',
                         mode: 'cors',
@@ -83,7 +101,7 @@ window.addEventListener("load", function () {
                         headers: new Headers()
                     })
                         .then(respuesta => console.log(respuesta))
-                        .then(location.reload); //Recargamos la página
+                        .then(location.reload); //Recargamos la página */
                 } catch (err) {
                     console.log("Ocurrió un error: " + err);
                 }
@@ -94,6 +112,7 @@ window.addEventListener("load", function () {
     })
     function modal(div, tipo) {
         var modal = this.document.createElement("div");
+        // El 'bloqueador'
         modal.style.position = "fixed";
         modal.style.background = "grey";
         modal.style.opacity = 0.5;
@@ -153,7 +172,7 @@ window.addEventListener("load", function () {
         cerrar.style.margin = "5px";
         cerrar.style.padding = "5px";
         caja.style.overflow = "hidden";
-        cerrar.onclick = function ()  {
+        cerrar.onclick = function () {
             var caja = this.parentElement.parentElement;
             caja.parentElement.removeChild(caja);
             modal.parentElement.removeChild(modal);
@@ -236,7 +255,7 @@ window.addEventListener("load", function () {
             try {
                 const data = new FormData(formulario);
                 //
-                await fetch("./API/BandasApi.php", {
+                await fetch("./API/bandas.php", {
                     method: 'POST',
                     mode: 'cors',
                     cache: 'no-cache',
@@ -245,7 +264,7 @@ window.addEventListener("load", function () {
                 })
                     .then(respuesta => console.log(respuesta));
             } catch (err) {
-                console.log("Ocurrió un error: " + err);
+                console.log("Ocurrió un error creando banda: " + err);
             }
         }
         modal(formulario, "new");

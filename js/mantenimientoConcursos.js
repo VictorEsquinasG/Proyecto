@@ -5,6 +5,9 @@ window.addEventListener("load",()=>{
         var btn = btns[i];
         btn.addEventListener('click',() =>
         {
+            //TODO ventana confirmar
+
+            // Lo borramos
             borrar(btn.getAttribute('idConcurso'));
         });
     }

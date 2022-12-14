@@ -13,12 +13,12 @@ if (!Sesion::existe('user')) {
     $idUsuario = Sesion::leer('user')->getId();
 }
 
-if (isset($_COOKIE['id'])) {
+if (isset($_GET['concurso'])) {
     # Aquí no comprobaremos su rol, cualquiera puede unirse al concurso
     $repP = new repParticipacion(gbd::getConexion());
     $rp = new repConcurso(gbd::getConexion());
     # capturamos el id
-    $idConcurso = $_COOKIE['id'];
+    $idConcurso = $_GET['concurso'];
     # Cogemos el concurso dado
     $concurso = $rp->getById($idConcurso);
     # Preparamos su página propia
@@ -27,7 +27,7 @@ if (isset($_COOKIE['id'])) {
     echo "<h1 class='g--font-size-4l'>Concurso: " . $concurso->getNombre() . "</h1>";
     if ($concurso->tieneCartel()) {
         # Si tiene imagen se la imprimimos
-        echo "<img src='data:image/png;base64," . $concurso->getCartel() . "'>";
+        // echo "<img src='data:image/png;base64," . $concurso->getCartel() . "'>";
     }
 
 } else {
@@ -120,7 +120,7 @@ echo "</tbody>";
 echo "</table>";
 
 # Mensajes
-if ($participa && !$juez) {
+if ($participa && !$juez) { 
     # Si es concursante podrá enviar mensajes
     $repbanda = new repBanda(gbd::getConexion());
     $repModo = new repModo(gbd::getConexion());
@@ -152,7 +152,10 @@ if ($participa && !$juez) {
                 </table>
             </form>
         EOD;
-    print $msg;
+    if (!$concurso->acabado()) {
+        # Si el concurso sigue activo podemos mandar mensajes
+        print $msg;
+    }
 }
 print "</div>";
 print "</div>";
@@ -160,7 +163,7 @@ print "</div>";
 print "</div>";
 
 # Matamos la cookie (le damos 3s)
-setcookie('id', $_COOKIE['id'], time() + 3);
+// setcookie('id', $_COOKIE['id'], time() + 3);
 
 if (isset($_POST['submit'])) {
     # Comprobamos si se da de baja o se une

@@ -117,7 +117,7 @@ if (!$admin) {
                         echo "<tr>";
                         // echo "<td>" . $banda->getId() . "</td>";
                         echo "<td>" . $banda->getNombre() . "</td>";
-                        echo "<td>" . $banda->getDistancia() . "</td>";
+                        echo "<td>" . $banda->getDistancia() . "Kms</td>";
                         echo "<td>" . $banda->getMin_rango() . "KHz</td>";
                         echo "<td>" . $banda->getMax_rango() . "KHz</td>";
                         # La última columna será de borrado y edición si es admin

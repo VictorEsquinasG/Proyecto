@@ -118,7 +118,7 @@ class Concurso
         $fin = $this->getFechFin();
         $inicio = $this->getFechInicio();
         # Devolvemos la diferencia 
-        return ($valida->fechaPosterior($inicio,$fin,''));
+        return ($valida->fechaPosterior($fin,$inicio,''));
     }
 
     /**

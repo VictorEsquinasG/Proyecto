@@ -1,6 +1,6 @@
 <?php   
     use PHPMailer\PHPMailer\PHPMailer;
-    require "../vendor/autoload.php";
+    require "./vendor/autoload.php";
     $mail = new PHPMailer();
     $mail->IsSMTP();
     // cambiar a 0 para no ver mensajes de error
@@ -16,16 +16,14 @@
     $mail->Password   = "qbzyypfssokhgwyo";       
     $mail->SetFrom('elpatronsupp@gmail.com', 'Soporte-no-Contestar');
     // asunto
-    $mail->Subject   = "El correo ha sido enviado";
+    $mail->Subject   = "Verifique su dirección de correo electrónico";
     // cuerpo
-    $mail->MsgHTML(file_get_contents('verificamail.html'),"C:/xampp/htdocs/Proyecto"); 
+    $mail->MsgHTML(file_get_contents('./mail/verificamail.html')); 
     // adjuntos
     // $mail->addAttachment("adjunto.txt");
     // destinatario
-    $address = "viktoresquinas@gmail.com";
-    $address1 = "dbarote0812@g.educaand.es";
-    $mail->AddAddress($address, "YO");
-    $mail->AddAddress($address1, "Daniel");
+    $address = $_GET['adrr'];
+    $mail->AddAddress($address, "Estimado cliente");
     // enviar
     $resul = $mail->Send();
     if(!$resul) {
