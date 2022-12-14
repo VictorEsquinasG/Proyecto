@@ -142,4 +142,48 @@ class repQSO
             echo "Error al añadir mensaje " . $e->getMessage();
         }
     }
+
+    public function isValidado($id)
+    {
+        # Mira si está validado
+        $sql = "SELECT validado FROM qso WHERE id LIKE $id";
+
+        try {
+            $c = $this->conexion->query($sql);
+            $data = $c->fetchAll(PDO::FETCH_ASSOC);
+
+            foreach ($data as $validado) {
+                # Devolvemos si está validado o no
+                return (bool) $validado;
+            }
+
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    }
+
+    public function valida($idQSO)
+    {
+        # Según el ID del mensaje, lo validamos
+        $sql = "UPDATE qso SET validado = 1 WHERE id LIKE $idQSO";
+        try {
+            $this->conexion->beginTransaction();
+            $this->conexion->exec($sql);
+            $this->conexion->commit();
+        } catch (PDOException $e) {
+            echo "Error al validar mensaje " . $e->getMessage();
+        }
+    }
+    public function invalida($idQSO)
+    {
+        # Según el ID del mensaje, lo validamos
+        $sql = "UPDATE qso SET validado = 0 WHERE id LIKE $idQSO";
+        try {
+            $this->conexion->beginTransaction();
+            $this->conexion->exec($sql);
+            $this->conexion->commit();
+        } catch (PDOException $e) {
+            echo "Error al invalidar mensaje " . $e->getMessage();
+        }
+    }
 }

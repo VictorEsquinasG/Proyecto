@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>El Patrón · Asociación de Radioafición · España</title>
     <script src="./js/nav.js"></script>
+    <link rel="shortcut icon" href="./images/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="./css/estilos.css">
 </head>
@@ -20,7 +21,7 @@
             <?php
             require_once './Views/Principal/enruta.php';
             ?>
-        </section>
+         </section>
     </main>
 
     <?php

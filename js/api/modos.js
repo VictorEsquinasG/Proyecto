@@ -11,7 +11,7 @@ window.addEventListener("load", function () {
             let nombre = document.createElement("input");
             let boton = document.createElement("input");
 
-            ////Asignamos atributos al objeto formulario
+            // Asignamos atributos al objeto formulario
             formulario.setAttribute('method', "POST");
             formulario.setAttribute('action', "");
 
@@ -19,7 +19,7 @@ window.addEventListener("load", function () {
             id.setAttribute("name", "id");
             id.style.display = "none"; // No se muestra al usuario
 
-            ////Asignamos atributos al input del nombre
+            // Asignamos atributos al input del nombre
             nombre.setAttribute('type', "text");
             nombre.setAttribute('id', "nombre");
             nombre.setAttribute('name', "nombre");
@@ -68,7 +68,7 @@ window.addEventListener("load", function () {
         nombre.setAttribute('placeholder', "Nombre");
         nombre.setAttribute('style', "width:80%;margin: 10px 0px;padding: 5px");
 
-        ////Asignar atributos al boton
+        // Asignar atributos al boton
         boton.setAttribute('type', "submit");
         boton.setAttribute('value', "Crear");
         boton.setAttribute('class', "c-card__btn c-btn--primary");
@@ -108,10 +108,7 @@ async function guardar(formulario) {
         // Lo mandamos a la bd mediante la API
         var respuesta = await fetch("./API/ModosApi.php", {
             method: 'POST',
-            mode: 'cors',
-            cache: 'no-cache',
-            body: data,
-            headers: new Headers()
+            body: data
         })
         .then(respuesta => console.log(respuesta))
         .then(location.reload()) //Recargamos la página
@@ -130,10 +127,7 @@ async function editar(formulario) {
         await fetch("./API/editaModo.php", {
             // method: 'PUT',
             method: 'POST',
-            mode: 'cors',
-            cache: 'no-cache',
-            body: data,
-            headers: new Headers()
+            body: data
         })
             .then(respuesta => console.log(respuesta))
             .then(location.reload()) //Recargamos la página
@@ -204,12 +198,12 @@ function modal(div, tipo) {
     cerrar.style.margin = "5px";
     cerrar.style.padding = "5px";
     caja.style.overflow = "hidden";
-    cerrar.addEventListener("click", () => {
+    cerrar.onclick = function ()  {
         var caja = this.parentElement.parentElement;
         caja.parentElement.removeChild(caja);
         modal.parentElement.removeChild(modal);
         location.reload();
-    })
+    }
     titulo.appendChild(cerrar);
     // La ventana flotante
     var contenido = document.createElement("div");

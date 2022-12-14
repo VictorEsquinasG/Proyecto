@@ -17,14 +17,14 @@ if (isset($_POST['submit'])) {
             <table class="editable">
                 <thead>
                     <tr>
-                        <th>ID<span id="btnDec">▼</span> <span id="btnAsc">▲</span> </th>
-                        <th>Nombre<span id="btnDec">▼</span> <span id="btnAsc">▲</span> </th>
-                        <th>Descripción<span id="btnDec">▼</span> <span id="btnAsc">▲</span> </th>
-                        <th>Inicio Inscripción<span id="btnDec">▼</span> <span id="btnAsc">▲</span> </th>
-                        <th>Fin Inscripción<span id="btnDec">▼</span> <span id="btnAsc">▲</span> </th>
-                        <th>Inicio Concurso<span id="btnDec">▼</span> <span id="btnAsc">▲</span> </th>
-                        <th>Fin Concurso<span id="btnDec">▼</span> <span id="btnAsc">▲</span> </th>
-                        <th>Letrero<span id="btnDec">▼</span> <span id="btnAsc">▲</span> </th>
+                        <th>ID <span id="btnAsc">▲▼</span></th>
+                        <th>Nombre <span id="btnAsc">▲▼</span></th>
+                        <th>Descripción <span id="btnAsc">▲▼</span></th>
+                        <th>Inicio Inscripción <span id="btnAsc">▲▼</span></th>
+                        <th>Fin Inscripción <span id="btnAsc">▲▼</span></th>
+                        <th>Inicio Concurso <span id="btnAsc">▲▼</span></th>
+                        <th>Fin Concurso <span id="btnAsc">▲▼</span></th>
+                        <th>Letrero <span id="btnAsc">▲▼</span></th>
                         <th></th>
                     </tr>
                 </thead>
@@ -75,7 +75,7 @@ if (isset($_POST['submit'])) {
         </div>
 
         <script src="./js/api/listados.js"></script>
-        <script src="./js/api/tabla.js"></script>
+        <script src="./js/clases/tabla.js"></script>
         <script>
             window.addEventListener("load", () => {
                 // Haremos que el doble click a cualquiera de las filas lleve a EDITAR

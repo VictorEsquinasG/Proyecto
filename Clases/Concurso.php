@@ -110,6 +110,37 @@ class Concurso
         return $cartel;
     }
 
+    public function acabado()
+    {
+        # Usaremos el metodo FECHA_POSTERIOR de Validacion
+        $valida = new Validacion();
+        # cogemos el valor de las variables
+        $fin = $this->getFechFin();
+        $inicio = $this->getFechInicio();
+        # Devolvemos la diferencia 
+        return ($valida->fechaPosterior($inicio,$fin,''));
+    }
+
+    /**
+     * Función que calcula la puntuación del usuario dado
+     * en este concurso 
+     */
+    public function calculaPuntuacion($idUsuario)
+    {
+        # este concurso
+        $id = $this->getId();
+        # El multiplicador (valor del mensaje segun el juez)
+        $multi = 1; // Por defecto 1
+
+        # Calculamos sus mensajes
+        $rP = new repParticipacion(gbd::getConexion());
+        $rM = new repQSO(gbd::getConexion()); 
+
+        $idparti = $rP->get($id,$idUsuario);
+        $mensajes = $rM->getMsg($id,$idparti);
+        
+        return count($mensajes) * $multi; //TODO separar los mensajes segun el juez y sumar todos
+    }
 
 
     /* GETTERS & SETTERS */

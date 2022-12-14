@@ -89,8 +89,7 @@ window.addEventListener("load", function () {
                 // Si pasa la validación se guarda
                 guardar();
             }
-            // Después redireccionamos (recargamos)
-            location.reload()
+            
         }
         async function guardar() {
             try {
@@ -104,6 +103,7 @@ window.addEventListener("load", function () {
                     headers: new Headers()   
 
                 })
+                .then(location.reload())// Después redireccionamos (recargamos)
                 .catch(err => console.log("Fallo al guardar los mensajes ", err));
 
             } catch (err) {
@@ -167,13 +167,14 @@ async function rellenaJueces(idConcurso, juez) {
     // Obtenemos los jueces y otro contenido para SELECT
     let jueces = await getJueces(idConcurso);// Rellenamos los SELECT
     console.log(jueces);
+    
     for (let i = 0; i < jueces.length; i++) {
         var jue = document.createElement("option");
         // Ponemos tanto value como entre la etiqueta el valor
-        jue.value = jueces[i].identificativo;
-        jue.innerHTML = jueces[i].identificativo;
+        jue.value = jueces[i].indicativo;
+        jue.innerHTML = jueces[i].indicativo;
         juez.appendChild(jue);
-    }
+    }       
 }
 async function rellenaBandas(id, banda) {
     // Obtenemos las banda para el SELECT
@@ -205,7 +206,7 @@ async function getJueces(concurso_id) {
     try {
         // Lo mandamos a la bd mediante la API
         const respuesta = await fetch("./API/jueces.php?id=" + concurso_id)
-        const jueces = await respuesta.json();
+        const jueces = respuesta.json();
         return jueces;
     } catch (err) {
         console.log("Ocurrió un error: " + err);
@@ -284,12 +285,12 @@ function modal(div) {
     cerrar.style.margin = "5px";
     cerrar.style.padding = "5px";
     caja.style.overflow = "hidden";
-    cerrar.addEventListener("click", () => {
+    cerrar.onclick = function ()  {
         var caja = this.parentElement.parentElement;
         caja.parentElement.removeChild(caja);
         modal.parentElement.removeChild(modal);
         location.reload();
-    })
+    }
     titulo.appendChild(cerrar);
 
     var contenido = document.createElement("div");

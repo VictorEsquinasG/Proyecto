@@ -75,10 +75,10 @@ if (!$admin) {
                 <thead>
                     <tr>
                         <!-- <th>ID</th> -->
-                        <th>Nombre<span id="btnDec">▼</span> <span id="btnAsc">▲</span> </th>
-                        <th>Distancia<span id="btnDec">▼</span> <span id="btnAsc">▲</span> </th>
-                        <th>Mínimo<span id="btnDec">▼</span> <span id="btnAsc">▲</span> </th>
-                        <th>Máximo<span id="btnDec">▼</span> <span id="btnAsc">▲</span> </th>
+                        <th>Nombre <span id="btnAsc">▲▼</span></th>
+                        <th>Distancia <span id="btnAsc">▲▼</span></th>
+                        <th>Mínimo <span id="btnAsc">▲▼</span></th>
+                        <th>Máximo <span id="btnAsc">▲▼</span></th>
                         <?= $admin ? '<th></th>':'' ?>
                     </tr>
                 </thead>

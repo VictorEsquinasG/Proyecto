@@ -145,7 +145,7 @@ class repConcurso
         $r = new repUsuarios(gbd::getConexion());
         #Jueces del concurso
         $sql = "SELECT P.participante_id FROM concurso C " .
-            "JOIN participacion P WHERE c.id LIKE $id";
+            "JOIN participacion P WHERE c.id LIKE $id AND rol LIKE 'juez'";
         try {
             #Conseguimos el id del participante que es juez
             $consulta = $this->conexion->query($sql);

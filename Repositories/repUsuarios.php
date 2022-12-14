@@ -168,7 +168,12 @@ class repUsuarios
         $ap1 = $a->getAp1();
         $ap2 = $a->getAp2();
         // Preparamos y realizamos el insert
-        $sql = "INSERT INTO participante VALUES (null,'$indicativo','$mail','$passwd','$rol',$gps,'$img','$nombre','$ap1','$ap2')";
+        if ($img !== null) {
+            # Si no es null tiene imagen (COMO STRING)
+            $sql = "INSERT INTO participante VALUES (null,'$indicativo','$mail','$passwd','$rol',$gps,'$img','$nombre','$ap1','$ap2')";
+        }else {
+            $sql = "INSERT INTO participante VALUES (null,'$indicativo','$mail','$passwd','$rol',$gps,null,'$nombre','$ap1','$ap2')";
+        }
         try {
             // Ejecutamos la instrucción
             $this->conexion->beginTransaction();

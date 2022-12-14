@@ -1,6 +1,6 @@
 <?php
 
-class Participacion {
+class Participacion implements JsonSerializable {
     private int | null $id;
     private string $rol;
     private int $id_concurso;
@@ -64,6 +64,8 @@ class Participacion {
         if ($rol === 'user' || $rol === 'juez') {
             # si es uno de los 2
             $this->rol = $rol;
+        }else {
+            throw new Exception("Rol no válido (fuera de enum user/juez)");
         }
 
         return $this;
@@ -108,4 +110,17 @@ class Participacion {
 
         return $this;
     }
+
+    public function jsonSerialize(): mixed
+    {
+        $json = new stdClass();
+        
+        $json->id = $this->getId();
+        $json->id_concurso = $this->getId_concurso();
+        $json->id_usuario = $this->getId_usuario();
+        $json->rol = $this->getRol();
+
+        return $json;
+    }
+
 }

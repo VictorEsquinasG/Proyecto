@@ -27,7 +27,7 @@ if (!$admin) {
             <table class="editable">
                 <thead>
                     <tr>
-                        <th>Nombre<span id="btnDec">▼</span> <span id="btnAsc">▲</span> </th>
+                        <th>Nombre <span id="btnAsc">▲▼</span></th>
                         <th></th> <!-- Cabecera vacía para editar y borrar -->
                     </tr>
                 </thead>
@@ -73,7 +73,7 @@ if (!$admin) {
         </div>
         <script src="./js/api/modos.js"></script>
         <script src="./js/api/listados.js"></script>
-        <script src="./js/api/tabla.js"></script>
+        <script src="./js/clases/tabla.js"></script>
 
         <script>
             window.addEventListener("load",()=>{

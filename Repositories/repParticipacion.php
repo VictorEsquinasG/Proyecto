@@ -64,18 +64,21 @@ class repParticipacion {
 
     public function get($idConcurso,$idParticipante)
     {
+        $par = new Participacion();
         # Encontramos la participación
         $sql = "SELECT * FROM participacion WHERE concurso_id LIKE $idConcurso AND participante_id LIKE $idParticipante";
         try {
             $consulta = $this->conexion->query($sql);
             $data = $consulta->fetchAll(PDO::FETCH_ASSOC);
             # cogemos todas las columnas
-            $id = $data[0]['id'];
-            $rol = $data[0]['rol'];
-            $con = $data[0]['concurso_id'];
-            $part = $data[0]['participante_id'];
-            $par = new Participacion();
-            $par->rellenaParticipacion($id,$rol,$con,$part);
+            foreach ($data as $dat) {
+                # Nos quitamos de poner $data[0]
+                $id = $dat['id'];
+                $rol = $dat['rol'];
+                $con = $dat['concurso_id'];
+                $part = $dat['participante_id'];
+                $par->rellenaParticipacion($id,$rol,$con,$part);
+            }
             return $par;
         } catch (PDOException $e) {
             echo "Error al buscar participación ".$e->getMessage();

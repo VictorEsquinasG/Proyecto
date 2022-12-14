@@ -8,10 +8,10 @@ $admin = Sesion::existe('user') && Sesion::leer('user')->getRol() === 'admin';
     <table class="editable">
         <thead>
             <tr>
-                <th>Identificador<span id="btnDec">▼</span> <span id="btnAsc">▲</span> </th>
-                <th>Nombre Completo<span id="btnDec">▼</span> <span id="btnAsc">▲</span> </th>
-                <th>Correo<span id="btnDec">▼</span> <span id="btnAsc">▲</span> </th>
-                <th>Ubicación<span id="btnDec">▼</span> <span id="btnAsc">▲</span> </th>
+                <th>Identificador <span id="btnAsc">▲▼</span></th>
+                <th>Nombre Completo <span id="btnAsc">▲▼</span></th>
+                <th>Correo <span id="btnAsc">▲▼</span></th>
+                <th>Ubicación <span id="btnAsc">▲▼</span></th>
                 <!-- La línea de abajo no se ejecuta => cambiar PHP por = -->
                 <?php $admin ? "<th></th>" : "" ?>
             </tr>
@@ -40,7 +40,7 @@ $admin = Sesion::existe('user') && Sesion::leer('user')->getRol() === 'admin';
 </section>
 
 <!-- Enlazamos con la tabla inteligente -->
-<script src="./js/api/tabla.js"></script>
+<script src="./js/clases/tabla.js"></script>
 <!-- Obtenemos los concursos existentes -->
 <script src="./js/api/listados.js"></script>
 <!-- Rellenamos la tabla según los datos -->

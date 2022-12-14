@@ -4,16 +4,16 @@
 HTMLTableElement.prototype.editable = function () {
     // COGEMOS LOS ELEMENTOS DE LA TABLA
     var tabla = this;
-    this.creciente = {variable:0, creciente:true};
+    this.creciente = { variable: 0, creciente: true };
 
     // var tfoot = tabla.querySelector('tfoot');
 
     //AL SER ADMIN SE LLAMARÁ A ESTA FUNCIÓN QUE ACTIVA LA EDICIÓN
     function editarAdmin() {
-            tabla.editar();
+        tabla.editar();
         //Pase lo que pase, el estado cambia
     }
- 
+
 }
 
 HTMLTableElement.prototype.guardar = function () {
@@ -169,23 +169,6 @@ HTMLTableElement.prototype.editar = function () {
 
     // })
 
-    // function annadir(dni = null, nombre = null) {
-    //     // if (dni == null) // SI NO SE NOS PASA EL DNI, SE QUIERE COGER DE LOCAL_STORAGE
-    //     // {
-    //     //     dni = localStorage.getItem('datos')[0][0];
-    //     //     nombre = localStorage.getItem('datos')[0][1];
-    //     // } else {
-    //     dni = dni.value;
-    //     nombre = nombre.value;
-    //     // VACIAMOS LOS CAMPOS
-    //     nombre.innerHTML = ""; dni.innerHTML = "";
-    //     // }
-    //     tbody.innerHTML += "<tr><td>" + dni + "</td><td class='editable'>" + nombre + "</td></tr>";
-    //     // AÑADIMOS EL BOTON DE EDICIÓN
-    //     tabla.desEditar();
-    //     tabla.editar();
-    // }
-
 }
 
 // MÉTODO QUE ELIMINA LA COLUMNA DE EDICIÓN DEVOLVIENDO LA TABLA A SU ESTADO ORIGINAL
@@ -200,6 +183,98 @@ HTMLTableElement.prototype.desEditar = function () {
     }
 }
 
+/**
+ * Método que ordena la tabla de alumnos según la propiedad que queramos.
+ */
+HTMLTableElement.prototype.ordena = function () {
+    var Nombrecol = this.orden.variable;
+    orden1 = (this.orden.creciente) ? 1 : -1;
+
+    var tBody = this.tBody;
+    var filas = tBody.rows;
+
+    for (let i = 0; i < filas.length; i++) {
+        // Metemos al array las filas de la tabla
+        array.push(filas[i]);
+    }
+
+    // Ordenamos las filas
+    array.sort(function (a, b) {
+        return (a.cells[Nombrecol].innerHTML.localeCompare(b.cells[Nombrecol].innerHTML) * orden1);
+    })
+    this.orden[Nombrecol] = !this.orden[Nombrecol]; //Cambiamos el valor
+}
+
+/**
+ * Método que imprime el array 
+ * en un tBody dado (Una tabla).
+ */
+HTMLTableElement.prototype.pintar = function () {
+    //TODO
+    var tbodyHTML = "";
+    var tBody = this.tBody;
+    var filas = tBody.rows;
+    this.tbody.innerHTML = ""; //Vaciamos
+
+    for (let i = 0; i < filas.length; i++) {
+        // Metemos al array las filas de la tabla
+        array.push(filas[i]);
+    }
+
+    for (let i = 0; i < array.length; i++) {
+        tbodyHTML += this.alumnos[i].toFila(i);
+    }
+    this.cuerpo.innerHTML = tbodyHTML;
+}
+/* 
+// Esto ordena los datos(que los tengo guardados como una propiedad de la tabla, array)
+HTMLTableElement.prototype.ordenar = function () {
+    let numColum = this.orden['variable'];
+    let orden = (this.orden['creciente']) ? 1 : -1;
+    let array = [];
+    var tBody = this.tBody;
+    var filas = tBody.rows;
+
+    for (let i = 0; i < filas.length; i++) {
+        array.push(filas[i]);
+    }
+
+    array.sort(function (a, b) {
+        return (a.cells[numColum].innerHTML).localeCompare(b.cells[numColum].innerHTML) * orden;
+    });
+
+    array.forEach(element => {
+        this.tBody.appendChild(element);
+    });
+    this.orden.creciente = !(this.orden.creciente);
+}
+
+// creamos el thead, que tiene el evento de ordenarse
+HTMLTableElement.prototype.creaTHead = function (nombreColum, obj = this) {
+    let tHead = document.createElement("thead");
+    let tr = document.createElement("tr");
+
+    for (let i = 0; i < nombreColum.length; i++) {
+        let th = document.createElement("th");
+        th.innerHTML = nombreColum[i] + ' ▼';
+        tr.appendChild(th);
+    }
+
+    tHead.addEventListener('click', function (ev) {
+        obj.orden['variable'] = ev.target.cellIndex;
+        obj.indice = 1;
+        // document.getElementById('pagActual').value = obj.indice;
+        // document.getElementById('btnRetrocede').disabled = true;
+        // document.getElementById('btnAvanza').disabled = false;
+        // obj.actualizaPagina();
+        obj.ordenar();
+        //obj.pintar();
+    })
+
+    tHead.appendChild(tr);
+    return tHead;
+} */
+
 
 
 
@@ -211,16 +286,15 @@ window.onload = function () {
     }
 
     var btnGuardar = document.getElementById('btnGuardar');
-    if(typeof(btnGuardar) != 'undefined' && btnGuardar != null)
-    {
+    if (typeof (btnGuardar) != 'undefined' && btnGuardar != null) {
         // Si el btnGuardar existe en la tabla
         btnGuardar.addEventListener('click', () => {
             const datosFila = [];
             var tBody = document.getElementsByTagName("tbody")[0];
             var filas = tBody.rows;
-    
+
             for (let i = 0; i < filas.length; i++) {
-    
+
                 const datos = [];
                 for (let j = 0; j < filas[i].cells.length; j++) {
                     // LOS TDS
@@ -229,7 +303,7 @@ window.onload = function () {
                     }
                 }
                 datosFila.push(datos);
-    
+
             }
             localStorage.setItem("Datos", JSON.stringify(datosFila));
         });
@@ -238,11 +312,10 @@ window.onload = function () {
     var cuerpo = document.getElementById('tbody');
 
     var btnAsc = document.getElementById('btnAsc');
-    var btnDec = document.getElementById('btnDec');
 
 
-    btnAsc.onclick = function (ev) {
-        this.orden['variable']=ev.target.cellIndex;
+    btnAsc.addEventListener("load", function (ev) {
+        this.orden['variable'] = ev.target.cellIndex;
         cuerpo = this.tBody;
         array = [];
         filas = cuerpo.rows;
@@ -254,64 +327,48 @@ window.onload = function () {
             this.tBody.appendChild(element);
         });
         this.orden = !this.orden;
-    }
+    });
 
-    btnDec.onclick = function (ev) {
-        this.orden['variable']=ev.target.cellIndex;
-        cuerpo = this.tBody;
-        array = [];
-        filas = cuerpo.rows;
-        for (let i = 0; i < filas.length; i++) {
-            array.push(filas[i]);
+    // ordena = function (array) {
+    //     var Nombrecol = this.orden.variable;
+    //     orden1 = (this.orden.creciente) ? 1 : -1;
+    //     array.sort(function (a, b) {
+    //         // Comparamos como string por norma general
+    //         return (a[Nombrecol].innerHTML.localeCompare(b[Nombrecol].innerHTML) * orden1);
+    //     })
+    //     this.orden[Nombrecol] = !this.orden[Nombrecol]; //Cambiamos el valor
+    // }
+    /*  btnAp1Asc.onclick = function () {
+        array = []
+        for (let i = 0; i < array.length; i++) {
+         const element = array[i];
+         
         }
-        clase.ordena(array);
-        array.forEach(element => {
-            this.tBody.appendChild(element);
-        });
-        this.orden.creciente = !this.orden.creciente;
-
-
-    }
-
-   /*  btnAp1Asc.onclick = function () {
-       array = []
-       for (let i = 0; i < array.length; i++) {
-        const element = array[i];
-        
-       }
-       array.push(this.tBody.rows[i])
-        clase.orden.variable ="apellido1";
-        clase.orden.creciente = true;
-        clase.ordena();
-        array.forEach(element => {
-            this.tBody.appendChild(element);
-        });
-    } */
+        array.push(this.tBody.rows[i])
+         clase.orden.variable ="apellido1";
+         clase.orden.creciente = true;
+         clase.ordena();
+         array.forEach(element => {
+             this.tBody.appendChild(element);
+         });
+     } */
     // btnAp1Dec.onclick = function () {
-        //     array = []
-        
+    //     array = []
+
     // }
 
     // btnAp2Asc.onclick = function () {
-        //     array = []
+    //     array = []
     // }  
     // btnAp2Dec.onclick = function () {
-        //     array = []
+    //     array = []
     //     clase.orden.variable = "apellido2";
     //     clase.orden.creciente = false;
     //     clase.ordena();
-    
+
     // }
 
 
-    ordena = function (array) {
-        var Nombrecol = this.orden.variable;
-        orden1 = (this.orden.creciente)?1:-1;
-        array.sort(function (a,b) {
-            return (a[Nombrecol].innerHTML.localeCompare(b[Nombrecol].innerHTML) * orden1);
-        })
-        this.orden[Nombrecol] = !this.orden[Nombrecol]; //Cambiamos el valor
-    }
 
 
     //     function () {

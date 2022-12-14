@@ -106,8 +106,9 @@ if (isset($_POST['submit'])) {
                             #TODO Si tiene cámara
                             print '<video id="video" width="220" height="140" autoplay></video>';
                             print '<canvas id="canvas" width="220" height="140"></canvas>';
-                            print '<button id ="btnFoto">Echar Foto</button>';
+                            print '<div id ="btnFoto" class="c-card__btn btn--secundary">Tomar Foto</div>';
                         }
+                        echo '<img id="foto" width="150">';
                     ?>
                     <div id="btnImg">
                         <label for="imagen" class="img">
@@ -120,7 +121,8 @@ if (isset($_POST['submit'])) {
                 <div class="c-registro__Contubi">
                     <div class="c-registro__ContUbi__ubi">
                         <!-- TODO si es detectable -->
-                        <div id="btnCaptura">Usar mi ubicación</div>
+                        <div class="btn--secundary" id="btnCaptura">Usar mi ubicación</div>
+
                         <label for="lat">Latitud</label>
                         <input type="number" step=0.000000001 placeholder="0" id="lat" name="lat">
                         <?= $valida->ImprimirError('lat') ?>

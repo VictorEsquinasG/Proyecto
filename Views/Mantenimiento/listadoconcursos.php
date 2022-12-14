@@ -64,13 +64,13 @@ if ((Sesion::existe('user') && Sesion::leer('user')->getRol() === 'admin')) {
                     <!-- Cuando es admin le añadimos la columna de borrado -->
                     <?= $admin ? "<th></th>" : null ?>
                     <!-- <th>ID</th> -->
-                    <th>NOMBRE<span id="btnDec">▼</span> <span id="btnAsc">▲</span> </th>
-                    <th>Descripción<span id="btnDec">▼</span> <span id="btnAsc">▲</span> </th>
-                    <th>Periodo de inscripción<span id="btnDec">▼</span> <span id="btnAsc">▲</span> </th>
-                    <th>Periodo de participación<span id="btnDec">▼</span> <span id="btnAsc">▲</span> </th>
-                    <th>Bandas<span id="btnDec">▼</span> <span id="btnAsc">▲</span> </th>
-                    <th>Modos<span id="btnDec">▼</span> <span id="btnAsc">▲</span> </th>
-                    <th>Cartel<span id="btnDec">▼</span> <span id="btnAsc">▲</span> </th>
+                    <th>NOMBRE <span id="btnAsc">▲▼</span></th>
+                    <th>Descripción <span id="btnAsc">▲▼</span></th>
+                    <th>Periodo de inscripción <span id="btnAsc">▲▼</span></th>
+                    <th>Periodo de participación <span id="btnAsc">▲▼</span></th>
+                    <th>Bandas <span id="btnAsc">▲▼</span></th>
+                    <th>Modos <span id="btnAsc">▲▼</span></th>
+                    <th>Cartel <span id="btnAsc">▲▼</span></th> 
                     <th></th>
                 </tr>
             </thead>

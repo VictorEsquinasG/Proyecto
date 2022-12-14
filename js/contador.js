@@ -7,6 +7,7 @@ window.addEventListener('load',function () {
       contador.style.marginTop='1.25vh';
       
       let fechaStr = contador.getAttribute('fechaFin');
+      let idConcurso = contador.getAttribute('idConcurso');
       // Separamos la fecha y la hora
       const [dateValues, timeValues] = fechaStr.split(' ');
       // FECHA
@@ -36,6 +37,14 @@ window.addEventListener('load',function () {
             // el concurso ha acabado
           clearInterval(x);
           contador.innerHTML = "El concurso ha finalizado";
+          // Creamos un botón para ver la puntuación y los premios
+          var botom = document.createElement('button');
+          botom.setAttribute("class","c-btn--secundary c-card__btn"); // estilo
+
+          botom.onclick = () => {
+            location.href = "?menu=premios&conc="+idConcurso;
+          }
+          contador.appendChild(botom);
         }
       }, 1000);
     }

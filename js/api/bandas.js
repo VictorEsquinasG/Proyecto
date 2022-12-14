@@ -15,7 +15,7 @@ window.addEventListener("load", function () {
             let max = document.createElement("input");
             let boton = document.createElement("input");
 
-            ////Asignamos atributos al objeto formulario
+            // Asignamos atributos al objeto formulario
             formulario.setAttribute('method', "POST");
             formulario.setAttribute('action', "");
 
@@ -23,26 +23,26 @@ window.addEventListener("load", function () {
             id.setAttribute("name","id");
             id.style.display = "none";
 
-            ////Asignamos atributos al input del nombre
+            // Asignamos atributos al input del nombre
             nombre.setAttribute('type', "text");
             nombre.setAttribute('id', "nombre");
             nombre.setAttribute('name', "nombre");
             nombre.setAttribute('placeholder', "Nombre");
             nombre.setAttribute('style', "width:80%;margin: 10px 0px;padding: 5px");
 
-            ////Asignamos atributos al input de la distancia
+            // Asignamos atributos al input de la distancia
             dist.setAttribute('type', "text");
             dist.setAttribute('id', "distancia");
             dist.setAttribute('name', "distancia");
             dist.setAttribute('placeholder', "Distancia");
             dist.setAttribute('style', "width:80%;margin: 10px 0px;padding: 5px");
-            ////Asignamos atributos al input del mínimo
+            // Asignamos atributos al input del mínimo
             min.setAttribute('type', "text");
             min.setAttribute('name', "minimo");
             min.setAttribute('id', "minimo");
             min.setAttribute('placeholder', "Mínimo");
             min.setAttribute('style', "width:80%;margin: 10px 0px;padding: 5px");
-            ////Asignamos atributos al input del máximo
+            // Asignamos atributos al input del máximo
             max.setAttribute('type', "text");
             max.setAttribute('id', "maximo");
             max.setAttribute('name', "maximo");
@@ -153,12 +153,12 @@ window.addEventListener("load", function () {
         cerrar.style.margin = "5px";
         cerrar.style.padding = "5px";
         caja.style.overflow = "hidden";
-        cerrar.addEventListener("click", () => {
+        cerrar.onclick = function ()  {
             var caja = this.parentElement.parentElement;
             caja.parentElement.removeChild(caja);
             modal.parentElement.removeChild(modal);
             location.reload();
-        })
+        }
         titulo.appendChild(cerrar);
         // La ventana flotante
         var contenido = document.createElement("div");
@@ -176,7 +176,7 @@ window.addEventListener("load", function () {
     nuevo.onclick = function (ev) {
         // Evitamos que nos redireccione
         ev.preventDefault();
-        ////Crear el objeto formulario, titulo, input y boton
+        // Creamos el objeto formulario, titulo, input y boton
         let formulario = document.createElement("form");
         let nombre = document.createElement("input");
         let dist = document.createElement("input");
@@ -184,29 +184,29 @@ window.addEventListener("load", function () {
         let max = document.createElement("input");
         let boton = document.createElement("input");
 
-        ////Asignamos atributos al objeto formulario
+        // Asignamos atributos al objeto formulario
         formulario.setAttribute('method', "POST");
         formulario.setAttribute('action', "");
-        ////Asignamos atributos al input del nombre
+        // Asignamos atributos al input del nombre
         nombre.setAttribute('type', "text");
         nombre.setAttribute('id', "nombre");
         nombre.setAttribute('name', "nombre");
         nombre.setAttribute('placeholder', "Nombre");
         nombre.setAttribute('style', "width:100%;margin: 10px 0px;padding: 5px");
 
-        ////Asignamos atributos al input de la distancia
+        // Asignamos atributos al input de la distancia
         dist.setAttribute('type', "text");
         dist.setAttribute('id', "distancia");
         dist.setAttribute('name', "distancia");
         dist.setAttribute('placeholder', "Distancia");
         dist.setAttribute('style', "width:100%;margin: 10px 0px;padding: 5px");
-        ////Asignamos atributos al input del mínimo
+        // Asignamos atributos al input del mínimo
         min.setAttribute('type', "text");
         min.setAttribute('name', "minimo");
         min.setAttribute('id', "minimo");
         min.setAttribute('placeholder', "Mínimo");
         min.setAttribute('style', "width:100%;margin: 10px 0px;padding: 5px");
-        ////Asignamos atributos al input del máximo
+        // Asignamos atributos al input del máximo
         max.setAttribute('type', "text");
         max.setAttribute('id', "maximo");
         max.setAttribute('name', "maximo");
