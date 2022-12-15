@@ -11,7 +11,7 @@ $rp = new repBanda(gbd::getConexion());
 $rpC = new repConcurso(gbd::getConexion());
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    # Si viene por GET
+    # Si viene por GET quiere leer
     if ($admin) {
         # Sólo si tiene credenciales le permitimos utilizar la API
         $hecho = $rpC->get_bandas($_GET['id']);
@@ -36,13 +36,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     # Quiere borrar
     $data = file_get_contents("php://input","r");
     $info = json_decode($data);
-    $id = $_DELETE['id'];
+    $id = $info->id;
 
     if ($admin) {
         # Sólo si tiene credenciales le permitimos utilizar la API
         $rp->delete($id);
     }
 } else if ($_SERVER['REQUEST_METHOD'] === "POST") {
+    # Quiere crear
     if ($admin) {
         # Sólo si tiene credenciales le permitimos utilizar la API
         $banda = new Banda();

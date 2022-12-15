@@ -133,7 +133,7 @@ if (!$admin) {
         </div>
         
         <script src="./js/api/bandas.js"></script>
-        <script>
+        <!-- <script>
             window.addEventListener("load",()=>{
                 // Captaremos los botones
                 var btns = document.querySelectorAll('.btnBorrar');
@@ -158,6 +158,6 @@ if (!$admin) {
                 //     }
                 // });     
             });
-        </script>
+        </script> -->
     </article>
 </section>

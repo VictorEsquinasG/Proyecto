@@ -62,6 +62,12 @@ class repParticipacion {
         return $participantes;
     }
 
+    /**
+     * Devuelve la participación dadas
+     * @param idConcurso La id del concurso
+     * @param idParticipante La id del usuario participante
+     * 
+     */
     public function get($idConcurso,$idParticipante)
     {
         $par = new Participacion();
@@ -85,6 +91,9 @@ class repParticipacion {
         }
     }
 
+    /**
+     * Devuelve el nº de jueces del concurso cuya id se pasa por parámetro
+     */
     public function getNumJueces($id)
     {
         # Cogemos los jueces del concurso con ID dada
@@ -98,6 +107,9 @@ class repParticipacion {
         }
     } 
 
+    /**
+     * Devuelve el número de participantes y jueces del concurso cuyo ID se pasa por parámetro
+     */
     public function cuantos($id)
     {
         $sql = "SELECT COUNT(id) FROM PARTICIPACION WHERE concurso_id LIKE $id";
@@ -110,6 +122,9 @@ class repParticipacion {
         }
     }
 
+    /**
+     * Borra una participación dada su ID
+     */
     public function delete($id)
     {
         # borramos según el id
@@ -120,6 +135,10 @@ class repParticipacion {
         return $devolveer;
     }
 
+    /**
+     *  Crea una participación en base de datos dada
+     * @param part El objeto tipo Participacion
+     */
     public function set(Participacion $part):int | false
     {
         $rol = $part->getRol();
@@ -136,6 +155,10 @@ class repParticipacion {
             echo "Error al insertar Participación: " .$th;
         }
     }
+
+    /**
+     * Devuelve la participación con ID dado
+     */
     public function getById($id): Participacion
     {
         $sql = "select * FROM participacion 

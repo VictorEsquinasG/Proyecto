@@ -1,5 +1,7 @@
 window.addEventListener("load", function () {
 
+    // Captaremos los botones
+    var btns = document.querySelectorAll('.btnBorrar');
     var nuevo = document.getElementById("annadir");
     var btnsEditado = document.querySelectorAll('.btnEd');
 
@@ -20,7 +22,7 @@ window.addEventListener("load", function () {
             formulario.setAttribute('method', "POST");
             formulario.setAttribute('action', "");
 
-            id.setAttribute('value', editado.getAttribute('idBanda'));
+            id.setAttribute('value', idEditado);
             id.setAttribute("name", "id");
             id.style.display = "none";
 
@@ -109,7 +111,29 @@ window.addEventListener("load", function () {
             modal(formulario, "edit");
         }
 
+        
     })
+
+    //PARA BORRAR LAS BANDAS
+    btns.forEach(boton => {
+        
+        boton.onclick = function () {
+            
+            var id = boton.getAttribute('idBanda');
+            const data = {
+                "id" : id,
+            };
+            fetch("./API/bandas.php", {
+                method: "DELETE",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+            .then(response => location.reload())
+            .then(response => location.reload())
+            .catch(err => console.log("Error al borrar banda de id "+id, err));
+        }
+    });
+
     function modal(div, tipo) {
         var modal = this.document.createElement("div");
         // El 'bloqueador'

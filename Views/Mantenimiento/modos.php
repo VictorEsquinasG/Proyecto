@@ -75,21 +75,32 @@ if (!$admin) {
         <script src="./js/api/listados.js"></script>
         <script src="./js/clases/tabla.js"></script>
 
-        <script>
+        <!-- <script>
             window.addEventListener("load",()=>{
                 // Captaremos los botones
                 var btns = document.querySelectorAll('.btnBorrar');
 
                 //PARA BORRAR LOS MODOS
                 btns.forEach(boton => {
-                    boton.onclick = function () {
+                    boton.onclick = async function () {
+                        // Cogemos la ID
                         var id = boton.getAttribute('idModo');
-                        fetch("./API/borraModo.php?id="+id)
+                        const data = {
+                            "id" : id,
+                        };
+                        const respuesta = await fetch("./API/modos.php", {
+                            method: "DELETE",
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(data)
+                        })
+                        // .then(console.log(respuesta))
                         .then(response => location.reload())
                         .catch(err => console.log("Error al borrar modo de id "+id, err));
+
+                        // location.reload();
                     }
                 });
             });
-        </script>
+        </script> -->
     </article>
 </section>

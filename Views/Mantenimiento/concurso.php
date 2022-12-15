@@ -152,10 +152,21 @@ if ($participa && !$juez) {
                 </table>
             </form>
         EOD;
-    if (!$concurso->acabado()) {
+    # puntuación del usuario en este concurso
+    $p = $concurso->calculaPuntuacion($idUsuario);
+    $puntos = <<<EOD
+        <div>
+            <p>Enhorabuena, has obtenido $p puntos en este concurso!</p>
+        </div>
+    EOD;
+    // if (!$concurso->acabado()) {
         # Si el concurso sigue activo podemos mandar mensajes
         print $msg;
-    }
+    // }
+    // else {
+    //     # Si ya ha terminado le imprimimos sus puntos
+    //     print $puntos;
+    // }
 }
 print "</div>";
 print "</div>";

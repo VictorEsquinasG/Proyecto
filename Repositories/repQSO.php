@@ -111,6 +111,11 @@ class repQSO
         }
     }
 
+    /**
+     * Elimina de la base de datos el mensaje 
+     * hay que darle:
+     * @param id El id del mensaje
+     */
     public function delete($id)
     {
         # borramos
@@ -124,6 +129,12 @@ class repQSO
             echo "Error al borrar mensaje " . $e->getMessage();
         }
     }
+
+    /**
+     * Inserta un mensaje en base de datos 
+     * mediante un 
+     * @param QSO Mensaje tipo QSO
+     */
     public function set(QSO $QSO)
     {
         $us = $QSO->getId_participante(); #ID participacion -> no participante 
@@ -143,6 +154,11 @@ class repQSO
         }
     }
 
+    /**
+     * Devuelve si está validado el mensaje del ID dado
+     * @param id El id del mensaje
+     * @return bool Si está o no validado
+     */
     public function isValidado($id)
     {
         # Mira si está validado
@@ -162,6 +178,9 @@ class repQSO
         }
     }
 
+    /**
+     * Valida un mensaje de ID dado
+     */
     public function valida($idQSO)
     {
         # Según el ID del mensaje, lo validamos
@@ -174,6 +193,10 @@ class repQSO
             echo "Error al validar mensaje " . $e->getMessage();
         }
     }
+
+    /**
+     * Invalida un mensaje de ID dado
+     */
     public function invalida($idQSO)
     {
         # Según el ID del mensaje, lo validamos

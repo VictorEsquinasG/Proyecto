@@ -163,7 +163,7 @@ class repUsuarios
         // $x = $gps->getX();
         // $y = $gps->getY();
         // $gps = "GeomFromText('POINT(".$x." ".$y.")')"; #pasamos a POINT
-        $a->getImg()!=null ? $img = $a->getImg() : $img = null;
+        $a->getImg()!=null ? $img = $a->getImg() : $img = null; //TODO 
         $nombre = $a->getNombre();
         $ap1 = $a->getAp1();
         $ap2 = $a->getAp2();

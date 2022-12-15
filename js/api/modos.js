@@ -1,7 +1,10 @@
 window.addEventListener("load", function () {
 
+    // Captaremos los botones
+    var btns = document.querySelectorAll('.btnBorrar');
     var nuevo = document.getElementById("annadir");
     var btnsEditado = document.querySelectorAll('.btnEd');
+    
     btnsEditado.forEach(editado => {
         editado.onclick = function (ev) {
             // Evitamos que nos redireccione
@@ -42,6 +45,7 @@ window.addEventListener("load", function () {
                 if (validado(formulario)) {
                     // guardamos
                     editar(formulario);
+                    location.reload();
                 }
             }
 
@@ -88,6 +92,27 @@ window.addEventListener("load", function () {
         modal(formulario, "new");
     }
 
+    //PARA BORRAR LOS MODOS
+    btns.forEach(boton => {
+        boton.onclick = async function () {
+            // Cogemos la ID
+            var id = boton.getAttribute('idModo');
+            const data = {
+                "id" : id,
+            };
+            const respuesta = await fetch("./API/modos.php", {
+                method: "DELETE",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+            // .then(console.log(respuesta))
+            .then(response => location.reload())
+            .catch(err => console.log("Error al borrar modo de id "+id, err));
+
+            // location.reload();
+        }
+    });
+
 })
 function validado(formu) {
     var errores = [];
@@ -106,13 +131,13 @@ async function guardar(formulario) {
     try {
         const data = new FormData(formulario);
         // Lo mandamos a la bd mediante la API
-        var respuesta = await fetch("./API/ModosApi.php", {
+        var respuesta = await fetch("./API/modos.php", {
             method: 'POST',
             body: data
         })
-        .then(respuesta => console.log(respuesta))
-        .then(location.reload()) //Recargamos la página
-        .then(location.reload()); //Recargamos la página
+            .then(respuesta => console.log(respuesta))
+            .then(location.reload()) //Recargamos la página
+            .then(location.reload()); //Recargamos la página
         // .catch(err => console.log("Fallo al leer los concursos", err));
 
     } catch (err) {
@@ -122,16 +147,20 @@ async function guardar(formulario) {
 
 async function editar(formulario) {
     try {
-        const data = new FormData(formulario);
+        const data = { 
+            "id" : formulario.id.value,
+            "nombre" : formulario.nombre.value 
+        };
         //
-        await fetch("./API/editaModo.php", {
-            // method: 'PUT',
-            method: 'POST',
-            body: data
+
+        const respuesta = await fetch("./API/modos.php", {
+            method: "PUT",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
         })
-            .then(respuesta => console.log(respuesta))
-            .then(location.reload()) //Recargamos la página
-            .then(location.reload()); //Recargamos la página
+            .then(respuesta => console.log(respuesta));
+        // .then(location.reload()) //Recargamos la página
+        // .then(location.reload()); //Recargamos la página
     } catch (err) {
         console.log("Ocurrió un error: " + err);
     }
@@ -198,7 +227,7 @@ function modal(div, tipo) {
     cerrar.style.margin = "5px";
     cerrar.style.padding = "5px";
     caja.style.overflow = "hidden";
-    cerrar.onclick = function ()  {
+    cerrar.onclick = function () {
         var caja = this.parentElement.parentElement;
         caja.parentElement.removeChild(caja);
         modal.parentElement.removeChild(modal);
